@@ -1,0 +1,62 @@
+{
+  "name": "@ossperks/cli",
+  "version": "0.1.0",
+  "description": "CLI to check if your project qualifies for OSS perk programs based on their guidelines.",
+  "keywords": [
+    "cli",
+    "eligibility",
+    "open-source",
+    "oss",
+    "perks"
+  ],
+  "homepage": "https://github.com/Aniket-508/ossperks/tree/main/packages/cli#readme",
+  "bugs": {
+    "url": "https://github.com/Aniket-508/ossperks/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aniket-508/ossperks.git",
+    "directory": "packages/cli"
+  },
+  "bin": {
+    "ossperks": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "imports": {
+    "#core": "./src/index.ts"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "dev": "tsdown --watch",
+    "build": "pnpm clean && NODE_ENV=production tsdown",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "perf": "pnpm build && vitest run tests/performance.test.ts --reporter=verbose",
+    "typecheck": "tsc -p tsconfig.json --pretty && tsc -p tests/tsconfig.json --pretty",
+    "test": "pnpm build && vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.5",
+    "tsdown": "^0.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  },
+  "engines": {
+    "node": ">=22.20.0",
+    "pnpm": ">=10.29.1"
+  },
+  "packageManager": "pnpm@10.29.1"
+}

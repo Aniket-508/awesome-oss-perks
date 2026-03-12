@@ -1,0 +1,65 @@
+{
+  "name": "@ossperks/data",
+  "version": "0.1.0",
+  "description": "Curated data of open-source software perk programs.",
+  "keywords": [
+    "data",
+    "open-source",
+    "oss",
+    "perks",
+    "programs"
+  ],
+  "homepage": "https://github.com/Aniket-508/ossperks/tree/main/packages/data#readme",
+  "bugs": {
+    "url": "https://github.com/Aniket-508/ossperks/issues"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aniket-508/ossperks.git",
+    "directory": "packages/data"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./schema": {
+      "types": "./dist/schema.d.ts",
+      "import": "./dist/schema.js",
+      "default": "./dist/schema.js"
+    }
+  },
+  "scripts": {
+    "dev": "tsdown --watch",
+    "build": "pnpm clean && NODE_ENV=production tsdown",
+    "clean": "rm -rf dist tsconfig.tsbuildinfo",
+    "typecheck": "tsc -p tsconfig.json --pretty",
+    "test": "pnpm build && vitest run",
+    "validate": "node --import tsx src/validate.ts"
+  },
+  "dependencies": {
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.5",
+    "tsdown": "^0.21.0",
+    "tsx": "^4.19.4",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.18"
+  },
+  "engines": {
+    "node": ">=22.20.0",
+    "pnpm": ">=10.29.1"
+  },
+  "packageManager": "pnpm@10.29.1"
+}
