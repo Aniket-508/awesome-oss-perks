@@ -5,7 +5,6 @@ const withMDX = createMDX();
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
-  transpilePackages: ["@ossperks/data"],
   rewrites() {
     return [
       {
@@ -23,6 +22,7 @@ const config = {
     ];
   },
   serverExternalPackages: ["@takumi-rs/image-response"],
+  transpilePackages: ["@ossperks/data"],
 };
 
 export default withMDX(config);
