@@ -1,5 +1,11 @@
 # ossperks
 
+## 0.1.2
+
+### Patch Changes
+
+- aac4ed8: Fix CLI not executing when installed via npx
+
 ## 0.1.1
 
 ### Patch Changes
