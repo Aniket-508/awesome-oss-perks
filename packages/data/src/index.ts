@@ -13,8 +13,8 @@ import sentry from "./programs/sentry.json" with { type: "json" };
 import snyk from "./programs/snyk.json" with { type: "json" };
 import vercel from "./programs/vercel.json" with { type: "json" };
 import zulip from "./programs/zulip.json" with { type: "json" };
-import { programSchema } from "./schema";
-import type { Category, Contact, Program } from "./schema";
+import { programSchema, getPerkType, PERK_TYPES } from "./schema";
+import type { Category, Contact, PerkType, Program } from "./schema";
 
 const raw = [
   _1password,
@@ -72,6 +72,13 @@ export const getPeople = (): PersonWithProgram[] => {
   return result;
 };
 
+export const getProgramPerkTypes = (program: Program): PerkType[] => [
+  ...new Set(program.perks.map((p) => getPerkType(p.title))),
+];
+
+export const getAllPerkTypes = (): PerkType[] =>
+  Object.values(PERK_TYPES).toSorted();
+
 export { programSchema, type Category, type Program } from "./schema";
-export { type Contact } from "./schema";
-export { CATEGORY_LABELS } from "./schema";
+export { type Contact, type PerkType } from "./schema";
+export { CATEGORY_LABELS, getPerkType, PERK_TYPES } from "./schema";

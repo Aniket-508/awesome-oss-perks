@@ -50,6 +50,36 @@ export const programSchema = z.object({
 
 export type Program = z.infer<typeof programSchema>;
 
+export const PERK_TYPES = {
+  credits: "Credits",
+  freePlans: "Free Plans",
+  fullAccess: "Full Access",
+  security: "Security",
+  support: "Support",
+} as const;
+
+export type PerkType = (typeof PERK_TYPES)[keyof typeof PERK_TYPES];
+
+const PERK_TYPE_PATTERNS: [PerkType, RegExp][] = [
+  [PERK_TYPES.credits, /credits?|minutes|events|transactions/i],
+  [PERK_TYPES.freePlans, /\bfree\b/i],
+  [
+    PERK_TYPES.fullAccess,
+    /\b(full|all|enterprise|ultimate|unlimited|complete)\b/i,
+  ],
+  [PERK_TYPES.security, /security|zero trust|codex security/i],
+  [PERK_TYPES.support, /support|assistance/i],
+];
+
+export const getPerkType = (perkTitle: string): PerkType => {
+  for (const [type, pattern] of PERK_TYPE_PATTERNS) {
+    if (pattern.test(perkTitle)) {
+      return type;
+    }
+  }
+  return PERK_TYPES.fullAccess;
+};
+
 export const CATEGORY_LABELS: Record<Category, string> = {
   ai: "AI & Machine Learning",
   analytics: "Analytics",
