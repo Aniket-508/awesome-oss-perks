@@ -75,7 +75,11 @@ export const ProgramsFilter = ({
       <div className="flex flex-wrap gap-3 mb-8">
         <Select value={selectedCategory} onValueChange={handleCategoryChange}>
           <SelectTrigger>
-            <SelectValue />
+            <SelectValue>
+              {selectedCategory === ALL
+                ? translations.filters.allCategories
+                : (categoryLabels[selectedCategory] ?? selectedCategory)}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={ALL}>
@@ -91,7 +95,11 @@ export const ProgramsFilter = ({
 
         <Select value={selectedPerkType} onValueChange={handlePerkTypeChange}>
           <SelectTrigger>
-            <SelectValue />
+            <SelectValue>
+              {selectedPerkType === ALL
+                ? translations.filters.allTypes
+                : selectedPerkType}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={ALL}>{translations.filters.allTypes}</SelectItem>
