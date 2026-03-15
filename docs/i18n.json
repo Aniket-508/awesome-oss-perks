@@ -14,9 +14,13 @@
     },
     "ts": {
       "include": [
+        "src/locales/[locale]/about.ts",
         "src/locales/[locale]/common.ts",
+        "src/locales/[locale]/footer.ts",
         "src/locales/[locale]/home.ts",
-        "src/locales/[locale]/programs.ts"
+        "src/locales/[locale]/people.ts",
+        "src/locales/[locale]/programs.ts",
+        "src/locales/[locale]/sponsors.ts"
       ]
     }
   }

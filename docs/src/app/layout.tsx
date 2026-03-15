@@ -1,11 +1,20 @@
-import "./global.css";
 import { Public_Sans } from "next/font/google";
+
+import "./global.css";
+import { headers } from "next/headers";
 
 const publicSans = Public_Sans({ subsets: ["latin"], variable: "--font-sans" });
 
-export default function Layout({ children }: LayoutProps<"/">) {
+export default async function Layout({ children }: LayoutProps<"/">) {
+  const headersList = await headers();
+  const locale = headersList.get("x-next-locale") ?? "en";
+
   return (
-    <html lang="en" className={publicSans.variable} suppressHydrationWarning>
+    <html
+      lang={locale}
+      className={publicSans.variable}
+      suppressHydrationWarning
+    >
       <body className="flex flex-col min-h-screen">{children}</body>
     </html>
   );
