@@ -32,7 +32,7 @@ export default async function SponsorsPage({
   const t = await getT(lang);
 
   return (
-    <>
+    <div className="container flex-1 flex flex-col w-full py-12 px-4 mx-auto">
       <div className="mb-10">
         <h1 className="text-4xl font-bold mb-4">{t.sponsors.heading}</h1>
         <p className="text-fd-muted-foreground text-lg leading-relaxed">
@@ -110,6 +110,6 @@ export default async function SponsorsPage({
           }
         />
       </section>
-    </>
+    </div>
   );
 }

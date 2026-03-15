@@ -1,8 +1,9 @@
 import { getPeople, programs } from "@ossperks/data";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Plus } from "lucide-react";
 import type { Metadata } from "next";
 
 import { ContactSubmissionDialog } from "@/components/people/contact-submission-dialog";
+import { Button } from "@/components/ui/button";
 import { getT } from "@/lib/get-t";
 import { i18n } from "@/lib/i18n";
 
@@ -34,7 +35,7 @@ export default async function PeoplePage({
   const programOptions = programs.map((p) => ({ name: p.name, slug: p.slug }));
 
   return (
-    <>
+    <div className="container flex-1 flex flex-col w-full py-12 px-4 mx-auto">
       <div className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h1 className="text-4xl font-bold mb-2">{t.people.heading}</h1>
@@ -46,6 +47,12 @@ export default async function PeoplePage({
         </div>
         <div className="shrink-0">
           <ContactSubmissionDialog
+            trigger={
+              <Button size="lg">
+                <Plus />
+                {t.people.submit.buttonText}
+              </Button>
+            }
             programs={programOptions}
             translations={t.people.submit}
           />
@@ -93,6 +100,6 @@ export default async function PeoplePage({
           })}
         </div>
       )}
-    </>
+    </div>
   );
 }

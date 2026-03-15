@@ -17,9 +17,7 @@ export default async function Layout({
 
   return (
     <HomeLayout {...baseOptions(lang)}>
-      <div className="max-w-(--fd-layout-width) flex-1 flex flex-col w-full py-12 px-4 mx-auto">
-        {children}
-      </div>
+      {children}
       <Footer translation={translation.footer} />
     </HomeLayout>
   );

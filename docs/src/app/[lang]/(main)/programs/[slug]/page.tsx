@@ -53,7 +53,7 @@ export default async function ProgramPage({
   } = resolveProgramContent(program, t);
 
   return (
-    <>
+    <div className="max-w-4xl flex-1 flex flex-col w-full py-12 px-4 mx-auto">
       <div className="mb-6">
         <Button
           variant="link"
@@ -193,7 +193,7 @@ export default async function ProgramPage({
           </section>
         </>
       )}
-    </>
+    </div>
   );
 }
 

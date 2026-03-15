@@ -1,12 +1,17 @@
-import { programs, getCategories, getPeople } from "@ossperks/data";
+import {
+  programs,
+  getCategories,
+  getPeople,
+  getFeaturedPrograms,
+} from "@ossperks/data";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-import { Badge } from "@/components/ui/badge";
+import { HeroActions } from "@/components/home/hero-actions";
+import { HomeCtaWithDialogs } from "@/components/home/home-cta-with-dialogs";
+import { ProgramCard } from "@/components/programs/program-card";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { LINK } from "@/constants/links";
 import { ROUTES } from "@/constants/routes";
 import { getT } from "@/lib/get-t";
 import { i18n, withLocalePrefix } from "@/lib/i18n";
@@ -25,6 +30,7 @@ export default async function HomePage({
   const categories = getCategories();
   const people = getPeople();
   const totalPerks = programs.reduce((sum, p) => sum + p.perks.length, 0);
+  const programOptions = programs.map((p) => ({ name: p.name, slug: p.slug }));
 
   const stats = [
     { label: t.home.stats.programs, value: programs.length },
@@ -34,123 +40,108 @@ export default async function HomePage({
   ];
 
   return (
-    <>
+    <div className="container flex-1 flex flex-col w-full py-12 px-4 mx-auto">
       {/* Hero */}
-      <section className="pb-16">
+      <section className="pt-8 pb-16 sm:pt-24 sm:pb-32">
         <h1 className="text-5xl font-bold tracking-tight mb-4">
           {t.home.heading}
+          <span className="text-fd-primary">.</span>
         </h1>
         <p className="text-fd-muted-foreground text-lg max-w-xl mb-8">
           {t.home.description}
         </p>
-        <div className="flex flex-wrap gap-4">
+        <HeroActions
+          lang={lang}
+          browseProgramsLabel={t.home.hero.browsePrograms}
+          submitProgramLabel={t.home.hero.submitProgram}
+          programDialogTranslations={t.programs.submit}
+        />
+      </section>
+
+      <Separator />
+
+      {/* Built for open source + Stats */}
+      <section>
+        <div className="flex flex-col gap-10 sm:flex-row sm:items-start sm:justify-between">
+          <div className="min-w-0 flex-1 py-16">
+            <p className="text-xs font-medium uppercase tracking-wider text-fd-muted-foreground mb-2">
+              {t.home.builtFor.subheading}
+            </p>
+            <h2 className="text-2xl font-bold mb-2">
+              {t.home.builtFor.heading}
+            </h2>
+            <p className="text-fd-muted-foreground max-w-2xl">
+              {t.home.builtFor.description}
+            </p>
+          </div>
+          <div className="relative grid grid-cols-1 self-stretch sm:w-[30%] sm:grid-cols-2">
+            <div className="pointer-events-none absolute inset-0 hidden sm:block">
+              <div className="absolute left-1/2 top-[15%] bottom-[15%] w-px -translate-x-1/2 bg-linear-to-b from-transparent via-fd-border to-transparent" />
+              <div className="absolute top-1/2 left-[15%] right-[15%] h-px -translate-y-1/2 bg-linear-to-r from-transparent via-fd-border to-transparent" />
+            </div>
+            {stats.map((stat) => (
+              <div
+                key={stat.label}
+                className="flex flex-col items-center justify-center p-8"
+              >
+                <p className="text-3xl font-bold text-fd-primary">
+                  {stat.value}
+                </p>
+                <p className="text-sm text-fd-muted-foreground">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <Separator />
+
+      {/* Featured Programs */}
+      <section className="py-16">
+        <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+          <h2 className="text-2xl font-bold mb-2">{t.home.featured.heading}</h2>
           <Button
-            variant="default"
-            size="lg"
+            variant="ghost"
+            size="sm"
+            className="shrink-0 text-fd-primary"
             nativeButton={false}
             render={
               <Link href={withLocalePrefix(lang, ROUTES.PROGRAMS)}>
-                {t.home.programsLink}
-              </Link>
-            }
-          />
-          <Button
-            variant="outline"
-            size="lg"
-            nativeButton={false}
-            render={
-              <Link href={withLocalePrefix(lang, ROUTES.CLI)}>
-                {t.home.cliLink}
+                {t.home.featured.viewAll}
+                <ArrowRight className="size-4" />
               </Link>
             }
           />
         </div>
-      </section>
-
-      {/* Stats */}
-      <section className="pb-16">
-        <div className="grid grid-cols-2 gap-6 sm:grid-cols-4">
-          {stats.map((stat) => (
-            <div key={stat.label}>
-              <p className="text-3xl font-bold text-fd-primary">{stat.value}</p>
-              <p className="text-sm text-fd-muted-foreground">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <Separator className="mb-16" />
-
-      {/* Featured Programs */}
-      <section className="pb-16">
-        <h2 className="text-2xl font-bold mb-2">{t.home.featured.heading}</h2>
-        <p className="text-fd-muted-foreground mb-8">
-          {t.home.featured.description}
-        </p>
         <div className="grid gap-4 sm:grid-cols-2">
-          {programs.map((program) => {
-            const extraPerks = program.perks.length - 2;
+          {getFeaturedPrograms().map((program) => {
             const categoryLabel =
               t.common.categories[
                 program.category as keyof typeof t.common.categories
               ] ?? program.category;
-
+            const programHref = withLocalePrefix(
+              lang,
+              `${ROUTES.PROGRAMS}/${program.slug}` as `/${string}`
+            );
             return (
-              <Link
+              <ProgramCard
                 key={program.slug}
-                href={withLocalePrefix(
-                  lang,
-                  `${ROUTES.PROGRAMS}/${program.slug}` as `/${string}`
-                )}
-                className="group block"
-              >
-                <Card className="h-full transition-colors hover:bg-fd-accent">
-                  <CardHeader>
-                    <Badge variant="secondary" className="w-fit text-xs">
-                      {categoryLabel}
-                    </Badge>
-                    <CardTitle className="font-semibold group-hover:text-fd-primary mt-2">
-                      {program.name}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <p className="text-sm text-fd-muted-foreground line-clamp-2">
-                      {program.description}
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {program.perks.slice(0, 2).map((perk) => (
-                        <Badge key={perk.title} variant="default">
-                          {perk.title}
-                        </Badge>
-                      ))}
-                      {extraPerks > 0 && (
-                        <Badge variant="secondary">
-                          {t.programs.more.replace(
-                            "{count}",
-                            String(extraPerks)
-                          )}
-                        </Badge>
-                      )}
-                    </div>
-                    <div className="flex justify-end">
-                      <span className="inline-flex items-center gap-1 text-xs text-fd-primary group-hover:underline">
-                        {t.programs.learnMore}
-                        <ArrowRight className="size-3" />
-                      </span>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
+                program={program}
+                programHref={programHref}
+                categoryLabel={categoryLabel}
+                learnMore={t.programs.learnMore}
+                more={t.programs.more}
+              />
             );
           })}
         </div>
       </section>
 
-      <Separator className="mb-16" />
+      <Separator />
 
       {/* People */}
       {people.length > 0 && (
-        <section className="pb-16">
+        <section className="py-16">
           <h2 className="text-2xl font-bold mb-2">{t.home.people.heading}</h2>
           <p className="text-fd-muted-foreground mb-8">
             {t.home.people.description}
@@ -189,26 +180,39 @@ export default async function HomePage({
         </section>
       )}
 
-      <Separator className="mb-16" />
+      {/* How it works */}
+      <section className="py-16 text-center">
+        <p className="text-xs font-medium uppercase tracking-wider text-fd-muted-foreground mb-2">
+          {t.home.howItWorks.subheading}
+        </p>
+        <h2 className="text-2xl font-bold mb-8">{t.home.howItWorks.heading}</h2>
+        <div className="grid gap-8 sm:grid-cols-3 max-w-5xl mx-auto">
+          {t.home.howItWorks.steps.map((step, index) => (
+            <div
+              key={step.title}
+              className="flex flex-col items-center gap-3 text-center"
+            >
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-fd-primary text-fd-primary-foreground font-bold text-sm">
+                {index + 1}
+              </div>
+              <h3 className="font-semibold">{step.title}</h3>
+              <p className="text-balance text-sm text-fd-muted-foreground">
+                {step.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <Separator />
 
       {/* CTA */}
-      <section className="pb-8 text-center">
-        <h2 className="text-2xl font-bold mb-2">{t.home.cta.heading}</h2>
-        <p className="text-fd-muted-foreground max-w-lg mx-auto mb-6">
-          {t.home.cta.description}
-        </p>
-        <Button
-          variant="default"
-          size="lg"
-          nativeButton={false}
-          render={
-            <a href={LINK.GITHUB} target="_blank" rel="noopener noreferrer">
-              {t.home.cta.buttonText}
-              <ArrowRight className="size-4" />
-            </a>
-          }
-        />
-      </section>
-    </>
+      <HomeCtaWithDialogs
+        programOptions={programOptions}
+        translations={t.home.cta}
+        programDialogTranslations={t.programs.submit}
+        contactDialogTranslations={t.people.submit}
+      />
+    </div>
   );
 }

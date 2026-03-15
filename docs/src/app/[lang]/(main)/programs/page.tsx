@@ -4,10 +4,12 @@ import {
   getAllPerkTypes,
   getProgramPerkTypes,
 } from "@ossperks/data";
+import { Plus } from "lucide-react";
 import type { Metadata } from "next";
 
 import { ProgramSubmissionDialog } from "@/components/programs/program-submission-dialog";
 import { ProgramsFilter } from "@/components/programs/programs-filter";
+import { Button } from "@/components/ui/button";
 import { getT } from "@/lib/get-t";
 import { i18n } from "@/lib/i18n";
 
@@ -43,7 +45,7 @@ export default async function ProgramsPage({
   }));
 
   return (
-    <>
+    <div className="container flex-1 flex flex-col w-full py-12 px-4 mx-auto">
       <div className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h1 className="text-4xl font-bold mb-2">
@@ -55,7 +57,15 @@ export default async function ProgramsPage({
           </p>
         </div>
         <div className="shrink-0">
-          <ProgramSubmissionDialog translations={t.programs.submit} />
+          <ProgramSubmissionDialog
+            trigger={
+              <Button size="lg">
+                <Plus />
+                {t.programs.submit.buttonText}
+              </Button>
+            }
+            translations={t.programs.submit}
+          />
         </div>
       </div>
 
@@ -71,6 +81,6 @@ export default async function ProgramsPage({
         }}
         categoryLabels={t.common.categories}
       />
-    </>
+    </div>
   );
 }
