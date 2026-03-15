@@ -47,6 +47,43 @@ const resolveContext = (slug: string[] | undefined): OgContext | null => {
   return null;
 };
 
+const getFooterLabel = (context: OgContext): string | undefined => {
+  if (context.type === "program") {
+    return "Program";
+  }
+  if (context.type === "cli") {
+    return "CLI";
+  }
+  return undefined;
+};
+
+const validateOgRequest = (params: {
+  lang: string;
+  slug?: string[];
+}): { context: OgContext; lang: string } => {
+  const { lang, slug } = params;
+  if (!isLocale(lang)) {
+    notFound();
+  }
+  const context = resolveContext(slug ?? undefined);
+  if (!context) {
+    notFound();
+  }
+  if (context.type === "program") {
+    const program = getProgramBySlug(context.slug);
+    if (!program) {
+      notFound();
+    }
+  }
+  if (context.type === "cli") {
+    const page = cliSource.getPage(context.slugs, lang);
+    if (!page) {
+      notFound();
+    }
+  }
+  return { context, lang };
+};
+
 const getOgContent = async (
   lang: string,
   context: OgContext
@@ -102,45 +139,16 @@ export const GET = async (
   _req: Request,
   { params }: { params: Promise<{ lang: string; slug?: string[] }> }
 ) => {
-  const { lang, slug } = await params;
-  if (!isLocale(lang)) {
-    notFound();
-  }
-  const context = resolveContext(slug ?? undefined);
-  if (!context) {
-    notFound();
-  }
-  if (context.type === "program") {
-    const program = getProgramBySlug(context.slug);
-    if (!program) {
-      notFound();
-    }
-  }
-  if (context.type === "cli") {
-    const page = cliSource.getPage(context.slugs, lang);
-    if (!page) {
-      notFound();
-    }
-  }
-
+  const { context, lang } = validateOgRequest(await params);
   const { description, title } = await getOgContent(lang, context);
   if (!title) {
     notFound();
   }
-
-  const footerLabel =
-    context.type === "program"
-      ? "Program"
-      : (context.type === "cli"
-        ? "CLI"
-        : undefined);
-
   const fonts = await loadGeistFonts();
-
   return new ImageResponse(
     <OgImage
       description={description}
-      footerLabel={footerLabel}
+      footerLabel={getFooterLabel(context)}
       siteName={SITE.NAME}
       title={title}
     />,
