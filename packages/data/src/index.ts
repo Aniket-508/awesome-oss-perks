@@ -13,8 +13,8 @@ import sentry from "./programs/sentry.json" with { type: "json" };
 import snyk from "./programs/snyk.json" with { type: "json" };
 import vercel from "./programs/vercel.json" with { type: "json" };
 import zulip from "./programs/zulip.json" with { type: "json" };
-import { programSchema } from "./schema.js";
-import type { Program, Category } from "./schema.js";
+import { programSchema } from "./schema";
+import type { Program, Category } from "./schema";
 
 const raw = [
   _1password,
@@ -45,5 +45,5 @@ export const getProgramsByCategory = (category: Category): Program[] =>
 export const getCategories = (): Category[] =>
   [...new Set(programs.map((p) => p.category))].toSorted();
 
-export { programSchema, type Program, type Category } from "./schema.js";
-export { CATEGORY_LABELS } from "./schema.js";
+export { programSchema, type Program, type Category } from "./schema";
+export { CATEGORY_LABELS } from "./schema";

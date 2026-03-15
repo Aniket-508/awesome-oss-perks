@@ -1,4 +1,4 @@
-import { programs } from "./index.js";
+import { programs } from "./index";
 
 console.log(`Validated ${programs.length} programs:`);
 for (const p of programs) {
