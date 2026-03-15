@@ -14,12 +14,20 @@ export const baseOptions = (_locale: string): BaseLayoutProps => ({
   i18n,
   links: [
     {
-      text: "Programs",
-      url: "/programs",
+      text: "About",
+      url: "/about",
     },
     {
       text: "CLI",
       url: "/cli",
+    },
+    {
+      text: "People",
+      url: "/people",
+    },
+    {
+      text: "Programs",
+      url: "/programs",
     },
   ],
   nav: {
