@@ -8,8 +8,10 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogBody,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -214,65 +216,73 @@ export const ContactSubmissionDialog = ({
       <DialogTrigger render={trigger} />
       <DialogContent>
         {step === "form" ? (
-          <>
+          <form
+            id="contact-form"
+            onSubmit={handleFormSubmit}
+            className="contents"
+          >
             <DialogHeader>
               <DialogTitle>{translations.heading}</DialogTitle>
               <DialogDescription>{translations.description}</DialogDescription>
             </DialogHeader>
 
-            <form onSubmit={handleFormSubmit} className="grid gap-4">
-              <div className="grid grid-cols-2 gap-4">
-                <form.Field name="name">
+            <DialogBody>
+              <div className="grid gap-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <form.Field name="name">
+                    {(field) => (
+                      <TextField
+                        field={field}
+                        id="contact-name"
+                        label="Name"
+                        placeholder="e.g., Jane Doe"
+                        disabled={isSubmitting}
+                      />
+                    )}
+                  </form.Field>
+                  <form.Field name="role">
+                    {(field) => (
+                      <TextField
+                        field={field}
+                        id="contact-role"
+                        label="Role"
+                        placeholder="e.g., OSS Program Manager"
+                        disabled={isSubmitting}
+                      />
+                    )}
+                  </form.Field>
+                </div>
+
+                <form.Field name="url">
                   {(field) => (
                     <TextField
                       field={field}
-                      id="contact-name"
-                      label="Name"
-                      placeholder="e.g., Jane Doe"
+                      id="contact-url"
+                      label="URL (optional)"
+                      placeholder="https://..."
+                      type="url"
                       disabled={isSubmitting}
                     />
                   )}
                 </form.Field>
-                <form.Field name="role">
+
+                <form.Field name="programSlug">
                   {(field) => (
-                    <TextField
+                    <ProgramSelectField
                       field={field}
-                      id="contact-role"
-                      label="Role"
-                      placeholder="e.g., OSS Program Manager"
+                      programs={programs}
                       disabled={isSubmitting}
                     />
                   )}
                 </form.Field>
+
+                {submissionError && (
+                  <p className="text-sm text-destructive">{submissionError}</p>
+                )}
               </div>
+            </DialogBody>
 
-              <form.Field name="url">
-                {(field) => (
-                  <TextField
-                    field={field}
-                    id="contact-url"
-                    label="URL (optional)"
-                    placeholder="https://..."
-                    type="url"
-                    disabled={isSubmitting}
-                  />
-                )}
-              </form.Field>
-
-              <form.Field name="programSlug">
-                {(field) => (
-                  <ProgramSelectField
-                    field={field}
-                    programs={programs}
-                    disabled={isSubmitting}
-                  />
-                )}
-              </form.Field>
-
-              {submissionError && (
-                <p className="text-sm text-destructive">{submissionError}</p>
-              )}
-
+            <DialogFooter>
               <form.Subscribe selector={canSubmitSelector}>
                 {(canSubmit) => (
                   <Button
@@ -294,8 +304,8 @@ export const ContactSubmissionDialog = ({
                   </Button>
                 )}
               </form.Subscribe>
-            </form>
-          </>
+            </DialogFooter>
+          </form>
         ) : (
           <div className="flex flex-col items-center gap-4 text-center">
             <CheckCircle2 className="size-12 text-green-500" />

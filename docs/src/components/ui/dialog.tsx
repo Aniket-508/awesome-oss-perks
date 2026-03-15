@@ -50,7 +50,7 @@ const DialogContent = ({
     <DialogPrimitive.Popup
       data-slot="dialog-content"
       className={cn(
-        "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-6 rounded-xl bg-background p-6 text-sm ring-1 ring-foreground/10 duration-100 outline-none sm:max-w-md data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+        "fixed top-1/2 left-1/2 z-50 flex w-full max-w-[calc(100%-2rem)] max-h-[90vh] -translate-x-1/2 -translate-y-1/2 flex-col gap-6 rounded-xl bg-background p-6 text-sm ring-1 ring-foreground/10 duration-100 outline-none overflow-hidden sm:max-w-md data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
         className
       )}
       {...props}
@@ -78,7 +78,15 @@ const DialogContent = ({
 const DialogHeader = ({ className, ...props }: React.ComponentProps<"div">) => (
   <div
     data-slot="dialog-header"
-    className={cn("flex flex-col gap-2", className)}
+    className={cn("flex shrink-0 flex-col gap-2", className)}
+    {...props}
+  />
+);
+
+const DialogBody = ({ className, ...props }: React.ComponentProps<"div">) => (
+  <div
+    data-slot="dialog-body"
+    className={cn("min-h-0 flex-1 overflow-auto -mx-4 px-4", className)}
     {...props}
   />
 );
@@ -94,7 +102,7 @@ const DialogFooter = ({
   <div
     data-slot="dialog-footer"
     className={cn(
-      "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
+      "flex shrink-0 flex-col-reverse gap-2 sm:flex-row sm:justify-end",
       className
     )}
     {...props}
@@ -132,6 +140,7 @@ const DialogDescription = ({
 
 export {
   Dialog,
+  DialogBody,
   DialogClose,
   DialogContent,
   DialogDescription,

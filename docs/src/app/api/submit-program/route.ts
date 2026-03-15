@@ -10,8 +10,8 @@ interface ProgramSubmission {
   url: string;
   category: string;
   description: string;
-  perkTitle: string;
-  perkDescription: string;
+  eligibility: string[];
+  perks: { title: string; description: string }[];
 }
 
 const slugify = (name: string): string =>
@@ -27,14 +27,11 @@ const buildProgramJson = (
   const program = {
     category: submission.category,
     description: submission.description,
-    eligibility: ["Open-source projects"],
+    eligibility: submission.eligibility.filter((s) => s.trim().length > 0),
     name: submission.name,
-    perks: [
-      {
-        description: submission.perkDescription,
-        title: submission.perkTitle,
-      },
-    ],
+    perks: submission.perks.filter(
+      (p) => p.title.trim().length > 0 && p.description.trim().length > 0
+    ),
     provider: submission.provider,
     slug,
     tags: ["open-source"],
@@ -43,9 +40,19 @@ const buildProgramJson = (
   return `${JSON.stringify(program, null, 2)}\n`;
 };
 
-const buildPRBody = (
-  submission: ProgramSubmission
-): string => `## New Program Submission
+const buildPRBody = (submission: ProgramSubmission): string => {
+  const eligibilityList =
+    submission.eligibility.length > 0
+      ? submission.eligibility
+          .filter((s) => s.trim().length > 0)
+          .map((s) => `- ${s}`)
+          .join("\n")
+      : "- (none)";
+  const perksList = submission.perks
+    .filter((p) => p.title.trim().length > 0 && p.description.trim().length > 0)
+    .map((p) => `- **${p.title}**: ${p.description}`)
+    .join("\n");
+  return `## New Program Submission
 
 **Program:** ${submission.name}
 **Provider:** ${submission.provider}
@@ -55,12 +62,16 @@ const buildPRBody = (
 ### Description
 ${submission.description}
 
+### Eligibility
+${eligibilityList}
+
 ### Perks
-- **${submission.perkTitle}**: ${submission.perkDescription}
+${perksList || "- (none)"}
 
 ---
 *Submitted via the OSS Perks website.*
 `;
+};
 
 const createProgramPR = async (
   submission: ProgramSubmission,
@@ -111,17 +122,42 @@ export const POST = async (request: NextRequest) => {
   try {
     const submission: ProgramSubmission = await request.json();
 
+    const eligibility = Array.isArray(submission.eligibility)
+      ? submission.eligibility
+      : [];
+    const perks = Array.isArray(submission.perks) ? submission.perks : [];
+    const hasEligibility = eligibility.some((s) => String(s).trim().length > 0);
+    const hasPerks = perks.some(
+      (p) =>
+        p &&
+        typeof p === "object" &&
+        String(p.title).trim().length > 0 &&
+        String(p.description).trim().length > 0
+    );
+
     if (
       !submission.name ||
       !submission.provider ||
       !submission.url ||
       !submission.category ||
-      !submission.description ||
-      !submission.perkTitle ||
-      !submission.perkDescription
+      !submission.description
     ) {
       return NextResponse.json(
-        { error: "All fields are required" },
+        {
+          error: "Name, provider, URL, category, and description are required",
+        },
+        { status: 400 }
+      );
+    }
+    if (!hasEligibility) {
+      return NextResponse.json(
+        { error: "At least one eligibility item is required" },
+        { status: 400 }
+      );
+    }
+    if (!hasPerks) {
+      return NextResponse.json(
+        { error: "At least one perk with title and description is required" },
         { status: 400 }
       );
     }
