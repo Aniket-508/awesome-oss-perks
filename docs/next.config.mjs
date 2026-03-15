@@ -16,8 +16,12 @@ const config = {
         source: "/:lang/cli/:path*.mdx",
       },
       {
-        destination: "/llms.mdx/programs/:slug",
-        source: "/programs/:slug.mdx",
+        destination: "/llms.mdx/programs/:path*",
+        source: "/programs/:path*.mdx",
+      },
+      {
+        destination: "/llms.mdx/programs/:lang/:path*",
+        source: "/:lang/programs/:path*.mdx",
       },
     ];
   },
