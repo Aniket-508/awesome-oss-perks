@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { Button } from "@/components/ui/button";
 import { getT } from "@/lib/get-t";
 import { withLocalePrefix } from "@/lib/i18n";
 
@@ -18,18 +19,24 @@ export default async function HomePage({
         {t.home.description}
       </p>
       <div className="flex flex-wrap gap-4 justify-center">
-        <Link
-          href={withLocalePrefix(lang, "/programs")}
-          className="rounded-lg bg-fd-primary px-5 py-2.5 text-sm font-medium text-fd-primary-foreground hover:opacity-90 transition-opacity"
-        >
-          {t.home.programsLink}
-        </Link>
-        <Link
-          href={withLocalePrefix(lang, "/cli")}
-          className="rounded-lg border px-5 py-2.5 text-sm font-medium hover:bg-fd-accent transition-colors"
-        >
-          {t.home.cliLink}
-        </Link>
+        <Button
+          variant="default"
+          size="lg"
+          nativeButton={false}
+          render={
+            <Link href={withLocalePrefix(lang, "/programs")}>
+              {t.home.programsLink}
+            </Link>
+          }
+        />
+        <Button
+          variant="outline"
+          size="lg"
+          nativeButton={false}
+          render={
+            <Link href={withLocalePrefix(lang, "/cli")}>{t.home.cliLink}</Link>
+          }
+        />
       </div>
     </div>
   );

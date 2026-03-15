@@ -2,6 +2,8 @@ import { programs, getCategories } from "@ossperks/data";
 import type { Metadata } from "next";
 import Link from "next/link";
 
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getT } from "@/lib/get-t";
 import { withLocalePrefix } from "@/lib/i18n";
 import { programsSource } from "@/lib/source";
@@ -72,34 +74,35 @@ export default async function ProgramsPage({
                   <Link
                     key={program.slug}
                     href={withLocalePrefix(lang, `/programs/${program.slug}`)}
-                    className="group block rounded-lg border bg-fd-card p-5 transition-colors hover:bg-fd-accent"
+                    className="group block transition-colors hover:bg-fd-accent"
                   >
-                    <div className="flex items-start justify-between mb-2">
-                      <h3 className="font-semibold group-hover:text-fd-primary">
-                        {pageData?.title ?? program.name}
-                      </h3>
-                    </div>
-                    <p className="text-sm text-fd-muted-foreground mb-3 line-clamp-2">
-                      {description}
-                    </p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {perks.slice(0, 2).map((perk) => (
-                        <span
-                          key={perk.title}
-                          className="inline-block rounded-md bg-fd-primary/10 px-2 py-0.5 text-xs font-medium text-fd-primary"
-                        >
-                          {perk.title}
-                        </span>
-                      ))}
-                      {extraPerks > 0 && (
-                        <span className="inline-block rounded-md bg-fd-muted px-2 py-0.5 text-xs text-fd-muted-foreground">
-                          {t.programs.more.replace(
-                            "{count}",
-                            String(extraPerks)
+                    <Card className="h-full">
+                      <CardHeader>
+                        <CardTitle className="font-semibold group-hover:text-fd-primary">
+                          {pageData?.title ?? program.name}
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        <p className="text-sm text-fd-muted-foreground line-clamp-2">
+                          {description}
+                        </p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {perks.slice(0, 2).map((perk) => (
+                            <Badge key={perk.title} variant="default">
+                              {perk.title}
+                            </Badge>
+                          ))}
+                          {extraPerks > 0 && (
+                            <Badge variant="secondary">
+                              {t.programs.more.replace(
+                                "{count}",
+                                String(extraPerks)
+                              )}
+                            </Badge>
                           )}
-                        </span>
-                      )}
-                    </div>
+                        </div>
+                      </CardContent>
+                    </Card>
                   </Link>
                 );
               })}

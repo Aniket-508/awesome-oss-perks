@@ -3,6 +3,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { getT } from "@/lib/get-t";
 import type { Translations } from "@/lib/get-t";
 import { withLocalePrefix } from "@/lib/i18n";
@@ -70,22 +74,23 @@ export default async function ProgramPage({
 
   return (
     <main className="container max-w-4xl py-12 px-4 mx-auto">
-      <Link
-        href={withLocalePrefix(lang, "/programs")}
-        className="text-sm text-fd-muted-foreground hover:text-fd-primary mb-6 inline-block"
-      >
-        {t.programs.backToAll}
-      </Link>
+      <Button
+        variant="link"
+        size="sm"
+        className="mb-6"
+        nativeButton={false}
+        render={
+          <Link href={withLocalePrefix(lang, "/programs")}>
+            {t.programs.backToAll}
+          </Link>
+        }
+      />
 
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
-          <span className="inline-block rounded-full bg-fd-primary/10 px-3 py-1 text-xs font-medium text-fd-primary">
-            {categoryLabel}
-          </span>
+          <Badge variant="default">{categoryLabel}</Badge>
           {program.duration && (
-            <span className="inline-block rounded-full bg-fd-muted px-3 py-1 text-xs text-fd-muted-foreground">
-              {program.duration}
-            </span>
+            <Badge variant="secondary">{program.duration}</Badge>
           )}
         </div>
         <h1 className="text-3xl font-bold mb-2">{title}</h1>
@@ -94,24 +99,34 @@ export default async function ProgramPage({
         </p>
         <p className="mt-4 text-fd-foreground">{description}</p>
         <div className="mt-6 flex gap-3">
-          <a
-            href={program.applicationUrl ?? program.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center rounded-md bg-fd-primary px-4 py-2 text-sm font-medium text-fd-primary-foreground hover:bg-fd-primary/90 transition-colors"
-          >
-            {t.programs.applyNow}
-          </a>
-          <a
-            href={program.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center rounded-md border px-4 py-2 text-sm font-medium hover:bg-fd-accent transition-colors"
-          >
-            {t.programs.viewDetails.replace("{provider}", program.provider)}
-          </a>
+          <Button
+            variant="default"
+            size="sm"
+            nativeButton={false}
+            render={
+              <a
+                href={program.applicationUrl ?? program.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {t.programs.applyNow}
+              </a>
+            }
+          />
+          <Button
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            render={
+              <a href={program.url} target="_blank" rel="noopener noreferrer">
+                {t.programs.viewDetails.replace("{provider}", program.provider)}
+              </a>
+            }
+          />
         </div>
       </div>
+
+      <Separator className="mb-10" />
 
       <section className="mb-10">
         <h2 className="text-xl font-semibold mb-4">
@@ -119,15 +134,21 @@ export default async function ProgramPage({
         </h2>
         <div className="grid gap-4 sm:grid-cols-2">
           {perks.map((perk) => (
-            <div key={perk.title} className="rounded-lg border bg-fd-card p-4">
-              <h3 className="font-semibold mb-1">{perk.title}</h3>
-              <p className="text-sm text-fd-muted-foreground">
-                {perk.description}
-              </p>
-            </div>
+            <Card key={perk.title}>
+              <CardHeader>
+                <CardTitle className="text-base">{perk.title}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-fd-muted-foreground">
+                  {perk.description}
+                </p>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </section>
+
+      <Separator className="mb-10" />
 
       <section className="mb-10">
         <h2 className="text-xl font-semibold mb-4">
@@ -141,47 +162,53 @@ export default async function ProgramPage({
       </section>
 
       {requirements.length > 0 && (
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold mb-4">
-            {t.programs.sections.requirements}
-          </h2>
-          <ul className="list-disc list-inside space-y-2 text-fd-foreground">
-            {requirements.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
-        </section>
+        <>
+          <Separator className="mb-10" />
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold mb-4">
+              {t.programs.sections.requirements}
+            </h2>
+            <ul className="list-disc list-inside space-y-2 text-fd-foreground">
+              {requirements.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </section>
+        </>
       )}
 
       {applicationProcess.length > 0 && (
-        <section className="mb-10">
-          <h2 className="text-xl font-semibold mb-4">
-            {t.programs.sections.howToApply}
-          </h2>
-          <ol className="list-decimal list-inside space-y-2 text-fd-foreground">
-            {applicationProcess.map((step) => (
-              <li key={step}>{step}</li>
-            ))}
-          </ol>
-        </section>
+        <>
+          <Separator className="mb-10" />
+          <section className="mb-10">
+            <h2 className="text-xl font-semibold mb-4">
+              {t.programs.sections.howToApply}
+            </h2>
+            <ol className="list-decimal list-inside space-y-2 text-fd-foreground">
+              {applicationProcess.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+          </section>
+        </>
       )}
 
       {tags.length > 0 && (
-        <section>
-          <h2 className="text-xl font-semibold mb-4">
-            {t.programs.sections.tags}
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="inline-block rounded-full bg-fd-muted px-3 py-1 text-xs text-fd-muted-foreground"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </section>
+        <>
+          <Separator className="mb-10" />
+          <section>
+            <h2 className="text-xl font-semibold mb-4">
+              {t.programs.sections.tags}
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <Badge key={tag} variant="secondary">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          </section>
+        </>
       )}
     </main>
   );
