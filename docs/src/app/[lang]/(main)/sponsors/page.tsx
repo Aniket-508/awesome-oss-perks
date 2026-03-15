@@ -1,0 +1,111 @@
+import type { Metadata } from "next";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { LINK } from "@/constants/links";
+import { getT } from "@/lib/get-t";
+
+export default async function SponsorsPage({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
+  const t = await getT(lang);
+
+  return (
+    <>
+      <div className="mb-10">
+        <h1 className="text-4xl font-bold mb-4">{t.sponsors.heading}</h1>
+        <p className="text-fd-muted-foreground text-lg leading-relaxed">
+          {t.sponsors.intro}
+        </p>
+      </div>
+
+      <Separator className="mb-10" />
+
+      <section className="mb-10">
+        <h2 className="text-2xl font-semibold mb-6">
+          {t.sponsors.tiers.gold.name}
+        </h2>
+        <p className="text-fd-muted-foreground mb-4">
+          {t.sponsors.tiers.gold.description}
+        </p>
+        <Card>
+          <CardContent className="pt-6">
+            <p className="text-fd-muted-foreground text-center">
+              No gold sponsors yet
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="mb-10">
+        <h2 className="text-2xl font-semibold mb-6">
+          {t.sponsors.tiers.silver.name}
+        </h2>
+        <p className="text-fd-muted-foreground mb-4">
+          {t.sponsors.tiers.silver.description}
+        </p>
+        <Card>
+          <CardContent className="pt-6">
+            <p className="text-fd-muted-foreground text-center">
+              No silver sponsors yet
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="mb-10">
+        <h2 className="text-2xl font-semibold mb-6">
+          {t.sponsors.tiers.bronze.name}
+        </h2>
+        <p className="text-fd-muted-foreground mb-4">
+          {t.sponsors.tiers.bronze.description}
+        </p>
+        <Card>
+          <CardContent className="pt-6">
+            <p className="text-fd-muted-foreground text-center">
+              No bronze sponsors yet
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+
+      <Separator className="mb-10" />
+
+      <section>
+        <h2 className="text-2xl font-semibold mb-4">
+          {t.sponsors.cta.heading}
+        </h2>
+        <p className="text-fd-muted-foreground mb-4">
+          {t.sponsors.cta.description}
+        </p>
+        <Button
+          variant="default"
+          size="lg"
+          nativeButton={false}
+          render={
+            <a href={LINK.SPONSOR} target="_blank" rel="noopener noreferrer">
+              {t.sponsors.cta.linkText}
+            </a>
+          }
+        />
+      </section>
+    </>
+  );
+}
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> => {
+  const { lang } = await params;
+  const t = await getT(lang);
+  return {
+    description: t.sponsors.intro,
+    title: `${t.sponsors.heading} | OSS Perks`,
+  };
+};
