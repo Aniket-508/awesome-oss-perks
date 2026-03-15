@@ -3,17 +3,18 @@ import { loader } from "fumadocs-core/source";
 import type { InferPageType } from "fumadocs-core/source";
 import { lucideIconsPlugin } from "fumadocs-core/source/lucide-icons";
 
+import { ROUTES } from "@/constants/routes";
 import { buildLocaleSlugs, i18n } from "@/lib/i18n";
 
 export const cliSource = loader({
-  baseUrl: "/cli",
+  baseUrl: ROUTES.CLI,
   i18n,
   plugins: [lucideIconsPlugin()],
   source: cli.toFumadocsSource(),
 });
 
 export const programsSource = loader({
-  baseUrl: "/programs",
+  baseUrl: ROUTES.PROGRAMS,
   i18n,
   source: programDocs.toFumadocsSource(),
 });
@@ -26,7 +27,7 @@ export const getCliPageImage = (page: InferPageType<typeof cliSource>) => {
 
   return {
     segments,
-    url: `/og/cli/${segments.join("/")}`,
+    url: `/og${ROUTES.CLI}/${segments.join("/")}`,
   };
 };
 
@@ -40,7 +41,7 @@ export const getProgramPageImage = (
 
   return {
     segments,
-    url: `/og/programs/${segments.join("/")}`,
+    url: `/og${ROUTES.PROGRAMS}/${segments.join("/")}`,
   };
 };
 

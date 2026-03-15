@@ -73,7 +73,7 @@ export default async function ProgramPage({
   } = resolveProgramContent(program, pageData, t);
 
   return (
-    <main className="container max-w-4xl py-12 px-4 mx-auto">
+    <>
       <Button
         variant="link"
         size="sm"
@@ -210,7 +210,7 @@ export default async function ProgramPage({
           </section>
         </>
       )}
-    </main>
+    </>
   );
 }
 

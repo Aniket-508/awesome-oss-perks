@@ -12,9 +12,10 @@ export default async function Layout({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
+  const { links: _omitLinksForCLI, ...docsLayoutOptions } = baseOptions(lang);
 
   return (
-    <DocsLayout tree={cliSource.getPageTree(lang)} {...baseOptions(lang)}>
+    <DocsLayout tree={cliSource.getPageTree(lang)} {...docsLayoutOptions}>
       {children}
     </DocsLayout>
   );

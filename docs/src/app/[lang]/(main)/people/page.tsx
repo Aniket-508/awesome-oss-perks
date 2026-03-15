@@ -17,7 +17,7 @@ export default async function PeoplePage({
   const people = getPeople();
 
   return (
-    <main className="container max-w-4xl py-12 px-4 mx-auto">
+    <>
       <div className="mb-12 text-center">
         <h1 className="text-4xl font-bold mb-4">{t.people.heading}</h1>
         <p className="text-fd-muted-foreground text-lg max-w-2xl mx-auto">
@@ -65,7 +65,7 @@ export default async function PeoplePage({
           })}
         </div>
       )}
-    </main>
+    </>
   );
 }
 

@@ -1,7 +1,7 @@
 export const SITE = {
   AUTHOR: {
-    NAME: "OSS Perks",
-    TWITTER: "@ossperks",
+    NAME: "Aniket Pawar",
+    TWITTER: "@alaymanguy",
   },
   DESCRIPTION: {
     LONG: "OSS Perks is a website that aggregates perks for open-source software, plus a CLI that checks whether your project qualifies for a particular OSS program based on its guidelines.",

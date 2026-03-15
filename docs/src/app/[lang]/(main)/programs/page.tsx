@@ -35,7 +35,7 @@ export default async function ProgramsPage({
   );
 
   return (
-    <main className="container max-w-6xl py-12 px-4 mx-auto">
+    <>
       <div className="mb-12 text-center">
         <h1 className="text-4xl font-bold mb-4">
           {t.programs.listing.heading}
@@ -110,7 +110,7 @@ export default async function ProgramsPage({
           </section>
         );
       })}
-    </main>
+    </>
   );
 }
 

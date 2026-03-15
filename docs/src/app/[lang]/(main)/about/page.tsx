@@ -4,9 +4,9 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import { GITHUB_CONFIG } from "@/constants/links";
 import { getT } from "@/lib/get-t";
 import { withLocalePrefix } from "@/lib/i18n";
-import { gitConfig } from "@/lib/layout.shared";
 
 export default async function AboutPage({
   params,
@@ -17,7 +17,7 @@ export default async function AboutPage({
   const t = await getT(lang);
 
   return (
-    <main className="container max-w-3xl py-12 px-4 mx-auto">
+    <>
       <div className="mb-10">
         <h1 className="text-4xl font-bold mb-4">{t.about.heading}</h1>
         <p className="text-fd-muted-foreground text-lg leading-relaxed">
@@ -57,12 +57,12 @@ export default async function AboutPage({
           {t.about.maintainer.description}
         </p>
         <a
-          href={`https://github.com/${gitConfig.user}`}
+          href={`https://github.com/${GITHUB_CONFIG.user}`}
           target="_blank"
           rel="noopener noreferrer"
           className="text-fd-primary hover:underline font-medium"
         >
-          @{gitConfig.user}
+          @{GITHUB_CONFIG.user}
         </a>
       </section>
 
@@ -84,7 +84,7 @@ export default async function AboutPage({
           }
         />
       </section>
-    </main>
+    </>
   );
 }
 

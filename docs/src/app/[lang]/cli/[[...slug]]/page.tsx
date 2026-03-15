@@ -11,7 +11,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { getMDXComponents } from "@/components/mdx";
-import { gitConfig } from "@/lib/layout.shared";
+import { LINK } from "@/constants/links";
 import { cliSource, getCliPageImage } from "@/lib/source";
 
 export default async function Page({
@@ -37,7 +37,7 @@ export default async function Page({
         <MarkdownCopyButton markdownUrl={`${page.url}.mdx`} />
         <ViewOptionsPopover
           markdownUrl={`${page.url}.mdx`}
-          githubUrl={`https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/content/cli/${page.path}`}
+          githubUrl={`${LINK.CLI}/${page.path}`}
         />
       </div>
       <DocsBody>
