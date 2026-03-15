@@ -112,7 +112,7 @@ export default async function ProgramPage({
       <Separator className="mb-10" />
 
       <section className="mb-10">
-        <h2 className="text-xl font-semibold mb-4">
+        <h2 id="perks" className="text-xl font-semibold mb-4">
           {t.programs.sections.perks}
         </h2>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -134,7 +134,7 @@ export default async function ProgramPage({
       <Separator className="mb-10" />
 
       <section className="mb-10">
-        <h2 className="text-xl font-semibold mb-4">
+        <h2 id="eligibility" className="text-xl font-semibold mb-4">
           {t.programs.sections.eligibility}
         </h2>
         <ul className="list-disc list-inside space-y-2 text-fd-foreground">
@@ -148,7 +148,7 @@ export default async function ProgramPage({
         <>
           <Separator className="mb-10" />
           <section className="mb-10">
-            <h2 className="text-xl font-semibold mb-4">
+            <h2 id="requirements" className="text-xl font-semibold mb-4">
               {t.programs.sections.requirements}
             </h2>
             <ul className="list-disc list-inside space-y-2 text-fd-foreground">
@@ -164,7 +164,7 @@ export default async function ProgramPage({
         <>
           <Separator className="mb-10" />
           <section className="mb-10">
-            <h2 className="text-xl font-semibold mb-4">
+            <h2 id="how-to-apply" className="text-xl font-semibold mb-4">
               {t.programs.sections.howToApply}
             </h2>
             <ol className="list-decimal list-inside space-y-2 text-fd-foreground">
@@ -180,7 +180,7 @@ export default async function ProgramPage({
         <>
           <Separator className="mb-10" />
           <section>
-            <h2 className="text-xl font-semibold mb-4">
+            <h2 id="tags" className="text-xl font-semibold mb-4">
               {t.programs.sections.tags}
             </h2>
             <div className="flex flex-wrap gap-2">

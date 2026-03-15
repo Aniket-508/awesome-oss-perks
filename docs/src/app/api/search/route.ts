@@ -1,37 +1,52 @@
-import { createFromSource } from "fumadocs-core/search/server";
+import { createTokenizer as createJapaneseTokenizer } from "@orama/tokenizers/japanese";
+import { createTokenizer as createMandarinTokenizer } from "@orama/tokenizers/mandarin";
+import { createI18nSearchAPI } from "fumadocs-core/search/server";
 
+import { i18n } from "@/lib/i18n";
 import { cliSource, programsSource } from "@/lib/source";
 
-const getSearchPages = (language?: string) => {
-  const cliPages = cliSource.getPages(language);
-  const programPages = programsSource.getPages(language);
+export const revalidate = false;
 
-  return [
-    ...cliPages.map((page) => ({
-      description: page.data.description,
-      id: `cli-${page.url}`,
-      structuredData: page.data.structuredData,
-      tag: "cli",
-      title: page.data.title,
-      url: page.url,
-    })),
-    ...programPages.map((page) => ({
-      description: page.data.description,
-      id: `programs-${page.url}`,
-      structuredData: page.data.structuredData,
-      tag: "programs",
-      title: page.data.title,
-      url: page.url,
-    })),
-  ];
-};
+export const { GET } = createI18nSearchAPI("advanced", {
+  i18n,
+  indexes() {
+    const entries = i18n.languages.flatMap((language) => {
+      const cliPages = cliSource.getPages(language);
+      const programPages = programsSource.getPages(language);
 
-export const { GET } = createFromSource(getSearchPages as never, {
-  // https://docs.orama.com/docs/orama-js/supported-languages
+      return [
+        ...cliPages.map((page) => ({
+          description: page.data.description,
+          id: page.url,
+          locale: language,
+          structuredData: page.data.structuredData,
+          tag: "cli",
+          title: page.data.title,
+          url: page.url,
+        })),
+        ...programPages.map((page) => ({
+          description: page.data.description,
+          id: page.url,
+          locale: language,
+          structuredData: page.data.structuredData,
+          tag: "programs",
+          title: page.data.title,
+          url: page.url,
+        })),
+      ];
+    });
+
+    return Promise.all(entries);
+  },
   localeMap: {
-    ja: "english",
+    ja: {
+      components: { tokenizer: createJapaneseTokenizer() },
+    },
     ko: "english",
     "pt-BR": "portuguese",
-    "zh-CN": "english",
+    "zh-CN": {
+      components: { tokenizer: createMandarinTokenizer() },
+      search: { threshold: 0, tolerance: 0 },
+    },
   },
 });
