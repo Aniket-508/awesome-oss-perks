@@ -1,5 +1,3 @@
-import { fileURLToPath } from "node:url";
-
 import { Command } from "commander";
 
 import { categoriesCommand } from "./commands/categories.js";
@@ -21,8 +19,6 @@ program.addCommand(checkCommand);
 program.addCommand(searchCommand);
 program.addCommand(categoriesCommand);
 
-if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  program.parse(process.argv);
-}
+program.parse(process.argv);
 
 export { program };
