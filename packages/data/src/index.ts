@@ -39,6 +39,20 @@ export const programs: Program[] = raw.map((p) => programSchema.parse(p));
 export const getProgramBySlug = (slug: string): Program | undefined =>
   programs.find((p) => p.slug === slug);
 
+export const FEATURED_PROGRAM_SLUGS: string[] = [
+  "vercel",
+  "github-copilot",
+  "sentry",
+  "jetbrains",
+  "cloudflare",
+  "gitlab",
+];
+
+export const getFeaturedPrograms = (): Program[] =>
+  FEATURED_PROGRAM_SLUGS.map((slug) => getProgramBySlug(slug))
+    .filter((p): p is Program => p !== undefined)
+    .slice(0, 6);
+
 export const getProgramsByCategory = (category: Category): Program[] =>
   programs.filter((p) => p.category === category);
 
