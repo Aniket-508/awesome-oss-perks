@@ -14,7 +14,7 @@ import snyk from "./programs/snyk.json" with { type: "json" };
 import vercel from "./programs/vercel.json" with { type: "json" };
 import zulip from "./programs/zulip.json" with { type: "json" };
 import { programSchema } from "./schema";
-import type { Program, Category } from "./schema";
+import type { Category, Contact, Program } from "./schema";
 
 const raw = [
   _1password,
@@ -45,5 +45,33 @@ export const getProgramsByCategory = (category: Category): Program[] =>
 export const getCategories = (): Category[] =>
   [...new Set(programs.map((p) => p.category))].toSorted();
 
-export { programSchema, type Program, type Category } from "./schema";
+export interface PersonWithProgram {
+  contact: Contact;
+  programSlug: string;
+  provider: string;
+}
+
+export const getPeople = (): PersonWithProgram[] => {
+  const seen = new Set<string>();
+  const result: PersonWithProgram[] = [];
+  for (const program of programs) {
+    if (!program.contact) {
+      continue;
+    }
+    const key = program.contact.name.toLowerCase();
+    if (seen.has(key)) {
+      continue;
+    }
+    seen.add(key);
+    result.push({
+      contact: program.contact,
+      programSlug: program.slug,
+      provider: program.provider,
+    });
+  }
+  return result;
+};
+
+export { programSchema, type Category, type Program } from "./schema";
+export { type Contact } from "./schema";
 export { CATEGORY_LABELS } from "./schema";

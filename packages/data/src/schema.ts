@@ -23,10 +23,19 @@ export const perkSchema = z.object({
 
 export type Perk = z.infer<typeof perkSchema>;
 
+export const contactSchema = z.object({
+  name: z.string(),
+  role: z.string(),
+  url: z.string().url().optional(),
+});
+
+export type Contact = z.infer<typeof contactSchema>;
+
 export const programSchema = z.object({
   applicationProcess: z.array(z.string()).optional(),
   applicationUrl: z.string().url().optional(),
   category: categoryEnum,
+  contact: contactSchema.optional(),
   description: z.string(),
   duration: z.string().optional(),
   eligibility: z.array(z.string()),
