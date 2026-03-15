@@ -29,57 +29,67 @@ const programs = fs
 
 fs.mkdirSync(OUT_DIR, { recursive: true });
 
-const q = (s) => JSON.stringify(String(s));
-
-const serializeField = (key, value) => {
-  if (value === null || value === undefined) {
-    return `${key}: ~`;
-  }
-  if (Array.isArray(value)) {
-    if (value.length === 0) {
-      return `${key}: []`;
-    }
-    if (typeof value[0] === "string") {
-      return `${key}:\n${value.map((v) => `  - ${q(v)}`).join("\n")}`;
-    }
-    // array of objects (perks)
-    const items = value
-      .map((obj) => {
-        const entries = Object.entries(obj)
-          .map(([k, v]) => `    ${k}: ${q(String(v))}`)
-          .join("\n");
-        return `  -\n${entries}`;
-      })
-      .join("\n");
-    return `${key}:\n${items}`;
-  }
-  return `${key}: ${q(String(value))}`;
+const buildMetaSection = (p) => {
+  const meta = [
+    `- **Provider**: ${p.provider}`,
+    `- **Category**: ${p.category}`,
+    ...(p.duration ? [`- **Duration**: ${p.duration}`] : []),
+    ...(p.url ? [`- **Website**: [${p.url}](${p.url})`] : []),
+    ...(p.applicationUrl && p.applicationUrl !== p.url
+      ? [`- **Apply**: [${p.applicationUrl}](${p.applicationUrl})`]
+      : []),
+  ];
+  return meta.join("\n");
 };
 
-const buildFrontmatter = (fields) =>
-  Object.entries(fields)
-    .filter(([, v]) => v !== undefined)
-    .map(([k, v]) => serializeField(k, v))
-    .join("\n");
+const buildPerksSection = (p) =>
+  p.perks?.length
+    ? `## Perks\n\n${p.perks.map((perk) => `- **${perk.title}**: ${perk.description}`).join("\n")}`
+    : null;
+
+const buildEligibilitySection = (p) =>
+  p.eligibility?.length
+    ? `## Eligibility\n\n${p.eligibility.map((e) => `- ${e}`).join("\n")}`
+    : null;
+
+const buildRequirementsSection = (p) =>
+  p.requirements?.length
+    ? `## Requirements\n\n${p.requirements.map((r) => `- ${r}`).join("\n")}`
+    : null;
+
+const buildApplicationProcessSection = (p) =>
+  p.applicationProcess?.length
+    ? `## How to apply\n\n${p.applicationProcess.map((step, i) => `${i + 1}. ${step}`).join("\n")}`
+    : null;
+
+const buildTagsSection = (p) =>
+  p.tags?.length
+    ? `## Tags\n\n${p.tags.map((t) => `\`${t}\``).join(", ")}`
+    : null;
+
+const buildMarkdownBody = (p) => {
+  const sections = [
+    buildMetaSection(p),
+    buildPerksSection(p),
+    buildEligibilitySection(p),
+    buildRequirementsSection(p),
+    buildApplicationProcessSection(p),
+    buildTagsSection(p),
+  ].filter(Boolean);
+  return sections.join("\n\n");
+};
 
 let count = 0;
 for (const p of programs) {
-  const fields = {
-    applicationProcess: p.applicationProcess ?? [],
-    applicationUrl: p.applicationUrl ?? null,
-    category: p.category,
-    description: p.description,
-    duration: p.duration ?? null,
-    eligibility: p.eligibility,
-    perks: p.perks,
-    provider: p.provider,
-    requirements: p.requirements ?? [],
-    tags: p.tags ?? [],
-    title: p.name,
-    url: p.url,
-  };
+  const frontmatter = [
+    "---",
+    `title: ${p.name}`,
+    `description: ${p.description}`,
+    "---",
+  ].join("\n");
 
-  const content = `---\n${buildFrontmatter(fields)}\n---\n`;
+  const body = buildMarkdownBody(p);
+  const content = `${frontmatter}\n\n${body}\n`;
   const outPath = path.join(OUT_DIR, `${p.slug}.mdx`);
   fs.writeFileSync(outPath, content, "utf8");
   count += 1;

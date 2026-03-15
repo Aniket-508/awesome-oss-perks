@@ -1,6 +1,6 @@
 const programs = {
-  applyNow: "Apply Now →",
-  backToAll: "← All Programs",
+  applyNow: "Apply Now",
+  backToAll: "All Programs",
   by: "by",
   listing: {
     description:

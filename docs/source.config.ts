@@ -1,24 +1,5 @@
 import { metaSchema, pageSchema } from "fumadocs-core/source/schema";
 import { defineConfig, defineDocs } from "fumadocs-mdx/config";
-import { z } from "zod";
-
-const perkSchema = z.object({
-  description: z.string(),
-  title: z.string(),
-});
-
-const programPageSchema = pageSchema.extend({
-  applicationProcess: z.array(z.string()).optional(),
-  applicationUrl: z.string().nullable().optional(),
-  category: z.string().optional(),
-  duration: z.string().nullable().optional(),
-  eligibility: z.array(z.string()).optional(),
-  perks: z.array(perkSchema).optional(),
-  provider: z.string().optional(),
-  requirements: z.array(z.string()).optional(),
-  tags: z.array(z.string()).optional(),
-  url: z.string().optional(),
-});
 
 export const cli = defineDocs({
   dir: "content/cli",
@@ -39,7 +20,7 @@ export const programDocs = defineDocs({
     postprocess: {
       includeProcessedMarkdown: true,
     },
-    schema: programPageSchema,
+    schema: pageSchema,
   },
   meta: {
     schema: metaSchema,

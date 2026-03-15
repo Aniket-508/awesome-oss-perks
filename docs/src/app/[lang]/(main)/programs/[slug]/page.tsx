@@ -1,4 +1,5 @@
 import { programs, getProgramBySlug } from "@ossperks/data";
+import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -10,40 +11,20 @@ import { Separator } from "@/components/ui/separator";
 import { getT } from "@/lib/get-t";
 import type { Translations } from "@/lib/get-t";
 import { withLocalePrefix } from "@/lib/i18n";
-import { programsSource } from "@/lib/source";
-
-interface Perk {
-  title: string;
-  description: string;
-}
-
-interface ProgramPageData {
-  title: string;
-  description?: string;
-  perks?: Perk[];
-  eligibility?: string[];
-  requirements?: string[];
-  applicationProcess?: string[];
-}
 
 type Program = NonNullable<ReturnType<typeof getProgramBySlug>>;
 
-const resolveProgramContent = (
-  program: Program,
-  pageData: ProgramPageData | undefined,
-  t: Translations
-) => ({
-  applicationProcess:
-    pageData?.applicationProcess ?? program.applicationProcess ?? [],
+const resolveProgramContent = (program: Program, t: Translations) => ({
+  applicationProcess: program.applicationProcess ?? [],
   categoryLabel:
     t.common.categories[program.category as keyof typeof t.common.categories] ??
     program.category,
-  description: pageData?.description ?? program.description,
-  eligibility: pageData?.eligibility ?? program.eligibility,
-  perks: pageData?.perks ?? program.perks,
-  requirements: pageData?.requirements ?? program.requirements ?? [],
+  description: program.description,
+  eligibility: program.eligibility,
+  perks: program.perks,
+  requirements: program.requirements ?? [],
   tags: program.tags ?? [],
-  title: pageData?.title ?? program.name,
+  title: program.name,
 });
 
 export default async function ProgramPage({
@@ -57,9 +38,6 @@ export default async function ProgramPage({
     notFound();
   }
 
-  const pageData = programsSource.getPage([slug], lang)?.data as
-    | ProgramPageData
-    | undefined;
   const t = await getT(lang);
   const {
     title,
@@ -70,21 +48,23 @@ export default async function ProgramPage({
     applicationProcess,
     tags,
     categoryLabel,
-  } = resolveProgramContent(program, pageData, t);
+  } = resolveProgramContent(program, t);
 
   return (
     <>
-      <Button
-        variant="link"
-        size="sm"
-        className="mb-6"
-        nativeButton={false}
-        render={
-          <Link href={withLocalePrefix(lang, "/programs")}>
-            {t.programs.backToAll}
-          </Link>
-        }
-      />
+      <div className="mb-6">
+        <Button
+          variant="link"
+          size="sm"
+          nativeButton={false}
+          render={
+            <Link href={withLocalePrefix(lang, "/programs")}>
+              <ArrowLeftIcon />
+              {t.programs.backToAll}
+            </Link>
+          }
+        />
+      </div>
 
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-2">
@@ -110,6 +90,7 @@ export default async function ProgramPage({
                 rel="noopener noreferrer"
               >
                 {t.programs.applyNow}
+                <ArrowRightIcon />
               </a>
             }
           />
@@ -222,19 +203,14 @@ export const generateMetadata = async ({
 }: {
   params: Promise<{ lang: string; slug: string }>;
 }): Promise<Metadata> => {
-  const { lang, slug } = await params;
+  const { slug } = await params;
   const program = getProgramBySlug(slug);
   if (!program) {
     notFound();
   }
 
-  const pageData = programsSource.getPage([slug], lang)?.data as
-    | ProgramPageData
-    | undefined;
-  const description = pageData?.description ?? program.description;
-
   return {
-    description,
-    title: `${pageData?.title ?? program.name} | OSS Programs`,
+    description: program.description,
+    title: `${program.name} | OSS Programs`,
   };
 };

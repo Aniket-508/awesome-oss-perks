@@ -8,15 +8,9 @@ import { getT } from "@/lib/get-t";
 import { withLocalePrefix } from "@/lib/i18n";
 import { programsSource } from "@/lib/source";
 
-interface Perk {
-  title: string;
-  description: string;
-}
-
 interface ProgramPageData {
   title?: string;
   description?: string;
-  perks?: Perk[];
 }
 
 export default async function ProgramsPage({
@@ -67,7 +61,7 @@ export default async function ProgramsPage({
                 const pageData = translatedBySlug.get(program.slug);
                 const description =
                   pageData?.description ?? program.description;
-                const perks = pageData?.perks ?? program.perks;
+                const { perks } = program;
                 const extraPerks = perks.length - 2;
 
                 return (
