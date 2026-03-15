@@ -1,5 +1,4 @@
 import {
-  programs,
   getCategories,
   getAllPerkTypes,
   getProgramPerkTypes,
@@ -12,6 +11,7 @@ import { ProgramsFilter } from "@/components/programs/programs-filter";
 import { Button } from "@/components/ui/button";
 import { getT } from "@/lib/get-t";
 import { i18n } from "@/lib/i18n";
+import { getPrograms } from "@/lib/programs";
 
 export const generateStaticParams = () =>
   i18n.languages.map((lang) => ({ lang }));
@@ -53,11 +53,14 @@ export default async function ProgramsPage({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const t = await getT(lang);
+  const [t, translatedPrograms] = await Promise.all([
+    getT(lang),
+    getPrograms(lang),
+  ]);
   const categories = getCategories();
   const perkTypes = getAllPerkTypes();
 
-  const programsWithPerkTypes = programs.map((p) => ({
+  const programsWithPerkTypes = translatedPrograms.map((p) => ({
     ...p,
     perkTypes: getProgramPerkTypes(p),
   }));
@@ -70,8 +73,8 @@ export default async function ProgramsPage({
             {t.programs.listing.heading}
           </h1>
           <p className="text-fd-muted-foreground text-lg max-w-2xl">
-            {programs.length} curated programs for open-source projects.{" "}
-            {t.programs.listing.description}
+            {translatedPrograms.length} curated programs for open-source
+            projects. {t.programs.listing.description}
           </p>
         </div>
         <div className="shrink-0">

@@ -1,4 +1,4 @@
-import { programs, getProgramBySlug } from "@ossperks/data";
+import { programs } from "@ossperks/data";
 import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -10,24 +10,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ROUTES } from "@/constants/routes";
 import { getT } from "@/lib/get-t";
-import type { Translations } from "@/lib/get-t";
 import { i18n, withLocalePrefix } from "@/lib/i18n";
+import { getProgram } from "@/lib/programs";
 import { getProgramPageImage, programsSource } from "@/lib/source";
-
-type Program = NonNullable<ReturnType<typeof getProgramBySlug>>;
-
-const resolveProgramContent = (program: Program, t: Translations) => ({
-  applicationProcess: program.applicationProcess ?? [],
-  categoryLabel:
-    t.common.categories[program.category as keyof typeof t.common.categories] ??
-    program.category,
-  description: program.description,
-  eligibility: program.eligibility,
-  perks: program.perks,
-  requirements: program.requirements ?? [],
-  tags: program.tags ?? [],
-  title: program.name,
-});
 
 export default async function ProgramPage({
   params,
@@ -35,22 +20,14 @@ export default async function ProgramPage({
   params: Promise<{ lang: string; slug: string }>;
 }) {
   const { lang, slug } = await params;
-  const program = getProgramBySlug(slug);
+  const [program, t] = await Promise.all([getProgram(slug, lang), getT(lang)]);
   if (!program) {
     notFound();
   }
 
-  const t = await getT(lang);
-  const {
-    title,
-    description,
-    perks,
-    eligibility,
-    requirements,
-    applicationProcess,
-    tags,
-    categoryLabel,
-  } = resolveProgramContent(program, t);
+  const categoryLabel =
+    t.common.categories[program.category as keyof typeof t.common.categories] ??
+    program.category;
 
   return (
     <div className="max-w-4xl flex-1 flex flex-col w-full py-12 px-4 mx-auto">
@@ -75,11 +52,11 @@ export default async function ProgramPage({
             <Badge variant="outline">{program.duration}</Badge>
           )}
         </div>
-        <h1 className="text-3xl font-bold mb-2">{title}</h1>
+        <h1 className="text-3xl font-bold mb-2">{program.name}</h1>
         <p className="text-fd-muted-foreground text-lg">
           {t.programs.by} {program.provider}
         </p>
-        <p className="mt-4 text-fd-foreground">{description}</p>
+        <p className="mt-4 text-fd-foreground">{program.description}</p>
         <div className="mt-6 flex gap-3">
           <Button
             variant="default"
@@ -116,7 +93,7 @@ export default async function ProgramPage({
           {t.programs.sections.perks}
         </h2>
         <div className="grid gap-4 sm:grid-cols-2">
-          {perks.map((perk) => (
+          {program.perks.map((perk) => (
             <Card key={perk.title}>
               <CardHeader>
                 <CardTitle className="text-base">{perk.title}</CardTitle>
@@ -138,13 +115,13 @@ export default async function ProgramPage({
           {t.programs.sections.eligibility}
         </h2>
         <ul className="list-disc list-inside space-y-2 text-fd-foreground">
-          {eligibility.map((item) => (
+          {program.eligibility.map((item) => (
             <li key={item}>{item}</li>
           ))}
         </ul>
       </section>
 
-      {requirements.length > 0 && (
+      {program.requirements && program.requirements.length > 0 && (
         <>
           <Separator className="mb-10" />
           <section className="mb-10">
@@ -152,7 +129,7 @@ export default async function ProgramPage({
               {t.programs.sections.requirements}
             </h2>
             <ul className="list-disc list-inside space-y-2 text-fd-foreground">
-              {requirements.map((item) => (
+              {program.requirements.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
@@ -160,7 +137,7 @@ export default async function ProgramPage({
         </>
       )}
 
-      {applicationProcess.length > 0 && (
+      {program.applicationProcess && program.applicationProcess.length > 0 && (
         <>
           <Separator className="mb-10" />
           <section className="mb-10">
@@ -168,7 +145,7 @@ export default async function ProgramPage({
               {t.programs.sections.howToApply}
             </h2>
             <ol className="list-decimal list-inside space-y-2 text-fd-foreground">
-              {applicationProcess.map((step) => (
+              {program.applicationProcess.map((step) => (
                 <li key={step}>{step}</li>
               ))}
             </ol>
@@ -176,7 +153,7 @@ export default async function ProgramPage({
         </>
       )}
 
-      {tags.length > 0 && (
+      {program.tags && program.tags.length > 0 && (
         <>
           <Separator className="mb-10" />
           <section>
@@ -184,7 +161,7 @@ export default async function ProgramPage({
               {t.programs.sections.tags}
             </h2>
             <div className="flex flex-wrap gap-2">
-              {tags.map((tag) => (
+              {program.tags.map((tag) => (
                 <Badge key={tag} variant="secondary">
                   {tag}
                 </Badge>
@@ -206,7 +183,7 @@ export const generateMetadata = async ({
   params: Promise<{ lang: string; slug: string }>;
 }): Promise<Metadata> => {
   const { lang, slug } = await params;
-  const program = getProgramBySlug(slug);
+  const program = await getProgram(slug, lang);
   if (!program) {
     notFound();
   }

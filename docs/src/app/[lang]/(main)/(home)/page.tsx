@@ -1,9 +1,4 @@
-import {
-  programs,
-  getCategories,
-  getPeople,
-  getFeaturedPrograms,
-} from "@ossperks/data";
+import { programs, getCategories, getPeople } from "@ossperks/data";
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -16,6 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { ROUTES } from "@/constants/routes";
 import { getT } from "@/lib/get-t";
 import { i18n, withLocalePrefix } from "@/lib/i18n";
+import { getFeaturedPrograms } from "@/lib/programs";
 import { createMetadata } from "@/seo/metadata";
 
 export const generateStaticParams = () =>
@@ -41,7 +37,10 @@ export default async function HomePage({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  const t = await getT(lang);
+  const [t, featured] = await Promise.all([
+    getT(lang),
+    getFeaturedPrograms(lang),
+  ]);
 
   const categories = getCategories();
   const people = getPeople();
@@ -130,7 +129,7 @@ export default async function HomePage({
           />
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
-          {getFeaturedPrograms().map((program) => {
+          {featured.map((program) => {
             const categoryLabel =
               t.common.categories[
                 program.category as keyof typeof t.common.categories
