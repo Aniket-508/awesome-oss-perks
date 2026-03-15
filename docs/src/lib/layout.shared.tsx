@@ -24,10 +24,10 @@ export const baseOptions = (_locale: string): BaseLayoutProps => ({
       text: "About",
       url: ROUTES.ABOUT,
     },
-    {
-      text: "Sponsors",
-      url: ROUTES.SPONSORS,
-    },
+    // {
+    //   text: "Sponsors",
+    //   url: ROUTES.SPONSORS,
+    // },
   ],
   nav: {
     title: "OSS Perks",

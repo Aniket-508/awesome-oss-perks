@@ -1,7 +1,7 @@
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import type { ReactNode } from "react";
 
-import { Footer } from "@/components/footer";
+import { Footer } from "@/components/layout/footer";
 import { getT } from "@/lib/get-t";
 import { baseOptions } from "@/lib/layout.shared";
 
