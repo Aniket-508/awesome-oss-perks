@@ -1,19 +1,9 @@
-import { createI18nMiddleware } from "fumadocs-core/i18n/middleware";
 import { NextResponse } from "next/server";
-import type { NextFetchEvent, NextRequest } from "next/server";
+import type { NextRequest } from "next/server";
 
 import { i18n, isLocale } from "@/lib/i18n";
 
-const i18nHandler = createI18nMiddleware(i18n);
-
-/**
- * Server-side locale resolution: redirects to locale-prefixed path when missing.
- * Sets x-next-locale on request so root layout can bind document lang.
- */
-export const proxy = function proxy(
-  request: NextRequest,
-  event: NextFetchEvent
-) {
+export const proxy = (request: NextRequest) => {
   const { pathname } = request.nextUrl;
   const segment = pathname.split("/").find(Boolean);
   const locale = segment && isLocale(segment) ? segment : i18n.defaultLanguage;
@@ -27,7 +17,12 @@ export const proxy = function proxy(
     });
   }
 
-  return i18nHandler(request, event);
+  const url = request.nextUrl.clone();
+  url.pathname = `/${i18n.defaultLanguage}${pathname}`;
+
+  return NextResponse.rewrite(url, {
+    request: { headers: requestHeaders },
+  });
 };
 
 export const config = {
