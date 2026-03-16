@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 import { LogoMark } from "@/components/logo";
 import { SITE } from "@/constants/site";
+import { OG_FONT_FAMILY } from "@/lib/fonts";
 
 interface OgImageProps {
   description?: ReactNode;
@@ -24,7 +25,7 @@ const OgImage = ({
       color: "white",
       display: "flex",
       flexDirection: "column",
-      fontFamily: "Geist",
+      fontFamily: OG_FONT_FAMILY,
       height: "100%",
       justifyContent: "space-between",
       padding: 64,

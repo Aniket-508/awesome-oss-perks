@@ -4,7 +4,7 @@ import { ImageResponse } from "next/og";
 
 import OgImage from "@/components/og/og-image";
 import { SITE } from "@/constants/site";
-import { loadGeistFonts } from "@/lib/fonts";
+import { loadOgFonts } from "@/lib/fonts";
 import { getT } from "@/lib/get-t";
 import { i18n, isLocale } from "@/lib/i18n";
 import { cliSource, programsSource } from "@/lib/source";
@@ -144,7 +144,7 @@ export const GET = async (
   if (!title) {
     notFound();
   }
-  const fonts = await loadGeistFonts();
+  const fonts = await loadOgFonts();
   return new ImageResponse(
     <OgImage
       description={description}
