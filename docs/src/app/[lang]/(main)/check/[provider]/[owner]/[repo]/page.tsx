@@ -1,13 +1,28 @@
 "use client";
 
-import { ArrowRight, CircleAlert, CircleCheck, CircleX, GitFork, Lock, Scale, Star } from "lucide-react";
+import {
+  ArrowRight,
+  CircleAlert,
+  CircleCheck,
+  CircleX,
+  GitFork,
+  Lock,
+  Scale,
+  Star,
+} from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { RepoCheckInput } from "@/components/check/repo-check-input";
+import { RepoCheckInput } from "@/components/home/repo-check-input";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ROUTES } from "@/constants/routes";
 
@@ -59,24 +74,24 @@ const formatAge = (iso: string): string => {
 const statusConfig = {
   eligible: {
     bg: "bg-emerald-500/10",
-    border: "border-emerald-500/20",
     color: "text-emerald-500",
     icon: CircleCheck,
     label: "Eligible",
+    ring: "ring-emerald-500/20",
   },
   ineligible: {
     bg: "bg-red-500/10",
-    border: "border-red-500/20",
     color: "text-red-500",
     icon: CircleX,
     label: "Ineligible",
+    ring: "ring-red-500/20",
   },
   "needs-review": {
     bg: "bg-amber-500/10",
-    border: "border-amber-500/20",
     color: "text-amber-500",
     icon: CircleAlert,
     label: "Needs Review",
+    ring: "ring-amber-500/20",
   },
 } as const;
 
@@ -119,34 +134,41 @@ const ResultSection = ({
   const Icon = config.icon;
   return (
     <section className="mb-8">
-      <h2 className={`text-lg font-semibold mb-4 flex items-center gap-2 ${config.color}`}>
+      <h2
+        className={`text-lg font-semibold mb-4 flex items-center gap-2 ${config.color}`}
+      >
         <Icon className="size-5" />
         {config.label} ({items.length})
       </h2>
       <div className="grid gap-3">
         {items.map((r) => (
-          <Card key={r.slug} className={`border ${config.border}`}>
-            <CardHeader className="pb-2">
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-base">{r.name}</CardTitle>
-                <Link
-                  href={`${ROUTES.PROGRAMS}/${r.slug}`}
-                  className="text-sm text-fd-primary hover:underline flex items-center gap-1"
-                >
-                  {r.perksCount} perks
-                  <ArrowRight className="size-3" />
-                </Link>
-              </div>
+          <Card key={r.slug} className={config.ring}>
+            <CardHeader>
+              <CardTitle className="text-base min-w-0 truncate">
+                {r.name}
+              </CardTitle>
+              <CardAction>
+                <Badge
+                  variant="action"
+                  className="text-sm"
+                  render={
+                    <Link href={`${ROUTES.PROGRAMS}/${r.slug}`}>
+                      {r.perksCount} perks
+                      <ArrowRight />
+                    </Link>
+                  }
+                />
+              </CardAction>
             </CardHeader>
             {r.reasons.length > 0 && (
               <CardContent className="pt-0">
                 <ul className="space-y-1">
-                  {r.reasons.map((reason) => (
+                  {[...new Set(r.reasons)].map((reason) => (
                     <li
-                      key={reason}
-                      className="text-sm text-fd-muted-foreground flex items-start gap-2"
+                      key={`${r.slug}-${reason}`}
+                      className="flex items-center text-sm text-fd-muted-foreground gap-2"
                     >
-                      <span className="mt-1.5 size-1 rounded-full bg-fd-muted-foreground/50 shrink-0" />
+                      <span className="size-1 rounded-full bg-fd-muted-foreground/50 shrink-0" />
                       {reason}
                     </li>
                   ))}
@@ -177,27 +199,25 @@ const CheckResults = ({ data }: { data: CheckResponse }) => {
         )}
         <div className="flex flex-wrap gap-2">
           <Badge variant="outline" className="gap-1.5">
-            <Star className="size-3" />
+            <Star />
             {repo.stars.toLocaleString()} stars
           </Badge>
           {repo.license && (
             <Badge variant="outline" className="gap-1.5">
-              <Scale className="size-3" />
+              <Scale />
               {repo.license}
             </Badge>
           )}
-          <Badge variant="outline">
-            Last push {formatAge(repo.pushedAt)}
-          </Badge>
+          <Badge variant="outline">Last push {formatAge(repo.pushedAt)}</Badge>
           {repo.isFork && (
             <Badge variant="secondary" className="gap-1.5">
-              <GitFork className="size-3" />
+              <GitFork />
               Fork
             </Badge>
           )}
           {repo.isPrivate && (
             <Badge variant="secondary" className="gap-1.5">
-              <Lock className="size-3" />
+              <Lock />
               Private
             </Badge>
           )}
@@ -208,9 +228,21 @@ const CheckResults = ({ data }: { data: CheckResponse }) => {
 
       <div className="grid grid-cols-3 gap-4 mb-8">
         {[
-          { color: "text-emerald-500", count: eligible.length, label: "Eligible" },
-          { color: "text-amber-500", count: review.length, label: "Needs Review" },
-          { color: "text-red-500", count: ineligible.length, label: "Ineligible" },
+          {
+            color: "text-emerald-500",
+            count: eligible.length,
+            label: "Eligible",
+          },
+          {
+            color: "text-amber-500",
+            count: review.length,
+            label: "Needs Review",
+          },
+          {
+            color: "text-red-500",
+            count: ineligible.length,
+            label: "Ineligible",
+          },
         ].map((s) => (
           <div key={s.label} className="text-center p-4 rounded-lg border">
             <p className={`text-3xl font-bold ${s.color}`}>{s.count}</p>
@@ -219,9 +251,15 @@ const CheckResults = ({ data }: { data: CheckResponse }) => {
         ))}
       </div>
 
-      {eligible.length > 0 && <ResultSection items={eligible} status="eligible" />}
-      {review.length > 0 && <ResultSection items={review} status="needs-review" />}
-      {ineligible.length > 0 && <ResultSection items={ineligible} status="ineligible" />}
+      {eligible.length > 0 && (
+        <ResultSection items={eligible} status="eligible" />
+      )}
+      {review.length > 0 && (
+        <ResultSection items={review} status="needs-review" />
+      )}
+      {ineligible.length > 0 && (
+        <ResultSection items={ineligible} status="ineligible" />
+      )}
     </>
   );
 };

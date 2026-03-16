@@ -50,10 +50,10 @@ export const ProgramCard = ({
             )}
           </div>
           <div className="flex justify-end">
-            <span className="inline-flex items-center gap-1 text-xs text-fd-primary group-hover:underline">
+            <Badge variant="action" className="group-hover:underline">
               {learnMore}
               <ArrowRight className="size-3" />
-            </span>
+            </Badge>
           </div>
         </CardContent>
       </Card>
