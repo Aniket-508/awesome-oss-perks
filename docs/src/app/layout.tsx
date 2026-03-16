@@ -1,4 +1,5 @@
 import "./global.css";
+import { Analytics } from "@vercel/analytics/react";
 import { headers } from "next/headers";
 
 import { publicSans } from "@/lib/fonts";
@@ -16,7 +17,10 @@ export default async function Layout({ children }: LayoutProps<"/">) {
       className={publicSans.variable}
       suppressHydrationWarning
     >
-      <body className="flex flex-col min-h-screen">{children}</body>
+      <body className="flex flex-col min-h-screen">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }

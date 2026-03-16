@@ -20,6 +20,7 @@
     "@orama/tokenizers": "^3.1.18",
     "@ossperks/data": "workspace:*",
     "@tanstack/react-form": "^1.28.5",
+    "@vercel/analytics": "^1.4.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "fumadocs-core": "16.6.16",
