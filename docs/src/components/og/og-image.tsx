@@ -19,42 +19,92 @@ const OgImage = ({
 }: OgImageProps) => (
   <div
     style={{
-      alignItems: "stretch",
-      background:
-        "linear-gradient(135deg, rgb(37, 37, 37) 0%, rgb(120, 65, 25) 52%, rgb(199, 108, 30) 100%)",
+      background: "#0c0c0c",
       color: "white",
       display: "flex",
       flexDirection: "column",
       fontFamily: OG_FONT_FAMILY,
       height: "100%",
-      justifyContent: "space-between",
-      padding: 64,
-      paddingBottom: 64,
+      overflow: "hidden",
+      position: "relative",
       width: "100%",
     }}
   >
+    {/* Radial glow from bottom */}
+    <div
+      style={{
+        background:
+          "radial-gradient(ellipse at 50% 100%, rgba(245,158,11,0.32) 0%, rgba(234,88,12,0.1) 35%, transparent 65%)",
+        bottom: 0,
+        display: "flex",
+        height: "100%",
+        left: 0,
+        position: "absolute",
+        width: "100%",
+      }}
+    />
+
+    {/* Secondary glow for warmth */}
+    <div
+      style={{
+        background:
+          "radial-gradient(ellipse at 65% 80%, rgba(251,146,60,0.12) 0%, transparent 50%)",
+        bottom: 0,
+        display: "flex",
+        height: "100%",
+        left: 0,
+        position: "absolute",
+        width: "100%",
+      }}
+    />
+
+    {/* Content */}
     <div
       style={{
         display: "flex",
         flexDirection: "column",
-        gap: 16,
+        height: "100%",
+        justifyContent: "space-between",
+        padding: 56,
+        position: "relative",
       }}
     >
+      {/* Top: Logo + site name */}
       <div
         style={{
+          alignItems: "center",
+          display: "flex",
+          gap: 12,
+        }}
+      >
+        <LogoMark width={28} height={28} />
+        <span
+          style={{
+            fontSize: 22,
+            fontWeight: 600,
+            letterSpacing: "-0.01em",
+          }}
+        >
+          {siteName}
+        </span>
+      </div>
+
+      {/* Center: Title + description */}
+      <div
+        style={{
+          alignItems: "center",
           display: "flex",
           flexDirection: "column",
-          gap: "32px",
-          marginBottom: "40px",
-          textWrap: "pretty",
+          gap: 20,
         }}
       >
         <span
           style={{
-            color: "white",
-            fontSize: 72,
-            fontWeight: 600,
+            fontSize: 68,
+            fontWeight: 700,
+            letterSpacing: "-0.03em",
             lineHeight: 1.1,
+            textAlign: "center",
           }}
         >
           {title}
@@ -64,73 +114,58 @@ const OgImage = ({
         description !== "" ? (
           <span
             style={{
-              color: "rgba(255,255,255,0.7)",
-              fontSize: 36,
+              color: "rgba(255,255,255,0.5)",
+              fontSize: 28,
               fontWeight: 400,
-              letterSpacing: "-0.01em",
               lineHeight: 1.4,
-              maxWidth: "95%",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
+              maxWidth: "85%",
+              textAlign: "center",
             }}
           >
             {description}
           </span>
         ) : null}
       </div>
-    </div>
 
-    <div
-      style={{
-        alignItems: "center",
-        color: "white",
-        display: "flex",
-        gap: 20,
-      }}
-    >
-      <LogoMark width={36} height={36} />
-      <span
+      {/* Bottom: footer label */}
+      <div
         style={{
-          color: "white",
-          fontSize: 28,
-          fontWeight: 700,
-          letterSpacing: "-0.02em",
+          alignItems: "center",
+          display: "flex",
+          justifyContent: "flex-end",
+          minHeight: 28,
         }}
       >
-        {siteName}
-      </span>
-      <div style={{ flexGrow: 1 }} />
-      {footerLabel !== undefined && footerLabel !== "" ? (
-        <div
-          style={{
-            alignItems: "center",
-            display: "flex",
-            gap: 20,
-          }}
-        >
+        {footerLabel !== undefined && footerLabel !== "" ? (
           <div
             style={{
-              backgroundColor: "rgba(255,255,255,0.3)",
-              borderRadius: 2,
-              height: 4,
-              opacity: 0.9,
-              width: 60,
-            }}
-          />
-          <span
-            style={{
-              color: "rgba(255,255,255,0.5)",
-              fontSize: 20,
-              fontWeight: 700,
-              letterSpacing: "0.2em",
-              opacity: 0.9,
-              textTransform: "uppercase",
+              alignItems: "center",
+              display: "flex",
+              gap: 16,
             }}
           >
-            {footerLabel}
-          </span>
-        </div>
-      ) : null}
+            <div
+              style={{
+                backgroundColor: "rgba(245,158,11,0.5)",
+                borderRadius: 2,
+                height: 3,
+                width: 48,
+              }}
+            />
+            <span
+              style={{
+                color: "rgba(255,255,255,0.4)",
+                fontSize: 16,
+                fontWeight: 700,
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+              }}
+            >
+              {footerLabel}
+            </span>
+          </div>
+        ) : null}
+      </div>
     </div>
   </div>
 );
