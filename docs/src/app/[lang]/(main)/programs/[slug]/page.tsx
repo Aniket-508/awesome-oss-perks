@@ -1,4 +1,4 @@
-import { programs } from "@ossperks/data";
+import { programs } from "@ossperks/core";
 import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";

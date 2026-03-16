@@ -1,4 +1,4 @@
-import type { Program } from "@ossperks/data";
+import type { Program } from "@ossperks/core";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 

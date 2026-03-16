@@ -1,4 +1,4 @@
-import { programs, getCategories, getPeople } from "@ossperks/data";
+import { programs, getCategories, getPeople } from "@ossperks/core";
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
