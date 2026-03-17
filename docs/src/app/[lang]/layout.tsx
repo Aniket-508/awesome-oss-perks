@@ -1,5 +1,4 @@
 import "../global.css";
-
 import { Analytics } from "@vercel/analytics/react";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
@@ -25,11 +24,7 @@ export default async function Layout({
   }
 
   return (
-    <html
-      lang={lang}
-      className={publicSans.variable}
-      suppressHydrationWarning
-    >
+    <html lang={lang} className={publicSans.variable} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen">
         <RootProvider i18n={provider(lang)}>{children}</RootProvider>
         <Analytics />
