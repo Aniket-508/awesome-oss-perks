@@ -84,4 +84,4 @@ Free tools, services, and credits offered to open-source projects and their main
 
 ## Contributing
 
-Contributions welcome! Read the [contribution guidelines](contributing.md) first.
+Contributions welcome! Read the [contribution guidelines](CONTRIBUTING.md) first.

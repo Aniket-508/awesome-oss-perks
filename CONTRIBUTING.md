@@ -1,6 +1,6 @@
 # Contribution Guidelines
 
-Please note that this project is released with a [Contributor Code of Conduct](code-of-conduct.md). By participating in this project you agree to abide by its terms.
+Please note that this project is released with a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 ## Adding a New Program
 
@@ -8,7 +8,7 @@ To suggest a new OSS perk program, please submit a pull request with the followi
 
 ### 1. Add the entry to the README
 
-Add a line in the appropriate category section of `readme.md` in the format:
+Add a line in the appropriate category section of `README.md` in the format:
 
 ```
 - [Program Name](https://program-url.example) - Short description of what the program offers.
@@ -44,7 +44,7 @@ Create a JSON file at `packages/core/src/programs/<slug>.json` following the exi
 Validate the schema:
 
 ```bash
-pnpm --filter @ossperks/data validate
+pnpm --filter @ossperks/core validate
 ```
 
 ### 3. Generate documentation
