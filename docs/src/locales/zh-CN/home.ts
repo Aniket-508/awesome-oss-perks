@@ -40,8 +40,9 @@ const home = {
     subheading: "运作方式",
   },
   people: {
-    description: "每个项目背后的真实团队,随时准备提供帮助。",
-    heading: "联系人",
+    description: "认识每个项目背后的团队成员，随时为您提供帮助。",
+    heading: "项目背后的团队",
+    viewAll: "查看全部",
   },
   stats: {
     categories: "类别",

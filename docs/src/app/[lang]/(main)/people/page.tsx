@@ -1,12 +1,14 @@
-import { getPeople, programs } from "@ossperks/core";
+import { getPeople, getPersonSlug, programs } from "@ossperks/core";
 import { ExternalLink, Plus } from "lucide-react";
 import type { Metadata } from "next";
+import Link from "next/link";
 
-import { ContactAvatar } from "@/components/people/contact-avatar";
 import { ContactSubmissionDialog } from "@/components/people/contact-submission-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { getT } from "@/lib/get-t";
-import { i18n } from "@/lib/i18n";
+import { i18n, withLocalePrefix } from "@/lib/i18n";
+import { getUnavatarUrl } from "@/lib/unavatar";
 import { createMetadata } from "@/seo/metadata";
 
 export const generateStaticParams = () =>
@@ -70,37 +72,47 @@ export default async function PeoplePage({
       ) : (
         <div className="grid gap-4 sm:grid-cols-2">
           {people.map(({ contact, provider }) => {
-            const roleText = t.people.roleAt
-              .replace("{role}", contact.role)
-              .replace("{provider}", provider);
+            const slug = getPersonSlug(contact.name);
+            const roleText = contact.role
+              ? t.people.roleAt
+                  .replace("{role}", contact.role)
+                  .replace("{provider}", provider)
+              : provider;
 
             return (
-              <div
+              <Link
                 key={`${contact.name}-${provider}`}
-                className="flex items-center gap-4 rounded-xl p-4 ring-1 ring-foreground/10 transition-colors hover:bg-fd-accent"
+                href={withLocalePrefix(lang, `/people/${slug}` as `/${string}`)}
+                className="group block"
               >
-                <ContactAvatar
-                  name={contact.name}
-                  url={contact.url}
-                  size="md"
-                />
-                <div className="flex-1 min-w-0">
-                  <p className="font-semibold truncate">{contact.name}</p>
-                  <p className="text-sm text-fd-muted-foreground truncate">
-                    {roleText}
-                  </p>
+                <div className="flex items-center gap-4 rounded-xl p-4 ring-1 ring-foreground/10 transition-colors hover:bg-fd-accent">
+                  <Avatar className="size-12">
+                    {contact.url &&
+                      (() => {
+                        const avatarUrl = getUnavatarUrl(contact.url);
+                        return avatarUrl ? (
+                          <AvatarImage src={avatarUrl} alt={contact.name} />
+                        ) : null;
+                      })()}
+                    <AvatarFallback className="text-lg">
+                      {contact.name.charAt(0).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-semibold truncate group-hover:text-fd-primary transition-colors">
+                      {contact.name}
+                    </p>
+                    <p className="text-sm text-fd-muted-foreground truncate">
+                      {roleText}
+                    </p>
+                  </div>
+                  {contact.url && (
+                    <span className="shrink-0 text-fd-muted-foreground group-hover:text-fd-foreground transition-colors">
+                      <ExternalLink className="size-4" />
+                    </span>
+                  )}
                 </div>
-                {contact.url && (
-                  <a
-                    href={contact.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="shrink-0 text-fd-muted-foreground hover:text-fd-foreground transition-colors"
-                  >
-                    <ExternalLink className="size-4" />
-                  </a>
-                )}
-              </div>
+              </Link>
             );
           })}
         </div>

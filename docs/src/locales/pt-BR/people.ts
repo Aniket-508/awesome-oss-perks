@@ -1,6 +1,12 @@
 const people = {
+  associatedWith: "Associado a",
+  backToPeople: "Voltar para pessoas",
   description:
     "operadores/contatos por trás dos programas que apoiam projetos de código aberto.",
+  detail: {
+    about: "Sobre",
+    noPrograms: "Nenhum programa associado encontrado.",
+  },
   empty:
     "Nenhum contato de programa foi adicionado ainda. Adicione um contato aos dados do programa para vê-los aqui.",
   heading: "Pessoas",

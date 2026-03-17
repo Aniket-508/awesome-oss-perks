@@ -1,0 +1,35 @@
+{
+  "slug": "crowdin",
+  "name": "Crowdin Open Source Program",
+  "provider": "Crowdin",
+  "url": "https://crowdin.com/page/open-source-project-setup-request",
+  "applicationUrl": "https://crowdin.com/page/open-source-project-setup-request",
+  "category": "devtools",
+  "description": "Free localization platform for open source projects with an OSI-approved license, including translation memory, glossaries, 700+ integrations, and GitHub/GitLab/Bitbucket sync.",
+  "perks": [
+    {
+      "title": "Free Localization Platform",
+      "description": "Full access to Crowdin's localization platform at no cost for qualifying open source projects."
+    },
+    {
+      "title": "Translation Memory & Glossaries",
+      "description": "Built-in translation memory and glossaries to maintain consistency across your project's translations."
+    },
+    {
+      "title": "700+ Integrations",
+      "description": "Integrations with GitHub, GitLab, Bitbucket, Azure Repos, and 700+ other tools, plus CLI and API access."
+    }
+  ],
+  "eligibility": [
+    "Licensed under an approved OSI open source license.",
+    "Source code must be publicly available for download.",
+    "No commercial products related to the project.",
+    "You must be the project lead.",
+    "Project must have been active for a minimum period."
+  ],
+  "applicationProcess": [
+    "Submit the open source project setup request form on Crowdin's website.",
+    "Crowdin reviews the application against their eligibility criteria."
+  ],
+  "tags": ["localization", "translation", "i18n", "developer-tools"]
+}

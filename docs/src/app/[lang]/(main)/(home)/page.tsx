@@ -1,18 +1,24 @@
-import { programs, getCategories, getPeople } from "@ossperks/core";
+import {
+  programs,
+  getCategories,
+  getPeople,
+  getPersonSlug,
+} from "@ossperks/core";
 import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 
 import { HeroActions } from "@/components/home/hero-actions";
 import { HomeCtaWithDialogs } from "@/components/home/home-cta-with-dialogs";
-import { ContactAvatar } from "@/components/people/contact-avatar";
 import { ProgramCard } from "@/components/programs/program-card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ROUTES } from "@/constants/routes";
 import { getT } from "@/lib/get-t";
 import { i18n, withLocalePrefix } from "@/lib/i18n";
 import { getFeaturedPrograms } from "@/lib/programs";
+import { getUnavatarUrl } from "@/lib/unavatar";
 import { createMetadata } from "@/seo/metadata";
 
 export const generateStaticParams = () =>
@@ -154,45 +160,71 @@ export default async function HomePage({
       <Separator />
 
       {/* People */}
-      {people.length > 0 && (
-        <section className="py-16">
-          <h2 className="text-2xl font-bold mb-2">{t.home.people.heading}</h2>
-          <p className="text-fd-muted-foreground mb-8">
-            {t.home.people.description}
-          </p>
-          <div className="flex flex-wrap justify-center gap-8">
-            {people.slice(0, 6).map(({ contact, provider }) => (
-              <div
-                key={`${contact.name}-${provider}`}
-                className="flex flex-col items-center gap-2"
-              >
-                <ContactAvatar
-                  name={contact.name}
-                  url={contact.url}
-                  size="lg"
-                  className="ring-2 ring-fd-primary/30"
-                />
-                <p className="text-sm font-medium">{contact.name}</p>
-                <p className="text-xs text-fd-muted-foreground">{provider}</p>
-              </div>
-            ))}
+      <section className="py-16">
+        <div className="mb-4 flex items-end justify-between">
+          <div>
+            <h2 className="text-2xl font-bold mb-1">{t.home.people.heading}</h2>
+            <p className="text-fd-muted-foreground">
+              {t.home.people.description}
+            </p>
           </div>
-          {people.length > 6 && (
-            <div className="mt-6 text-center">
-              <Button
-                variant="outline"
-                nativeButton={false}
-                render={
-                  <Link href={withLocalePrefix(lang, ROUTES.PEOPLE)}>
-                    View all {people.length} people
-                    <ArrowRight className="size-4" />
-                  </Link>
-                }
-              />
-            </div>
-          )}
-        </section>
-      )}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="shrink-0 text-fd-primary"
+            nativeButton={false}
+            render={
+              <Link href={withLocalePrefix(lang, ROUTES.PEOPLE)}>
+                {t.home.people.viewAll}
+                <ArrowRight className="size-4" />
+              </Link>
+            }
+          />
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {people.slice(0, 6).map(({ contact, provider }) => {
+            const personSlug = getPersonSlug(contact.name);
+            const personHref = withLocalePrefix(
+              lang,
+              `/people/${personSlug}` as `/${string}`
+            );
+            const roleText = contact.role
+              ? `${contact.role} at ${provider}`
+              : provider;
+
+            return (
+              <Link
+                key={`${contact.name}-${provider}`}
+                href={personHref}
+                className="group block"
+              >
+                <div className="flex flex-col items-center gap-3 rounded-xl p-8 ring-1 ring-foreground/10 transition-colors hover:bg-fd-accent">
+                  <Avatar className="size-16 ring-2 ring-fd-primary/20 group-hover:ring-fd-primary/40 transition-all">
+                    {contact.url &&
+                      (() => {
+                        const avatarUrl = getUnavatarUrl(contact.url);
+                        return avatarUrl ? (
+                          <AvatarImage src={avatarUrl} alt={contact.name} />
+                        ) : null;
+                      })()}
+                    <AvatarFallback className="text-xl">
+                      {contact.name.charAt(0).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="text-center">
+                    <p className="font-semibold">{contact.name}</p>
+                    <p className="text-sm text-fd-muted-foreground">
+                      {roleText}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      <Separator />
 
       {/* How it works */}
       <section className="py-16 text-center">

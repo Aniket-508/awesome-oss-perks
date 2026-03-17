@@ -45,8 +45,10 @@ const home = {
     subheading: "SO FUNKTIONIERT ES",
   },
   people: {
-    description: "Die Menschen hinter jedem Programm, bereit zu helfen.",
-    heading: "Ansprechpartner",
+    description:
+      "Lernen Sie die Menschen hinter jedem Programm kennen, die bereit sind zu helfen.",
+    heading: "Die Menschen hinter den Programmen",
+    viewAll: "Alle anzeigen",
   },
   stats: {
     categories: "Kategorien",

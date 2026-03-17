@@ -1,6 +1,12 @@
 const people = {
+  associatedWith: "関連付け",
+  backToPeople: "人物一覧に戻る",
   description:
     "オープンソースプロジェクトを支援するプログラムの運営者/連絡先。",
+  detail: {
+    about: "概要",
+    noPrograms: "関連するプログラムが見つかりません。",
+  },
   empty:
     "プログラムの連絡先はまだ追加されていません。プログラムデータに連絡先を追加すると、ここに表示されます。",
   heading: "人物",

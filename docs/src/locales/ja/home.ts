@@ -42,8 +42,10 @@ const home = {
     subheading: "仕組み",
   },
   people: {
-    description: "各プログラムの担当者が、いつでもサポートします。",
-    heading: "担当者",
+    description:
+      "各プログラムを支える人々に会いましょう。サポートの準備ができています。",
+    heading: "プログラムを支える人々",
+    viewAll: "すべて表示",
   },
   stats: {
     categories: "カテゴリー",

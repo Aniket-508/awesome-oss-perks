@@ -44,8 +44,9 @@ const home = {
   },
   people: {
     description:
-      "Les personnes derrière chaque programme, prêtes à vous aider.",
-    heading: "Contacts",
+      "Rencontrez les personnes derrière chaque programme, prêtes à vous aider.",
+    heading: "Les personnes derrière les programmes",
+    viewAll: "Voir tout",
   },
   stats: {
     categories: "Catégories",

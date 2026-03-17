@@ -1,6 +1,12 @@
 const people = {
+  associatedWith: "연결됨",
+  backToPeople: "사람 목록으로 돌아가기",
   description:
     "오픈소스 프로젝트를 지원하는 프로그램을 운영하는 운영자/담당자.",
+  detail: {
+    about: "소개",
+    noPrograms: "연결된 프로그램이 없습니다.",
+  },
   empty:
     "아직 추가된 프로그램 연락처가 없습니다. 프로그램 데이터에 연락처를 추가하면 여기에 표시됩니다.",
   heading: "담당자",

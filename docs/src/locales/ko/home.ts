@@ -42,8 +42,10 @@ const home = {
     subheading: "이용 방법",
   },
   people: {
-    description: "각 프로그램을 담당하는 실제 담당자들이 도움을 드립니다.",
-    heading: "담당자",
+    description:
+      "각 프로그램을 담당하며 도움을 드릴 준비가 된 사람들을 만나보세요.",
+    heading: "프로그램을 만드는 사람들",
+    viewAll: "전체 보기",
   },
   stats: {
     categories: "카테고리",

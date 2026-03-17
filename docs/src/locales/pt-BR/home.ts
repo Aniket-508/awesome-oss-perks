@@ -42,8 +42,10 @@ const home = {
     subheading: "COMO FUNCIONA",
   },
   people: {
-    description: "As pessoas por trás de cada programa, prontas para ajudar.",
-    heading: "Pessoas",
+    description:
+      "Conheça as pessoas por trás de cada programa, prontas para ajudar.",
+    heading: "Pessoas por trás dos programas",
+    viewAll: "Ver todos",
   },
   stats: {
     categories: "Categorias",

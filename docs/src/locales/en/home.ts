@@ -42,8 +42,9 @@ const home = {
     subheading: "HOW IT WORKS",
   },
   people: {
-    description: "The humans behind each program, ready to help.",
-    heading: "People",
+    description: "Meet the humans behind each program, ready to help.",
+    heading: "People behind the programs",
+    viewAll: "View all",
   },
   stats: {
     categories: "Categories",

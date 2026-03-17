@@ -25,8 +25,10 @@ export const perkSchema = z.object({
 export type Perk = z.infer<typeof perkSchema>;
 
 export const contactSchema = z.object({
+  bio: z.string().optional(),
+  linkedin: z.string().url().optional(),
   name: z.string(),
-  role: z.string(),
+  role: z.string().optional(),
   url: z.string().url().optional(),
 });
 
