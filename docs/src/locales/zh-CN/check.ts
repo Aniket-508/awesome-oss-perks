@@ -4,10 +4,22 @@ const check = {
   description:
     "粘贴 GitHub 或 GitLab 仓库链接，即时查看您的项目可以获得哪些开源计划和福利。",
   eligible: "符合条件",
+  errors: {
+    invalidRequest: "检查请求无效。",
+    notFound: "未找到该仓库。请检查链接后重试。",
+    rateLimit: "请求过于频繁。请一分钟后再试。",
+    unknown: "出现了一些问题。请重试。",
+    upstream: "暂时无法获取仓库详情。请稍后再试。",
+  },
   fetchError: "无法获取资格结果。请重试。",
   fork: "复刻",
   heading: "检查项目资格",
   ineligible: "不符合条件",
+  input: {
+    invalidUrl: "请输入有效的 GitHub 或 GitLab 仓库链接",
+    placeholder: "粘贴 GitHub 或 GitLab 仓库链接...",
+    required: "请粘贴仓库链接",
+  },
   lastPush: "最近推送",
   needsReview: "需要审核",
   perks: "项福利",

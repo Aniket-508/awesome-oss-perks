@@ -5,6 +5,8 @@ import { usePathname, useRouter } from "next/navigation";
 import type { ComponentProps } from "react";
 import { useCallback } from "react";
 
+import { isLocale, withLocalePrefix } from "@/lib/i18n";
+
 type FumadocsRootProviderProps = ComponentProps<typeof FumadocsRootProvider>;
 
 export const RootProvider = ({
@@ -14,19 +16,20 @@ export const RootProvider = ({
 }: FumadocsRootProviderProps) => {
   const router = useRouter();
   const pathname = usePathname();
-  const currentLocale = i18n?.locale;
 
   const onLocaleChange = useCallback(
     (newLocale: string) => {
       const segments = pathname.split("/").filter((v) => v.length > 0);
-      if (segments[0] === currentLocale) {
-        segments[0] = newLocale;
-      } else {
-        segments.unshift(newLocale);
-      }
-      router.push(`/${segments.join("/")}${window.location.search}`);
+      const pathWithoutLocale =
+        segments[0] && isLocale(segments[0])
+          ? (`/${segments.slice(1).join("/")}` as `/${string}`)
+          : (pathname as `/${string}`);
+      const nextPath = withLocalePrefix(newLocale, pathWithoutLocale);
+      router.push(
+        `${nextPath}${window.location.search}${window.location.hash}`
+      );
     },
-    [pathname, currentLocale, router]
+    [pathname, router]
   );
 
   return (

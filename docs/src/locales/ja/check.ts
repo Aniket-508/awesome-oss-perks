@@ -4,10 +4,23 @@ const check = {
   description:
     "GitHubまたはGitLabのリポジトリURLを貼り付けて、プロジェクトが対象となるオープンソースプログラムや特典を即座に確認できます。",
   eligible: "対象",
+  errors: {
+    invalidRequest: "無効な確認リクエストです。",
+    notFound:
+      "リポジトリが見つかりません。URLを確認してもう一度お試しください。",
+    rateLimit: "レート制限に達しました。1分後にもう一度お試しください。",
+    unknown: "問題が発生しました。もう一度お試しください。",
+    upstream: "現在リポジトリの詳細を取得できません。もう一度お試しください。",
+  },
   fetchError: "適格性の結果を取得できませんでした。もう一度お試しください。",
   fork: "フォーク",
   heading: "プロジェクトの適格性を確認",
   ineligible: "対象外",
+  input: {
+    invalidUrl: "有効なGitHubまたはGitLabのリポジトリURLを入力してください",
+    placeholder: "GitHubまたはGitLabのリポジトリURLを貼り付け...",
+    required: "リポジトリURLを貼り付けてください",
+  },
   lastPush: "最終プッシュ",
   needsReview: "要確認",
   perks: "特典",

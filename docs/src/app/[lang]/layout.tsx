@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 import { RootProvider } from "@/components/root-provider";
 import { i18n, isLocale } from "@/lib/i18n";
-import { provider } from "@/lib/i18n-ui"; 
+import { provider } from "@/lib/i18n-ui";
 
 export default async function Layout({
   children,

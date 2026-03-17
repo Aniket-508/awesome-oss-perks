@@ -4,11 +4,25 @@ const check = {
   description:
     "Füge die URL eines GitHub- oder GitLab-Repositorys ein, um sofort zu sehen, für welche Open-Source-Programme und Vorteile dein Projekt in Frage kommt.",
   eligible: "Berechtigt",
+  errors: {
+    invalidRequest: "Ungültige Prüfanfrage.",
+    notFound:
+      "Repository nicht gefunden. Bitte überprüfe die URL und versuche es erneut.",
+    rateLimit: "Rate-Limit erreicht. Bitte versuche es in einer Minute erneut.",
+    unknown: "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+    upstream:
+      "Repository-Details konnten gerade nicht abgerufen werden. Bitte versuche es erneut.",
+  },
   fetchError:
     "Die Berechtigungsergebnisse konnten nicht abgerufen werden. Bitte versuche es erneut.",
   fork: "Fork",
   heading: "Prüfe die Berechtigung deines Projekts",
   ineligible: "Nicht berechtigt",
+  input: {
+    invalidUrl: "Bitte gib eine gültige GitHub- oder GitLab-Repository-URL ein",
+    placeholder: "GitHub- oder GitLab-Repository-URL einfügen...",
+    required: "Repository-URL einfügen",
+  },
   lastPush: "Letzter Push",
   needsReview: "Überprüfung nötig",
   perks: "Vorteile",
@@ -20,7 +34,7 @@ const check = {
     hostingPlatform:
       "Hosting-Plattform-Anforderung kann nicht automatisch überprüft werden",
     inactive:
-      "letzter Commit vor {days} Tagen (Projekt ist möglicherweise inaktiv)",
+      "letzter Commit: vor {days} T (Projekt ist möglicherweise inaktiv)",
     missionAlignment:
       "Missionsausrichtung kann nicht automatisch überprüft werden",
     noOsiLicense: "keine OSI-genehmigte Lizenz erkannt (erkannt: {license})",
@@ -31,14 +45,14 @@ const check = {
     popularityThreshold: "Popularitätsschwelle wird vom Anbieter bestimmt",
     procedural: "Verfahrensschritt — manuell bewerben",
     projectTooNew:
-      "Projekt muss mindestens {required} Tage alt sein (deines ist {current} Tage alt)",
+      "Projektalter muss mindestens {required} T betragen (aktuell: {current} T)",
     repoFork: "Repository ist ein Fork",
     repoPrivate: "Repository ist privat",
     requiresGithub: "erfordert ein GitHub-Repository",
     requiresGitlab: "erfordert ein GitLab-Repository",
     role: "Rollenanforderung kann nicht automatisch überprüft werden",
-    starsBelow: "erfordert {threshold}+ Sterne (du hast {current})",
-    starsMet: "{current} Sterne erreichen die Schwelle von {threshold}+",
+    starsBelow: "erfordert {threshold}+ Sterne (aktuell: {current})",
+    starsMet: "Sterneschwelle erreicht ({current}/{threshold}+)",
     subjective:
       "subjektive Kriterien können nicht automatisch überprüft werden",
     usageRestriction:
