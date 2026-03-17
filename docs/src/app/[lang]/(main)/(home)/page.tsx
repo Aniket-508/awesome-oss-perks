@@ -200,7 +200,9 @@ export default async function HomePage({
               `/people/${personSlug}` as `/${string}`
             );
             const roleText = contact.role
-              ? `${contact.role} at ${provider}`
+              ? t.people.roleAt
+                  .replace("{role}", contact.role)
+                  .replace("{provider}", provider)
               : provider;
 
             return (
