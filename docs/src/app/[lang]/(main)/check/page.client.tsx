@@ -1,0 +1,159 @@
+"use client";
+
+import { CircleX } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import type { ReactNode } from "react";
+import { Suspense, useMemo } from "react";
+
+import { RepoCheckInput } from "@/components/check/check-input";
+import { CheckResults } from "@/components/check/check-results";
+import { Separator } from "@/components/ui/separator";
+import { useCheckData } from "@/hooks/use-check-data";
+import { CHECK_PAGE_CONTAINER, DEFAULT_PROVIDER } from "@/lib/check";
+import { translateReasons } from "@/lib/translate-reasons";
+import type { CheckTranslations } from "@/locales/en/check";
+import type { ProgramTranslationMap } from "@/types/check";
+
+interface CheckPageClientProps {
+  children?: ReactNode;
+  lang: string;
+  programTranslations: ProgramTranslationMap;
+  translations: CheckTranslations;
+}
+
+const CheckPageFallback = () => (
+  <div className={`${CHECK_PAGE_CONTAINER} animate-pulse`}>
+    <div className="mb-8">
+      <div className="h-10 w-72 bg-fd-muted rounded mx-auto mb-4" />
+      <div className="h-5 max-w-2xl bg-fd-muted rounded mx-auto mb-2" />
+      <div className="h-5 max-w-xl bg-fd-muted rounded mx-auto" />
+    </div>
+    <div className="h-12 w-full max-w-2xl bg-fd-muted rounded mx-auto" />
+  </div>
+);
+
+const CheckSkeleton = ({ owner, repo }: { owner: string; repo: string }) => (
+  <div className={`${CHECK_PAGE_CONTAINER} animate-pulse`}>
+    <div className="mb-8">
+      <h1 className="text-3xl font-bold mb-2">
+        {owner}/{repo}
+      </h1>
+      <div className="h-5 w-2/3 bg-fd-muted rounded mb-4" />
+      <div className="flex gap-2">
+        <div className="h-6 w-24 bg-fd-muted rounded-full" />
+        <div className="h-6 w-16 bg-fd-muted rounded-full" />
+        <div className="h-6 w-28 bg-fd-muted rounded-full" />
+      </div>
+    </div>
+    <Separator className="mb-8" />
+    <div className="grid grid-cols-3 gap-4 mb-8">
+      {["stats-1", "stats-2", "stats-3"].map((key) => (
+        <div key={key} className="text-center p-4 rounded-lg border">
+          <div className="h-9 w-8 bg-fd-muted rounded mx-auto mb-2" />
+          <div className="h-4 w-20 bg-fd-muted rounded mx-auto" />
+        </div>
+      ))}
+    </div>
+    {["row-1", "row-2", "row-3", "row-4", "row-5"].map((key) => (
+      <div key={key} className="h-16 bg-fd-muted rounded-lg mb-3" />
+    ))}
+  </div>
+);
+
+const CheckPageInner = ({
+  children,
+  lang,
+  programTranslations,
+  translations,
+}: Omit<CheckPageClientProps, "fallback">) => {
+  const searchParams = useSearchParams();
+  const provider = searchParams.get("provider") ?? DEFAULT_PROVIDER;
+  const owner = searchParams.get("owner");
+  const repo = searchParams.get("repo");
+
+  const { data, error, loading } = useCheckData({
+    owner,
+    provider,
+    repo,
+    translations,
+  });
+
+  const currentData = useMemo(() => {
+    if (
+      !data ||
+      data.repo.owner !== owner ||
+      data.repo.provider !== provider ||
+      data.repo.repo !== repo
+    ) {
+      return null;
+    }
+    return data;
+  }, [data, owner, provider, repo]);
+
+  const translatedData = useMemo(() => {
+    if (!currentData) {
+      return null;
+    }
+    return {
+      ...currentData,
+      results: currentData.results.map((result) => {
+        const programTranslation = programTranslations[result.slug];
+        return {
+          ...result,
+          name: programTranslation?.name ?? result.name,
+          reasons: translateReasons(
+            result.reasons,
+            programTranslation?.eligibility ?? [],
+            translations.reasons,
+            {
+              canTranslateRuleReasons:
+                programTranslation?.hasEligibilityParity ?? false,
+              formatNumber: (value) =>
+                new Intl.NumberFormat(lang).format(value),
+            }
+          ),
+        };
+      }),
+    };
+  }, [currentData, lang, programTranslations, translations.reasons]);
+
+  if (loading) {
+    return <CheckSkeleton owner={owner ?? ""} repo={repo ?? ""} />;
+  }
+
+  if (error) {
+    return (
+      <div className={CHECK_PAGE_CONTAINER}>
+        <div className="rounded-lg border border-red-500/20 bg-red-500/5 p-8 text-center">
+          <CircleX className="mx-auto mb-4 size-10 text-red-500" />
+          <h1 className="text-xl font-semibold mb-2">
+            {translations.checkFailed}
+          </h1>
+          <p className="text-fd-muted-foreground mb-6">{error}</p>
+          <RepoCheckInput lang={lang} translations={translations.input} />
+        </div>
+      </div>
+    );
+  }
+
+  if (!translatedData) {
+    return <CheckSkeleton owner={owner ?? ""} repo={repo ?? ""} />;
+  }
+
+  return (
+    <div className={CHECK_PAGE_CONTAINER}>
+      <CheckResults
+        data={translatedData}
+        lang={lang}
+        translations={translations}
+      />
+      {children}
+    </div>
+  );
+};
+
+export const CheckPageClient = ({ ...props }: CheckPageClientProps) => (
+  <Suspense fallback={<CheckPageFallback />}>
+    <CheckPageInner {...props} />
+  </Suspense>
+);
