@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 
 import { RepoCheckInput } from "@/components/home/repo-check-input";
 import { Badge } from "@/components/ui/badge";
@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ROUTES } from "@/constants/routes";
+import { translateReasons } from "@/lib/translate-reasons";
 import type { CheckTranslations } from "@/locales/en/check";
 
 interface RepoInfo {
@@ -53,8 +54,17 @@ interface CheckResponse {
   results: CheckResult[];
 }
 
+export interface ProgramTranslation {
+  eligibility: string[];
+  englishEligibility: string[];
+  name: string;
+}
+
+export type ProgramTranslationMap = Record<string, ProgramTranslation>;
+
 interface CheckPageClientProps {
   lang: string;
+  programTranslations: ProgramTranslationMap;
   translations: CheckTranslations;
 }
 
@@ -293,13 +303,24 @@ const CheckResults = ({
   );
 };
 
-const CheckPageInner = ({ lang, translations }: CheckPageClientProps) => {
+const checkCache = new Map<string, CheckResponse>();
+
+const CheckPageInner = ({
+  lang,
+  programTranslations,
+  translations,
+}: CheckPageClientProps) => {
   const searchParams = useSearchParams();
   const provider = searchParams.get("provider");
   const owner = searchParams.get("owner");
   const repo = searchParams.get("repo");
 
-  const [data, setData] = useState<CheckResponse | null>(null);
+  const cacheKey =
+    provider && owner && repo ? `${provider}/${owner}/${repo}` : null;
+
+  const [data, setData] = useState<CheckResponse | null>(
+    () => (cacheKey ? checkCache.get(cacheKey) : null) ?? null
+  );
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -307,6 +328,12 @@ const CheckPageInner = ({ lang, translations }: CheckPageClientProps) => {
 
   useEffect(() => {
     if (!provider || !owner || !repo) {
+      return;
+    }
+
+    const key = `${provider}/${owner}/${repo}`;
+    if (checkCache.has(key)) {
+      setData(checkCache.get(key) ?? null);
       return;
     }
 
@@ -322,7 +349,9 @@ const CheckPageInner = ({ lang, translations }: CheckPageClientProps) => {
           setError(json.error ?? `Error ${res.status}`);
           return;
         }
-        setData(json as CheckResponse);
+        const response = json as CheckResponse;
+        checkCache.set(key, response);
+        setData(response);
       } catch {
         setError(translations.fetchError);
       } finally {
@@ -331,6 +360,28 @@ const CheckPageInner = ({ lang, translations }: CheckPageClientProps) => {
     };
     fetchResults();
   }, [provider, owner, repo, translations.fetchError]);
+
+  const translatedData = useMemo(() => {
+    if (!data) {
+      return null;
+    }
+    return {
+      ...data,
+      results: data.results.map((r) => {
+        const pt = programTranslations[r.slug];
+        return {
+          ...r,
+          name: pt?.name ?? r.name,
+          reasons: translateReasons(
+            r.reasons,
+            pt?.englishEligibility ?? [],
+            pt?.eligibility ?? [],
+            translations.reasons
+          ),
+        };
+      }),
+    };
+  }, [data, programTranslations, translations.reasons]);
 
   if (!hasParams) {
     return (
@@ -368,13 +419,13 @@ const CheckPageInner = ({ lang, translations }: CheckPageClientProps) => {
     );
   }
 
-  if (!data) {
+  if (!translatedData) {
     return null;
   }
 
   return (
     <div className="container max-w-4xl flex-1 flex flex-col w-full py-12 px-4 mx-auto">
-      <CheckResults data={data} translations={translations} />
+      <CheckResults data={translatedData} translations={translations} />
 
       <Separator className="mb-8" />
 
