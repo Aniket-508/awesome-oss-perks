@@ -11,13 +11,16 @@ import docker from "./programs/docker.json" with { type: "json" };
 import githubCopilot from "./programs/github-copilot.json" with { type: "json" };
 import gitlab from "./programs/gitlab.json" with { type: "json" };
 import jetbrains from "./programs/jetbrains.json" with { type: "json" };
+import microsoftFossFund from "./programs/microsoft-foss-fund.json" with { type: "json" };
 import netlify from "./programs/netlify.json" with { type: "json" };
+import openaiCodexFund from "./programs/openai-codex-fund.json" with { type: "json" };
 import openaiCodex from "./programs/openai-codex.json" with { type: "json" };
 import openpanel from "./programs/openpanel.json" with { type: "json" };
 import sentry from "./programs/sentry.json" with { type: "json" };
 import signpath from "./programs/signpath.json" with { type: "json" };
 import snyk from "./programs/snyk.json" with { type: "json" };
 import sonarcloud from "./programs/sonarcloud.json" with { type: "json" };
+import upstash from "./programs/upstash.json" with { type: "json" };
 import vercel from "./programs/vercel.json" with { type: "json" };
 import zulip from "./programs/zulip.json" with { type: "json" };
 import { programSchema, getPerkType, PERK_TYPES } from "./schema";
@@ -37,13 +40,16 @@ const raw = [
   githubCopilot,
   gitlab,
   jetbrains,
+  microsoftFossFund,
   netlify,
   openaiCodex,
+  openaiCodexFund,
   openpanel,
   sentry,
   signpath,
   snyk,
   sonarcloud,
+  upstash,
   vercel,
   zulip,
 ];

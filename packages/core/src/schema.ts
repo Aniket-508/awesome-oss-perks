@@ -12,6 +12,7 @@ export const categoryEnum = z.enum([
   "analytics",
   "infrastructure",
   "credentials",
+  "funding",
 ]);
 
 export type Category = z.infer<typeof categoryEnum>;
@@ -87,6 +88,7 @@ export const CATEGORY_LABELS: Record<Category, string> = {
   communication: "Communication",
   credentials: "Credentials & Secrets",
   devtools: "Developer Tools",
+  funding: "Funding",
   hosting: "Hosting & Deployment",
   infrastructure: "Infrastructure",
   monitoring: "Monitoring & Observability",
