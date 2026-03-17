@@ -41,9 +41,8 @@ export const RepoCheckInput = ({
       if (!ref) {
         return;
       }
-      const path =
-        `${ROUTES.CHECK}/${ref.provider}/${ref.owner}/${ref.repo}` as `/${string}`;
-      router.push(withLocalePrefix(lang, path));
+      const search = `?provider=${encodeURIComponent(ref.provider)}&owner=${encodeURIComponent(ref.owner)}&repo=${encodeURIComponent(ref.repo)}`;
+      router.push(`${withLocalePrefix(lang, ROUTES.CHECK)}${search}`);
     },
     validators: {
       onSubmit: repoUrlSchema,

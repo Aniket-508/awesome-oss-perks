@@ -11,8 +11,8 @@ import {
   Star,
 } from "lucide-react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 
 import { RepoCheckInput } from "@/components/home/repo-check-input";
 import { Badge } from "@/components/ui/badge";
@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { ROUTES } from "@/constants/routes";
+import type { CheckTranslations } from "@/locales/en/check";
 
 interface RepoInfo {
   description: string | null;
@@ -52,48 +53,29 @@ interface CheckResponse {
   results: CheckResult[];
 }
 
-const formatAge = (iso: string): string => {
+interface CheckPageClientProps {
+  lang: string;
+  translations: CheckTranslations;
+}
+
+const formatAge = (iso: string, t: CheckTranslations["time"]): string => {
   const days = Math.floor(
     (Date.now() - new Date(iso).getTime()) / (1000 * 60 * 60 * 24)
   );
   if (days === 0) {
-    return "today";
+    return t.today;
   }
   if (days === 1) {
-    return "yesterday";
+    return t.yesterday;
   }
   if (days < 30) {
-    return `${days}d ago`;
+    return t.daysAgo.replace("{days}", String(days));
   }
   if (days < 365) {
-    return `${Math.floor(days / 30)}mo ago`;
+    return t.monthsAgo.replace("{months}", String(Math.floor(days / 30)));
   }
-  return `${Math.floor(days / 365)}y ago`;
+  return t.yearsAgo.replace("{years}", String(Math.floor(days / 365)));
 };
-
-const statusConfig = {
-  eligible: {
-    bg: "bg-emerald-500/10",
-    color: "text-emerald-500",
-    icon: CircleCheck,
-    label: "Eligible",
-    ring: "ring-emerald-500/20",
-  },
-  ineligible: {
-    bg: "bg-red-500/10",
-    color: "text-red-500",
-    icon: CircleX,
-    label: "Ineligible",
-    ring: "ring-red-500/20",
-  },
-  "needs-review": {
-    bg: "bg-amber-500/10",
-    color: "text-amber-500",
-    icon: CircleAlert,
-    label: "Needs Review",
-    ring: "ring-amber-500/20",
-  },
-} as const;
 
 const CheckSkeleton = ({ owner, repo }: { owner: string; repo: string }) => (
   <div className="container max-w-4xl flex-1 flex flex-col w-full py-12 px-4 mx-auto animate-pulse">
@@ -126,10 +108,36 @@ const CheckSkeleton = ({ owner, repo }: { owner: string; repo: string }) => (
 const ResultSection = ({
   items,
   status,
+  translations,
 }: {
   items: CheckResult[];
   status: "eligible" | "needs-review" | "ineligible";
+  translations: CheckTranslations;
 }) => {
+  const statusConfig = {
+    eligible: {
+      bg: "bg-emerald-500/10",
+      color: "text-emerald-500",
+      icon: CircleCheck,
+      label: translations.eligible,
+      ring: "ring-emerald-500/20",
+    },
+    ineligible: {
+      bg: "bg-red-500/10",
+      color: "text-red-500",
+      icon: CircleX,
+      label: translations.ineligible,
+      ring: "ring-red-500/20",
+    },
+    "needs-review": {
+      bg: "bg-amber-500/10",
+      color: "text-amber-500",
+      icon: CircleAlert,
+      label: translations.needsReview,
+      ring: "ring-amber-500/20",
+    },
+  } as const;
+
   const config = statusConfig[status];
   const Icon = config.icon;
   return (
@@ -153,7 +161,7 @@ const ResultSection = ({
                   className="text-sm"
                   render={
                     <Link href={`${ROUTES.PROGRAMS}/${r.slug}`}>
-                      {r.perksCount} perks
+                      {r.perksCount} {translations.perks}
                       <ArrowRight />
                     </Link>
                   }
@@ -182,7 +190,13 @@ const ResultSection = ({
   );
 };
 
-const CheckResults = ({ data }: { data: CheckResponse }) => {
+const CheckResults = ({
+  data,
+  translations,
+}: {
+  data: CheckResponse;
+  translations: CheckTranslations;
+}) => {
   const { repo, results } = data;
   const eligible = results.filter((r) => r.status === "eligible");
   const review = results.filter((r) => r.status === "needs-review");
@@ -200,7 +214,7 @@ const CheckResults = ({ data }: { data: CheckResponse }) => {
         <div className="flex flex-wrap gap-2">
           <Badge variant="outline" className="gap-1.5">
             <Star />
-            {repo.stars.toLocaleString()} stars
+            {repo.stars.toLocaleString()} {translations.stars}
           </Badge>
           {repo.license && (
             <Badge variant="outline" className="gap-1.5">
@@ -208,17 +222,20 @@ const CheckResults = ({ data }: { data: CheckResponse }) => {
               {repo.license}
             </Badge>
           )}
-          <Badge variant="outline">Last push {formatAge(repo.pushedAt)}</Badge>
+          <Badge variant="outline">
+            {translations.lastPush}{" "}
+            {formatAge(repo.pushedAt, translations.time)}
+          </Badge>
           {repo.isFork && (
             <Badge variant="secondary" className="gap-1.5">
               <GitFork />
-              Fork
+              {translations.fork}
             </Badge>
           )}
           {repo.isPrivate && (
             <Badge variant="secondary" className="gap-1.5">
               <Lock />
-              Private
+              {translations.private}
             </Badge>
           )}
         </div>
@@ -231,17 +248,17 @@ const CheckResults = ({ data }: { data: CheckResponse }) => {
           {
             color: "text-emerald-500",
             count: eligible.length,
-            label: "Eligible",
+            label: translations.eligible,
           },
           {
             color: "text-amber-500",
             count: review.length,
-            label: "Needs Review",
+            label: translations.needsReview,
           },
           {
             color: "text-red-500",
             count: ineligible.length,
-            label: "Ineligible",
+            label: translations.ineligible,
           },
         ].map((s) => (
           <div key={s.label} className="text-center p-4 rounded-lg border">
@@ -252,36 +269,53 @@ const CheckResults = ({ data }: { data: CheckResponse }) => {
       </div>
 
       {eligible.length > 0 && (
-        <ResultSection items={eligible} status="eligible" />
+        <ResultSection
+          items={eligible}
+          status="eligible"
+          translations={translations}
+        />
       )}
       {review.length > 0 && (
-        <ResultSection items={review} status="needs-review" />
+        <ResultSection
+          items={review}
+          status="needs-review"
+          translations={translations}
+        />
       )}
       {ineligible.length > 0 && (
-        <ResultSection items={ineligible} status="ineligible" />
+        <ResultSection
+          items={ineligible}
+          status="ineligible"
+          translations={translations}
+        />
       )}
     </>
   );
 };
 
-export default function CheckPage() {
-  const params = useParams<{
-    lang: string;
-    owner: string;
-    provider: string;
-    repo: string;
-  }>();
+const CheckPageInner = ({ lang, translations }: CheckPageClientProps) => {
+  const searchParams = useSearchParams();
+  const provider = searchParams.get("provider");
+  const owner = searchParams.get("owner");
+  const repo = searchParams.get("repo");
+
   const [data, setData] = useState<CheckResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const hasParams = Boolean(provider && owner && repo);
 
   useEffect(() => {
+    if (!provider || !owner || !repo) {
+      return;
+    }
+
     const fetchResults = async () => {
       setLoading(true);
       setError(null);
       try {
         const res = await fetch(
-          `/api/check?owner=${encodeURIComponent(params.owner)}&repo=${encodeURIComponent(params.repo)}&provider=${encodeURIComponent(params.provider)}`
+          `/api/check?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo)}&provider=${encodeURIComponent(provider)}`
         );
         const json = await res.json();
         if (!res.ok) {
@@ -290,16 +324,33 @@ export default function CheckPage() {
         }
         setData(json as CheckResponse);
       } catch {
-        setError("Failed to fetch eligibility results. Please try again.");
+        setError(translations.fetchError);
       } finally {
         setLoading(false);
       }
     };
     fetchResults();
-  }, [params.owner, params.repo, params.provider]);
+  }, [provider, owner, repo, translations.fetchError]);
+
+  if (!hasParams) {
+    return (
+      <div className="container max-w-4xl flex-1 flex flex-col w-full py-12 px-4 mx-auto">
+        <section className="py-16 sm:py-24 text-center">
+          <h1 className="text-4xl font-bold tracking-tight mb-4">
+            {translations.heading}
+            <span className="text-fd-primary">.</span>
+          </h1>
+          <p className="text-fd-muted-foreground mb-8 max-w-2xl mx-auto">
+            {translations.description}
+          </p>
+          <RepoCheckInput lang={lang} />
+        </section>
+      </div>
+    );
+  }
 
   if (loading) {
-    return <CheckSkeleton owner={params.owner} repo={params.repo} />;
+    return <CheckSkeleton owner={owner ?? ""} repo={repo ?? ""} />;
   }
 
   if (error) {
@@ -307,9 +358,11 @@ export default function CheckPage() {
       <div className="container max-w-4xl flex-1 flex flex-col w-full py-12 px-4 mx-auto">
         <div className="rounded-lg border border-red-500/20 bg-red-500/5 p-8 text-center">
           <CircleX className="mx-auto mb-4 size-10 text-red-500" />
-          <h1 className="text-xl font-semibold mb-2">Check Failed</h1>
+          <h1 className="text-xl font-semibold mb-2">
+            {translations.checkFailed}
+          </h1>
           <p className="text-fd-muted-foreground mb-6">{error}</p>
-          <RepoCheckInput lang={params.lang} />
+          <RepoCheckInput lang={lang} />
         </div>
       </div>
     );
@@ -321,14 +374,22 @@ export default function CheckPage() {
 
   return (
     <div className="container max-w-4xl flex-1 flex flex-col w-full py-12 px-4 mx-auto">
-      <CheckResults data={data} />
+      <CheckResults data={data} translations={translations} />
 
       <Separator className="mb-8" />
 
       <section className="text-center">
-        <h2 className="text-lg font-semibold mb-4">Check another repository</h2>
-        <RepoCheckInput lang={params.lang} />
+        <h2 className="text-lg font-semibold mb-4">
+          {translations.checkAnother}
+        </h2>
+        <RepoCheckInput lang={lang} />
       </section>
     </div>
   );
-}
+};
+
+export const CheckPageClient = (props: CheckPageClientProps) => (
+  <Suspense>
+    <CheckPageInner {...props} />
+  </Suspense>
+);

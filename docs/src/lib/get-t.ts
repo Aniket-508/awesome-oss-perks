@@ -1,6 +1,8 @@
 import "server-only";
 import aboutEn from "@/locales/en/about";
 import type { AboutTranslations } from "@/locales/en/about";
+import checkEn from "@/locales/en/check";
+import type { CheckTranslations } from "@/locales/en/check";
 import commonEn from "@/locales/en/common";
 import type { CommonTranslations } from "@/locales/en/common";
 import footerEn from "@/locales/en/footer";
@@ -16,6 +18,7 @@ import type { SponsorsTranslations } from "@/locales/en/sponsors";
 
 export interface Translations {
   about: AboutTranslations;
+  check: CheckTranslations;
   common: CommonTranslations;
   footer: FooterTranslations;
   home: HomeTranslations;
@@ -27,6 +30,7 @@ export interface Translations {
 const loaders = {
   de: {
     about: () => import("@/locales/de/about"),
+    check: () => import("@/locales/de/check"),
     common: () => import("@/locales/de/common"),
     footer: () => import("@/locales/de/footer"),
     home: () => import("@/locales/de/home"),
@@ -36,6 +40,7 @@ const loaders = {
   },
   en: {
     about: () => import("@/locales/en/about"),
+    check: () => import("@/locales/en/check"),
     common: () => import("@/locales/en/common"),
     footer: () => import("@/locales/en/footer"),
     home: () => import("@/locales/en/home"),
@@ -45,6 +50,7 @@ const loaders = {
   },
   es: {
     about: () => import("@/locales/es/about"),
+    check: () => import("@/locales/es/check"),
     common: () => import("@/locales/es/common"),
     footer: () => import("@/locales/es/footer"),
     home: () => import("@/locales/es/home"),
@@ -54,6 +60,7 @@ const loaders = {
   },
   fr: {
     about: () => import("@/locales/fr/about"),
+    check: () => import("@/locales/fr/check"),
     common: () => import("@/locales/fr/common"),
     footer: () => import("@/locales/fr/footer"),
     home: () => import("@/locales/fr/home"),
@@ -63,6 +70,7 @@ const loaders = {
   },
   ja: {
     about: () => import("@/locales/ja/about"),
+    check: () => import("@/locales/ja/check"),
     common: () => import("@/locales/ja/common"),
     footer: () => import("@/locales/ja/footer"),
     home: () => import("@/locales/ja/home"),
@@ -72,6 +80,7 @@ const loaders = {
   },
   ko: {
     about: () => import("@/locales/ko/about"),
+    check: () => import("@/locales/ko/check"),
     common: () => import("@/locales/ko/common"),
     footer: () => import("@/locales/ko/footer"),
     home: () => import("@/locales/ko/home"),
@@ -81,6 +90,7 @@ const loaders = {
   },
   "pt-BR": {
     about: () => import("@/locales/pt-BR/about"),
+    check: () => import("@/locales/pt-BR/check"),
     common: () => import("@/locales/pt-BR/common"),
     footer: () => import("@/locales/pt-BR/footer"),
     home: () => import("@/locales/pt-BR/home"),
@@ -90,6 +100,7 @@ const loaders = {
   },
   ru: {
     about: () => import("@/locales/ru/about"),
+    check: () => import("@/locales/ru/check"),
     common: () => import("@/locales/ru/common"),
     footer: () => import("@/locales/ru/footer"),
     home: () => import("@/locales/ru/home"),
@@ -99,6 +110,7 @@ const loaders = {
   },
   "zh-CN": {
     about: () => import("@/locales/zh-CN/about"),
+    check: () => import("@/locales/zh-CN/check"),
     common: () => import("@/locales/zh-CN/common"),
     footer: () => import("@/locales/zh-CN/footer"),
     home: () => import("@/locales/zh-CN/home"),
@@ -113,12 +125,16 @@ export type SupportedLocale = keyof typeof loaders;
 export const getT = async (locale: string): Promise<Translations> => {
   const localeLoaders = loaders[locale as SupportedLocale] ?? loaders.en;
 
-  const [about, common, footer, home, people, programs, sponsors] =
+  const [about, check, common, footer, home, people, programs, sponsors] =
     await Promise.all([
       localeLoaders
         .about()
         .then((m) => m.default as AboutTranslations)
         .catch(() => aboutEn),
+      localeLoaders
+        .check()
+        .then((m) => m.default as CheckTranslations)
+        .catch(() => checkEn),
       localeLoaders
         .common()
         .then((m) => m.default as CommonTranslations)
@@ -145,5 +161,5 @@ export const getT = async (locale: string): Promise<Translations> => {
         .catch(() => sponsorsEn),
     ]);
 
-  return { about, common, footer, home, people, programs, sponsors };
+  return { about, check, common, footer, home, people, programs, sponsors };
 };

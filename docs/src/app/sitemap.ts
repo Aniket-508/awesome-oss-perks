@@ -8,6 +8,7 @@ import { i18n, withLocalePrefix } from "@/lib/i18n";
 const staticPaths: `/${string}`[] = [
   ROUTES.HOME,
   ROUTES.ABOUT,
+  ROUTES.CHECK,
   ROUTES.PROGRAMS,
   ROUTES.PEOPLE,
   ROUTES.SPONSORS,
