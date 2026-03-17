@@ -5,6 +5,11 @@
   "url": "https://upstash.com/open-source",
   "applicationUrl": "https://upstash.com/open-source",
   "category": "infrastructure",
+  "contact": {
+    "name": "Josh",
+    "role": "Lead DevRel",
+    "url": "https://x.com/joshtriedcoding"
+  },
   "description": "Upstash supports open-source projects with monthly credit grants, direct technical support, and co-marketing opportunities.",
   "perks": [
     {
