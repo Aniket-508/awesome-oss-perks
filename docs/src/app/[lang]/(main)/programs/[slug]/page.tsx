@@ -1,4 +1,4 @@
-import { programs } from "@ossperks/core";
+import { getAllProgramSlugs } from "@ossperks/core";
 import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -177,7 +177,7 @@ export default async function ProgramPage({
 
 export const generateStaticParams = () =>
   i18n.languages.flatMap((lang) =>
-    programs.map((p) => ({ lang, slug: p.slug }))
+    getAllProgramSlugs().map((slug) => ({ lang, slug }))
   );
 
 export const generateMetadata = async ({

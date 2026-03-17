@@ -292,13 +292,13 @@ export const ContactSubmissionDialog = ({
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="size-4 animate-spin" />
+                        <Loader2 className="animate-spin" />
                         {submissionStatus}
                       </>
                     ) : (
                       <>
                         Submit PR
-                        <ArrowRight className="size-4" />
+                        <ArrowRight />
                       </>
                     )}
                   </Button>
@@ -327,7 +327,7 @@ export const ContactSubmissionDialog = ({
                       rel="noopener noreferrer"
                     >
                       View PR #{result.prNumber}
-                      <ArrowRight className="size-4" />
+                      <ArrowRight />
                     </a>
                   }
                 />

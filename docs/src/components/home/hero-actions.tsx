@@ -41,7 +41,7 @@ export const HeroActions = ({
       render={
         <Link href={withLocalePrefix(lang, ROUTES.PROGRAMS)}>
           {browseProgramsLabel}
-          <ArrowRight className="size-4" />
+          <ArrowRight />
         </Link>
       }
     />

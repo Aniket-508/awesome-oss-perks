@@ -117,18 +117,18 @@ export default async function HomePage({
       <Separator />
 
       {/* Featured Programs */}
-      <section className="py-16">
-        <div className="mb-4 flex gap-2 items-center justify-between">
+      <section className="space-y-4 py-16">
+        <div className="flex gap-2 items-center justify-between">
           <h2 className="text-2xl font-bold">{t.home.featured.heading}</h2>
           <Button
             variant="ghost"
             size="sm"
-            className="shrink-0 text-fd-primary"
+            className="shrink-0 max-sm:hidden text-fd-primary"
             nativeButton={false}
             render={
               <Link href={withLocalePrefix(lang, ROUTES.PROGRAMS)}>
                 {t.home.featured.viewAll}
-                <ArrowRight className="size-4" />
+                <ArrowRight />
               </Link>
             }
           />
@@ -155,13 +155,24 @@ export default async function HomePage({
             );
           })}
         </div>
+        <Button
+          variant="ghost"
+          className="w-full shrink-0 sm:hidden text-fd-primary"
+          nativeButton={false}
+          render={
+            <Link href={withLocalePrefix(lang, ROUTES.PROGRAMS)}>
+              {t.home.featured.viewAll}
+              <ArrowRight />
+            </Link>
+          }
+        />
       </section>
 
       <Separator />
 
       {/* People */}
-      <section className="py-16">
-        <div className="mb-4 flex items-end justify-between">
+      <section className="space-y-4 py-16">
+        <div className="flex items-end justify-between">
           <div>
             <h2 className="text-2xl font-bold mb-1">{t.home.people.heading}</h2>
             <p className="text-fd-muted-foreground">
@@ -171,12 +182,12 @@ export default async function HomePage({
           <Button
             variant="ghost"
             size="sm"
-            className="shrink-0 text-fd-primary"
+            className="shrink-0 max-sm:hidden text-fd-primary"
             nativeButton={false}
             render={
               <Link href={withLocalePrefix(lang, ROUTES.PEOPLE)}>
                 {t.home.people.viewAll}
-                <ArrowRight className="size-4" />
+                <ArrowRight />
               </Link>
             }
           />
@@ -222,6 +233,17 @@ export default async function HomePage({
             );
           })}
         </div>
+        <Button
+          variant="ghost"
+          className="w-full shrink-0 sm:hidden text-fd-primary"
+          nativeButton={false}
+          render={
+            <Link href={withLocalePrefix(lang, ROUTES.PEOPLE)}>
+              {t.home.people.viewAll}
+              <ArrowRight />
+            </Link>
+          }
+        />
       </section>
 
       <Separator />

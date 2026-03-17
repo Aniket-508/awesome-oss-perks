@@ -434,7 +434,7 @@ export const ProgramSubmissionDialog = ({
                             ]);
                           }}
                         >
-                          <Plus className="size-4" />
+                          <Plus />
                           Add another
                         </Button>
                         <FieldError errors={field.state.meta.errors} />
@@ -534,7 +534,7 @@ export const ProgramSubmissionDialog = ({
                             setPerkKeys((prev) => [...prev, nextIdRef.current]);
                           }}
                         >
-                          <Plus className="size-4" />
+                          <Plus />
                           Add perk
                         </Button>
                         <FieldError errors={field.state.meta.errors} />
@@ -560,13 +560,13 @@ export const ProgramSubmissionDialog = ({
                   >
                     {isSubmitting ? (
                       <>
-                        <Loader2 className="size-4 animate-spin" />
+                        <Loader2 className="animate-spin" />
                         {submissionStatus}
                       </>
                     ) : (
                       <>
                         Submit PR
-                        <ArrowRight className="size-4" />
+                        <ArrowRight />
                       </>
                     )}
                   </Button>
@@ -595,7 +595,7 @@ export const ProgramSubmissionDialog = ({
                       rel="noopener noreferrer"
                     >
                       View PR #{result.prNumber}
-                      <ArrowRight className="size-4" />
+                      <ArrowRight />
                     </a>
                   }
                 />

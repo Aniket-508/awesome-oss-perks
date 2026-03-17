@@ -42,7 +42,7 @@ export const HomeCtaWithDialogs = ({
         trigger={
           <Button variant="default" size="lg">
             {translations.submitProgram}
-            <ArrowRight className="size-4" />
+            <ArrowRight />
           </Button>
         }
         translations={programDialogTranslations}
@@ -51,7 +51,7 @@ export const HomeCtaWithDialogs = ({
         trigger={
           <Button variant="outline" size="lg">
             {translations.submitContact}
-            <ArrowRight className="size-4" />
+            <ArrowRight />
           </Button>
         }
         programs={programOptions}
