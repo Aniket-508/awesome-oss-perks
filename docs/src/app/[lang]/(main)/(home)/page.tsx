@@ -67,6 +67,7 @@ export default async function HomePage({
         <HeroActions
           lang={lang}
           browseProgramsLabel={t.home.hero.browsePrograms}
+          inputTranslations={t.check.input}
         />
       </section>
 

@@ -4,35 +4,42 @@ import { parseRepoUrl } from "@ossperks/core";
 import { useForm } from "@tanstack/react-form";
 import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { z } from "zod";
 
 import { Input } from "@/components/ui/input";
 import { ROUTES } from "@/constants/routes";
 import { withLocalePrefix } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
-
-const repoUrlSchema = z.object({
-  url: z
-    .string()
-    .min(1, "Paste a repository URL")
-    .refine((val) => parseRepoUrl(val) !== null, {
-      message: "Please enter a valid GitHub or GitLab repository URL",
-    }),
-});
+import type { CheckTranslations } from "@/locales/en/check";
 
 interface RepoCheckInputProps {
   lang: string;
+  translations: CheckTranslations["input"];
   className?: string;
   compact?: boolean;
 }
 
 export const RepoCheckInput = ({
   lang,
+  translations,
   className,
   compact,
 }: RepoCheckInputProps) => {
   const router = useRouter();
+
+  const schema = useMemo(
+    () =>
+      z.object({
+        url: z
+          .string()
+          .min(1, translations.required)
+          .refine((val) => parseRepoUrl(val) !== null, {
+            message: translations.invalidUrl,
+          }),
+      }),
+    [translations.required, translations.invalidUrl]
+  );
 
   const form = useForm({
     defaultValues: { url: "" },
@@ -45,7 +52,7 @@ export const RepoCheckInput = ({
       router.push(`${withLocalePrefix(lang, ROUTES.CHECK)}${search}`);
     },
     validators: {
-      onSubmit: repoUrlSchema,
+      onSubmit: schema,
     },
   });
 
@@ -75,7 +82,7 @@ export const RepoCheckInput = ({
                 value={field.state.value}
                 onChange={(e) => field.handleChange(e.target.value)}
                 onBlur={field.handleBlur}
-                placeholder="Paste a GitHub or GitLab repo URL..."
+                placeholder={translations.placeholder}
                 aria-invalid={field.state.meta.errors.length > 0}
                 className="pl-10"
               />

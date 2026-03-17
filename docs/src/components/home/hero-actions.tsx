@@ -1,22 +1,29 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 
-import { RepoCheckInput } from "@/components/home/repo-check-input";
+import { RepoCheckInput } from "@/components/check/check-input";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
 import { withLocalePrefix } from "@/lib/i18n";
+import type { CheckTranslations } from "@/locales/en/check";
 
 interface HeroActionsProps {
   lang: string;
   browseProgramsLabel: string;
+  inputTranslations: CheckTranslations["input"];
 }
 
 export const HeroActions = ({
   lang,
   browseProgramsLabel,
+  inputTranslations,
 }: HeroActionsProps) => (
   <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-2xl mx-auto">
-    <RepoCheckInput lang={lang} className="max-w-none" />
+    <RepoCheckInput
+      lang={lang}
+      translations={inputTranslations}
+      className="max-w-none"
+    />
 
     <div className="flex sm:flex-col items-center gap-3 sm:gap-1 w-full sm:w-auto">
       <div className="h-px sm:h-auto sm:w-px flex-1 sm:flex-none sm:min-h-2 bg-fd-border" />
