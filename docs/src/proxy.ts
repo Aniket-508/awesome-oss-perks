@@ -1,29 +1,8 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { createI18nMiddleware } from "fumadocs-core/i18n/middleware";
 
-import { i18n, isLocale } from "@/lib/i18n";
+import { i18n } from "@/lib/i18n";
 
-export const proxy = (request: NextRequest) => {
-  const { pathname } = request.nextUrl;
-  const segment = pathname.split("/").find(Boolean);
-  const locale = segment && isLocale(segment) ? segment : i18n.defaultLanguage;
-
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-next-locale", locale);
-
-  if (segment && isLocale(segment)) {
-    return NextResponse.next({
-      request: { headers: requestHeaders },
-    });
-  }
-
-  const url = request.nextUrl.clone();
-  url.pathname = `/${i18n.defaultLanguage}${pathname}`;
-
-  return NextResponse.rewrite(url, {
-    request: { headers: requestHeaders },
-  });
-};
+export const proxy = createI18nMiddleware(i18n);
 
 export const config = {
   matcher: [
