@@ -2,6 +2,7 @@ import { getPeople, programs } from "@ossperks/core";
 import { ExternalLink, Plus } from "lucide-react";
 import type { Metadata } from "next";
 
+import { ContactAvatar } from "@/components/people/contact-avatar";
 import { ContactSubmissionDialog } from "@/components/people/contact-submission-dialog";
 import { Button } from "@/components/ui/button";
 import { getT } from "@/lib/get-t";
@@ -69,7 +70,6 @@ export default async function PeoplePage({
       ) : (
         <div className="grid gap-4 sm:grid-cols-2">
           {people.map(({ contact, provider }) => {
-            const initial = contact.name.charAt(0).toUpperCase();
             const roleText = t.people.roleAt
               .replace("{role}", contact.role)
               .replace("{provider}", provider);
@@ -79,9 +79,11 @@ export default async function PeoplePage({
                 key={`${contact.name}-${provider}`}
                 className="flex items-center gap-4 rounded-xl p-4 ring-1 ring-foreground/10 transition-colors hover:bg-fd-accent"
               >
-                <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-fd-muted text-fd-foreground font-semibold text-lg">
-                  {initial}
-                </div>
+                <ContactAvatar
+                  name={contact.name}
+                  url={contact.url}
+                  size="md"
+                />
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold truncate">{contact.name}</p>
                   <p className="text-sm text-fd-muted-foreground truncate">

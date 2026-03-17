@@ -1,5 +1,5 @@
 const people = {
-  description: "支持开源项目的计划背后的运营者和联系人。",
+  description: "支持开源项目的计划背后的运营者/联系人。",
   empty: "尚未添加任何计划联系人。将联系人添加到计划数据中即可在此处查看。",
   heading: "人员",
   roleAt: "{role},就职于 {provider}",

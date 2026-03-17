@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { HeroActions } from "@/components/home/hero-actions";
 import { HomeCtaWithDialogs } from "@/components/home/home-cta-with-dialogs";
+import { ContactAvatar } from "@/components/people/contact-avatar";
 import { ProgramCard } from "@/components/programs/program-card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -160,21 +161,21 @@ export default async function HomePage({
             {t.home.people.description}
           </p>
           <div className="flex flex-wrap justify-center gap-8">
-            {people.slice(0, 6).map(({ contact, provider }) => {
-              const initial = contact.name.charAt(0).toUpperCase();
-              return (
-                <div
-                  key={`${contact.name}-${provider}`}
-                  className="flex flex-col items-center gap-2"
-                >
-                  <div className="flex size-16 items-center justify-center rounded-full bg-fd-muted ring-2 ring-fd-primary/30 text-fd-foreground font-semibold text-xl">
-                    {initial}
-                  </div>
-                  <p className="text-sm font-medium">{contact.name}</p>
-                  <p className="text-xs text-fd-muted-foreground">{provider}</p>
-                </div>
-              );
-            })}
+            {people.slice(0, 6).map(({ contact, provider }) => (
+              <div
+                key={`${contact.name}-${provider}`}
+                className="flex flex-col items-center gap-2"
+              >
+                <ContactAvatar
+                  name={contact.name}
+                  url={contact.url}
+                  size="lg"
+                  className="ring-2 ring-fd-primary/30"
+                />
+                <p className="text-sm font-medium">{contact.name}</p>
+                <p className="text-xs text-fd-muted-foreground">{provider}</p>
+              </div>
+            ))}
           </div>
           {people.length > 6 && (
             <div className="mt-6 text-center">

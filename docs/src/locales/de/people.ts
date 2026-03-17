@@ -1,6 +1,6 @@
 const people = {
   description:
-    "Betreiber und Ansprechpartner hinter den Programmen, die Open-Source-Projekte unterstützen.",
+    "Betreiber/Kontakte hinter den Programmen, die Open-Source-Projekte unterstützen.",
   empty:
     "Es wurden noch keine Programm-Ansprechpartner hinzugefügt. Fügen Sie einen Kontakt zu den Programmdaten hinzu, um ihn hier zu sehen.",
   heading: "Personen",

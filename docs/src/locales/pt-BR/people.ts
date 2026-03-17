@@ -1,6 +1,6 @@
 const people = {
   description:
-    "Operadores e contatos por trás dos programas que apoiam projetos de código aberto.",
+    "operadores/contatos por trás dos programas que apoiam projetos de código aberto.",
   empty:
     "Nenhum contato de programa foi adicionado ainda. Adicione um contato aos dados do programa para vê-los aqui.",
   heading: "Pessoas",
