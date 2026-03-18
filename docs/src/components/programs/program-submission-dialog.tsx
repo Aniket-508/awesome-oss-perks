@@ -7,6 +7,7 @@ import { z } from "zod";
 
 import { TagsInput } from "@/components/programs/tags-input";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogBody,
@@ -204,6 +205,9 @@ interface ProgramSubmissionTranslations {
     tagsLabel: string;
     tagsHelp: string;
     tagsPlaceholder: string;
+    applicationUrlCheckbox: string;
+    applicationUrlLabel: string;
+    applicationUrlPlaceholder: string;
     tagsAddNew: string;
     tagsNoResults: string;
   };
@@ -211,6 +215,7 @@ interface ProgramSubmissionTranslations {
     categoryRequired: string;
     descriptionRequired: string;
     eligibilityRequired: string;
+    invalidApplicationUrl: string;
     nameRequired: string;
     perkRequired: string;
     providerRequired: string;
@@ -250,6 +255,7 @@ export const ProgramSubmissionDialog = ({
   const [applicationProcessKeys, setApplicationProcessKeys] = useState<
     number[]
   >([0]);
+  const [hasApplicationUrl, setHasApplicationUrl] = useState(false);
 
   const t = translations;
 
@@ -257,6 +263,10 @@ export const ProgramSubmissionDialog = ({
     () =>
       z.object({
         applicationProcess: z.array(z.string()),
+        applicationUrl: z
+          .string()
+          .url(t.validation.invalidApplicationUrl)
+          .or(z.literal("")),
         category: z.string().min(1, t.validation.categoryRequired),
         description: z.string().min(1, t.validation.descriptionRequired),
         eligibility: z
@@ -292,6 +302,7 @@ export const ProgramSubmissionDialog = ({
   const form = useForm({
     defaultValues: {
       applicationProcess: [""],
+      applicationUrl: "",
       category: "",
       description: "",
       eligibility: [""],
@@ -311,6 +322,9 @@ export const ProgramSubmissionDialog = ({
       );
       const res = await submit({
         applicationProcess,
+        ...(value.applicationUrl.trim() && {
+          applicationUrl: value.applicationUrl.trim(),
+        }),
         category: value.category,
         description: value.description,
         eligibility,
@@ -336,6 +350,7 @@ export const ProgramSubmissionDialog = ({
     setEligibilityKeys([0]);
     setPerkKeys([0]);
     setApplicationProcessKeys([0]);
+    setHasApplicationUrl(false);
     setTimeout(() => {
       setStep("form");
       form.reset();
@@ -414,6 +429,36 @@ export const ProgramSubmissionDialog = ({
                   )}
                 </form.Field>
 
+                <div className="space-y-4">
+                  <label className="flex items-center gap-2 text-sm cursor-pointer">
+                    <Checkbox
+                      checked={hasApplicationUrl}
+                      onCheckedChange={(checked) => {
+                        setHasApplicationUrl(checked);
+                        if (!checked) {
+                          form.setFieldValue("applicationUrl", "");
+                        }
+                      }}
+                      disabled={isSubmitting}
+                    />
+                    {t.form.applicationUrlCheckbox}
+                  </label>
+                  {hasApplicationUrl && (
+                    <form.Field name="applicationUrl">
+                      {(field) => (
+                        <TextField
+                          field={field}
+                          id="prog-application-url"
+                          label={t.form.applicationUrlLabel}
+                          placeholder={t.form.applicationUrlPlaceholder}
+                          type="url"
+                          disabled={isSubmitting}
+                        />
+                      )}
+                    </form.Field>
+                  )}
+                </div>
+
                 <form.Field name="category">
                   {(field) => {
                     const handleChange = (val: string | number | null) =>
@@ -429,12 +474,14 @@ export const ProgramSubmissionDialog = ({
                           <SelectTrigger className="w-full">
                             <SelectValue
                               placeholder={t.form.categoryPlaceholder}
-                            />
+                            >
+                              {categoryLabels[field.state.value]}
+                            </SelectValue>
                           </SelectTrigger>
                           <SelectContent>
                             {CATEGORY_VALUES.map((val) => (
                               <SelectItem key={val} value={val}>
-                                {categoryLabels[val] ?? val}
+                                {categoryLabels[val]}
                               </SelectItem>
                             ))}
                           </SelectContent>
