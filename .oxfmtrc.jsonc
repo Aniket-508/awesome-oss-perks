@@ -8,6 +8,7 @@
     "**/node_modules/**",
     "**/tsconfig.tsbuildinfo",
     "docs/content/programs/**",
+    "docs/src/locales/**",
   ],
   "printWidth": 80,
   "tabWidth": 2,
