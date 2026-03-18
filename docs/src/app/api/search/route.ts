@@ -2,7 +2,7 @@ import { createTokenizer as createJapaneseTokenizer } from "@orama/tokenizers/ja
 import { createTokenizer as createMandarinTokenizer } from "@orama/tokenizers/mandarin";
 import { createI18nSearchAPI } from "fumadocs-core/search/server";
 
-import { i18n } from "@/lib/i18n";
+import { i18n } from "@/i18n/config";
 import { cliSource, programsSource } from "@/lib/source";
 
 export const revalidate = false;

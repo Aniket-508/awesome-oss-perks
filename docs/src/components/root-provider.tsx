@@ -5,7 +5,8 @@ import { usePathname, useRouter } from "next/navigation";
 import type { ComponentProps } from "react";
 import { useCallback } from "react";
 
-import { isLocale, withLocalePrefix } from "@/lib/i18n";
+import { isLocale } from "@/i18n/config";
+import { withLocalePrefix } from "@/i18n/navigation";
 
 type FumadocsRootProviderProps = ComponentProps<typeof FumadocsRootProvider>;
 

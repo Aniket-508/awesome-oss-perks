@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { withLocalePrefix } from "@/lib/i18n";
+import { withLocalePrefix } from "@/i18n/navigation";
 
 interface ProgramWithPerkTypes extends Program {
   perkTypes: PerkType[];

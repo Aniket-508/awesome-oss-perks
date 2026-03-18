@@ -9,8 +9,8 @@ import { RepoCheckInput } from "@/components/check/check-input";
 import { CheckResults } from "@/components/check/check-results";
 import { Separator } from "@/components/ui/separator";
 import { useCheckData } from "@/hooks/use-check-data";
+import { translateReasons } from "@/i18n/translate-reasons";
 import { CHECK_PAGE_CONTAINER, DEFAULT_PROVIDER } from "@/lib/check";
-import { translateReasons } from "@/lib/translate-reasons";
 import type { CheckTranslations } from "@/locales/en/check";
 import type { ProgramTranslationMap } from "@/types/check";
 

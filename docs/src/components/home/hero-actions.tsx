@@ -4,7 +4,7 @@ import Link from "next/link";
 import { RepoCheckInput } from "@/components/check/check-input";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
-import { withLocalePrefix } from "@/lib/i18n";
+import { withLocalePrefix } from "@/i18n/navigation";
 import type { CheckTranslations } from "@/locales/en/check";
 
 interface HeroActionsProps {

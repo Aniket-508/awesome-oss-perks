@@ -6,8 +6,9 @@ import Link from "next/link";
 import { ContactSubmissionDialog } from "@/components/people/contact-submission-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { getT } from "@/lib/get-t";
-import { i18n, withLocalePrefix } from "@/lib/i18n";
+import { i18n } from "@/i18n/config";
+import { getT } from "@/i18n/get-t";
+import { withLocalePrefix } from "@/i18n/navigation";
 import { getUnavatarUrl } from "@/lib/unavatar";
 import { createMetadata } from "@/seo/metadata";
 

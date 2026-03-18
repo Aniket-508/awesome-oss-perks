@@ -9,8 +9,8 @@ import type { Metadata } from "next";
 import { ProgramSubmissionDialog } from "@/components/programs/program-submission-dialog";
 import { ProgramsFilter } from "@/components/programs/programs-filter";
 import { Button } from "@/components/ui/button";
-import { getT } from "@/lib/get-t";
-import { i18n } from "@/lib/i18n";
+import { i18n } from "@/i18n/config";
+import { getT } from "@/i18n/get-t";
 import { getPrograms } from "@/lib/programs";
 import { createMetadata } from "@/seo/metadata";
 

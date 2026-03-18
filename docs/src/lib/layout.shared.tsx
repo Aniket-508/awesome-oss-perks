@@ -4,7 +4,8 @@ import { LogoMark } from "@/components/logo";
 import { LINK } from "@/constants/links";
 import { ROUTES } from "@/constants/routes";
 import { SITE } from "@/constants/site";
-import { i18n, withLocalePrefix } from "@/lib/i18n";
+import { i18n } from "@/i18n/config";
+import { withLocalePrefix } from "@/i18n/navigation";
 
 export const baseOptions = (locale: string): BaseLayoutProps => ({
   githubUrl: LINK.GITHUB,

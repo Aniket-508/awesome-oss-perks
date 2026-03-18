@@ -1,6 +1,6 @@
 import { LINK } from "@/constants/links";
 import { SITE } from "@/constants/site";
-import { i18n } from "@/lib/i18n";
+import { i18n } from "@/i18n/config";
 
 const LOCALE_TO_BCP47: Record<string, string> = {
   en: "en-US",

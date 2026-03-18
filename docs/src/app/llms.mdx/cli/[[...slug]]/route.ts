@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 
-import { buildLocaleSlugs, i18n, parseLocaleSlugs } from "@/lib/i18n";
+import { i18n } from "@/i18n/config";
+import { buildLocaleSlugs, parseLocaleSlugs } from "@/i18n/navigation";
 import { cliSource, getLLMText } from "@/lib/source";
 
 export const revalidate = false;

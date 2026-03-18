@@ -6,8 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { GITHUB_CONFIG } from "@/constants/links";
 import { ROUTES } from "@/constants/routes";
-import { getT } from "@/lib/get-t";
-import { i18n, withLocalePrefix } from "@/lib/i18n";
+import { i18n } from "@/i18n/config";
+import { getT } from "@/i18n/get-t";
+import { withLocalePrefix } from "@/i18n/navigation";
 import { createMetadata } from "@/seo/metadata";
 
 export const generateStaticParams = () =>

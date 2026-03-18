@@ -13,8 +13,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ROUTES } from "@/constants/routes";
+import { withLocalePrefix } from "@/i18n/navigation";
 import { STATUS_CONFIG } from "@/lib/check";
-import { withLocalePrefix } from "@/lib/i18n";
 import type { CheckTranslations } from "@/locales/en/check";
 import type { TranslatedCheckResult } from "@/types/check";
 

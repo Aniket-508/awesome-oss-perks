@@ -4,7 +4,7 @@ import type { InferPageType } from "fumadocs-core/source";
 import { lucideIconsPlugin } from "fumadocs-core/source/lucide-icons";
 
 import { ROUTES } from "@/constants/routes";
-import { i18n } from "@/lib/i18n";
+import { i18n } from "@/i18n/config";
 
 export const cliSource = loader({
   baseUrl: ROUTES.CLI,

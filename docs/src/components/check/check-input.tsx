@@ -9,7 +9,7 @@ import { z } from "zod";
 
 import { Input } from "@/components/ui/input";
 import { ROUTES } from "@/constants/routes";
-import { withLocalePrefix } from "@/lib/i18n";
+import { withLocalePrefix } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import type { CheckTranslations } from "@/locales/en/check";
 

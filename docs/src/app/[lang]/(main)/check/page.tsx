@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 
 import { RepoCheckInput } from "@/components/check/check-input";
 import { Separator } from "@/components/ui/separator";
+import { i18n } from "@/i18n/config";
+import { getT } from "@/i18n/get-t";
 import { CHECK_PAGE_CONTAINER } from "@/lib/check";
-import { getT } from "@/lib/get-t";
-import { i18n } from "@/lib/i18n";
 import { getPrograms } from "@/lib/programs";
 import { createMetadata } from "@/seo/metadata";
 import type { ProgramTranslationMap } from "@/types/check";
