@@ -45,13 +45,12 @@ jobs:
       - name: Generate README
         run: pnpm generate:readme
 
+      - name: Translate
+        run: pnpm --filter docs i18n:run
+        env:
+          LINGO_API_KEY: ${{ secrets.LINGO_API_KEY }}
+
       - name: Commit generated files
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: auto-generate content from program data"
-
-      - name: Translate
-        uses: lingodotdev/lingo.dev@main
-        with:
-          api-key: ${{ secrets.LINGO_API_KEY }}
-          working-directory: docs
+          commit_message: "chore: auto-generate content and translations"
