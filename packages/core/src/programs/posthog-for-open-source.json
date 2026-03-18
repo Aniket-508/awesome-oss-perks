@@ -7,9 +7,11 @@
   "description": "Free credits for small open-source projects covering product analytics, session replay, feature flags, error tracking, and more.",
   "perks": [
     {
+      "title": "PostHog Credits",
       "description": "$50,000 in credits covering all products including product analytics, session replay, feature flags, experiments, and error tracking."
     },
     {
+      "title": "Credit Expiry Waiver",
       "description": "Standard 12-month credit expiry limit waived for qualifying OSS projects upon request."
     }
   ],
