@@ -89,6 +89,8 @@ export const TagsInput = ({
       onInputValueChange={setInputValue}
       inputValue={inputValue}
       disabled={disabled}
+      items={allItems}
+      filteredItems={filteredItems}
     >
       {/* eslint-disable react-perf/jsx-no-new-function-as-prop */}
       <ComboboxChips ref={anchor}>
@@ -103,7 +105,7 @@ export const TagsInput = ({
         />
       </ComboboxChips>
 
-      <ComboboxContent anchor={anchor}>
+      <ComboboxContent anchor={anchor} side="top">
         <ComboboxList>
           {(item: string) => (
             <ComboboxItem key={item} value={item}>
