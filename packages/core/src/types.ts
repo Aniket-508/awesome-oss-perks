@@ -22,15 +22,17 @@ export interface PersonDetail {
   programs: ProgramSummary[];
 }
 
+export type RepoProvider = "github" | "gitlab";
+
 export interface RepoRef {
-  provider: "github" | "gitlab";
+  provider: RepoProvider;
   owner: string;
   path: string;
   repo: string;
 }
 
 export interface RepoContext {
-  provider: "github" | "gitlab";
+  provider: RepoProvider;
   owner: string;
   path: string;
   repo: string;

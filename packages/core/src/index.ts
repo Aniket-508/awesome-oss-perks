@@ -117,5 +117,6 @@ export type {
   ProgramEligibilityDetailed,
   ProgramSummary,
   RepoContext,
+  RepoProvider,
   RepoRef,
 } from "./types";
