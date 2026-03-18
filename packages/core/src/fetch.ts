@@ -112,7 +112,9 @@ const throwGitLabError = (
 
 export const fetchGitLab = async (ref: RepoRef): Promise<RepoContext> => {
   try {
-    const data = await gitlabClient.Projects.show(ref.path);
+    const data = await gitlabClient.Projects.show(ref.path, {
+      license: true,
+    });
 
     return {
       createdAt: new Date(data.created_at),
@@ -128,7 +130,7 @@ export const fetchGitLab = async (ref: RepoRef): Promise<RepoContext> => {
       pushedAt: new Date(data.last_activity_at),
       repo: ref.repo,
       stars: data.star_count,
-      topics: [],
+      topics: data.topics ?? [],
     };
   } catch (error) {
     const status = getErrorStatus(error);
