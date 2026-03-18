@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "prebuild": "node scripts/generate-programs-mdx.mjs",
-    "build": "next build",
+    "build": "pnpm generate:programs && next build",
     "dev": "pnpm --filter @ossperks/core generate && pnpm generate:programs && next dev",
     "start": "next start",
     "generate:programs": "node scripts/generate-programs-mdx.mjs",
