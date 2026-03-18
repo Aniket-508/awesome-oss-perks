@@ -53,4 +53,5 @@ jobs:
       - name: Translate
         uses: lingodotdev/lingo.dev@main
         with:
+          api-key: ${{ secrets.LINGO_API_KEY }}
           working-directory: docs
