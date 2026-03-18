@@ -21,8 +21,14 @@ const buildProgramJson = (
   submission: ProgramSubmission,
   slug: string
 ): string => {
-  const applicationProcess = (submission.applicationProcess ?? []).filter(
-    (s) => s.trim().length > 0
+  const eligibility = submission.eligibility
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+  const applicationProcess = (submission.applicationProcess ?? [])
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
+  const perks = submission.perks.filter(
+    (p) => p.title.trim().length > 0 && p.description.trim().length > 0
   );
   const tags =
     submission.tags && submission.tags.length > 0
@@ -30,24 +36,31 @@ const buildProgramJson = (
       : ["open-source"];
 
   const program: Record<string, unknown> = {
+    ...(applicationProcess.length > 0 && { applicationProcess }),
     category: submission.category,
     description: submission.description,
-    eligibility: submission.eligibility.filter((s) => s.trim().length > 0),
+    eligibility,
     name: submission.name,
-    perks: submission.perks.filter(
-      (p) => p.title.trim().length > 0 && p.description.trim().length > 0
-    ),
+    perks,
     provider: submission.provider,
     slug,
     tags,
     url: submission.url,
   };
 
-  if (applicationProcess.length > 0) {
-    program.applicationProcess = applicationProcess;
-  }
-
-  return `${JSON.stringify(program, null, 2)}\n`;
+  const keyOrder = [
+    "slug",
+    "name",
+    "provider",
+    "url",
+    "category",
+    "description",
+    "perks",
+    "eligibility",
+    "applicationProcess",
+    "tags",
+  ];
+  return `${JSON.stringify(program, keyOrder, 2)}\n`;
 };
 
 const buildPRBody = (submission: ProgramSubmission): string => {
@@ -94,13 +107,63 @@ ${perksList || "- (none)"}
 `;
 };
 
+const CATEGORY_HEADINGS: Record<string, string> = {
+  ai: "## AI & Machine Learning",
+  analytics: "## Analytics",
+  "ci-cd": "## CI/CD",
+  communication: "## Communication",
+  credentials: "## Credentials & Secrets",
+  devtools: "## Developer Tools",
+  funding: "## Funding",
+  hosting: "## Hosting & Deployment",
+  infrastructure: "## Infrastructure",
+  monitoring: "## Monitoring & Observability",
+  security: "## Security",
+  testing: "## Testing",
+};
+
+const buildReadmeEntry = (submission: ProgramSubmission): string =>
+  `- [${submission.name}](${submission.url}) - ${submission.description}`;
+
+const insertReadmeEntry = (
+  readme: string,
+  submission: ProgramSubmission
+): string => {
+  const heading = CATEGORY_HEADINGS[submission.category];
+  if (!heading) {
+    return readme;
+  }
+
+  const entry = buildReadmeEntry(submission);
+  const headingIndex = readme.indexOf(heading);
+  if (headingIndex === -1) {
+    return readme;
+  }
+
+  const afterHeading = readme.indexOf("\n", headingIndex) + 1;
+  const nextSectionMatch = readme.slice(afterHeading).search(/^## /m);
+  const sectionEnd =
+    nextSectionMatch === -1
+      ? readme.length
+      : afterHeading + nextSectionMatch - 1;
+  const section = readme.slice(afterHeading, sectionEnd);
+
+  const lines = section.split("\n").filter((l) => l.startsWith("- "));
+  lines.push(entry);
+  lines.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
+
+  const newSection = `\n${lines.join("\n")}\n`;
+  return readme.slice(0, afterHeading) + newSection + readme.slice(sectionEnd);
+};
+
 const createProgramPR = async (
   submission: ProgramSubmission,
   githubToken: string
 ) => {
   const octokit = new Octokit({ auth: githubToken });
   const slug = formatSlug(submission.name);
-  const filePath = `packages/core/src/programs/${slug}.json`;
+  const jsonPath = `packages/core/src/programs/${slug}.json`;
+  const readmePath = "README.md";
   const branchName = `add-program-${slug}-${Date.now()}`;
 
   const { data: ref } = await octokit.git.getRef({
@@ -123,8 +186,36 @@ const createProgramPR = async (
     content: Buffer.from(content).toString("base64"),
     message: `feat: Add ${submission.name} program`,
     owner: GITHUB_CONFIG.user,
-    path: filePath,
+    path: jsonPath,
     repo: GITHUB_CONFIG.repo,
+  });
+
+  const { data: readmeData } = await octokit.repos.getContent({
+    owner: GITHUB_CONFIG.user,
+    path: readmePath,
+    ref: branchName,
+    repo: GITHUB_CONFIG.repo,
+  });
+
+  if (
+    Array.isArray(readmeData) ||
+    !("content" in readmeData) ||
+    !readmeData.sha
+  ) {
+    throw new Error("Could not read README.md");
+  }
+
+  const currentReadme = Buffer.from(readmeData.content, "base64").toString();
+  const updatedReadme = insertReadmeEntry(currentReadme, submission);
+
+  await octokit.repos.createOrUpdateFileContents({
+    branch: branchName,
+    content: Buffer.from(updatedReadme).toString("base64"),
+    message: `docs: Add ${submission.name} to README`,
+    owner: GITHUB_CONFIG.user,
+    path: readmePath,
+    repo: GITHUB_CONFIG.repo,
+    sha: readmeData.sha,
   });
 
   const { data: pr } = await octokit.pulls.create({

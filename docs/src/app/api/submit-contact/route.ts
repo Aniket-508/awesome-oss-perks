@@ -52,12 +52,10 @@ const createContactPR = async (
   const programData = JSON.parse(currentContent);
 
   const contact: Record<string, string> = {
-    name: submission.name,
-    role: submission.role,
+    name: submission.name.trim(),
+    role: submission.role.trim(),
+    ...(submission.url?.trim() && { url: submission.url.trim() }),
   };
-  if (submission.url) {
-    contact.url = submission.url;
-  }
   programData.contact = contact;
 
   const updatedContent = `${JSON.stringify(programData, null, 2)}\n`;
