@@ -5,14 +5,16 @@ import { ROUTES } from "@/constants/routes";
 import { SITE } from "@/constants/site";
 import { i18n } from "@/i18n/config";
 import { withLocalePrefix } from "@/i18n/navigation";
+import { cliSource } from "@/lib/source";
 
-const staticPaths: `/${string}`[] = [
-  ROUTES.HOME,
-  ROUTES.ABOUT,
-  ROUTES.CHECK,
-  ROUTES.PROGRAMS,
-  ROUTES.PEOPLE,
-  ROUTES.SPONSORS,
+const STATIC_PATHS: { path: `/${string}`; priority: number }[] = [
+  { path: ROUTES.HOME, priority: 1 },
+  { path: ROUTES.ABOUT, priority: 0.5 },
+  { path: ROUTES.CHECK, priority: 0.7 },
+  { path: ROUTES.PROGRAMS, priority: 0.9 },
+  { path: ROUTES.PEOPLE, priority: 0.7 },
+  { path: ROUTES.SPONSORS, priority: 0.5 },
+  { path: ROUTES.CLI, priority: 0.9 },
 ];
 
 const buildAlternates = (
@@ -30,13 +32,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
   const entries: MetadataRoute.Sitemap = [];
 
-  for (const path of staticPaths) {
+  for (const { path, priority } of STATIC_PATHS) {
     entries.push({
       alternates: buildAlternates(path),
       changeFrequency: "weekly" as const,
       lastModified,
-      priority: path === ROUTES.HOME ? 1 : 0.8,
-      url: `${SITE.URL}${path}`,
+      priority,
+      url: `${SITE.URL}${withLocalePrefix(i18n.defaultLanguage, path)}`,
     });
   }
 
@@ -46,8 +48,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
       alternates: buildAlternates(path),
       changeFrequency: "weekly" as const,
       lastModified,
-      priority: 0.7,
-      url: `${SITE.URL}${path}`,
+      priority: 0.8,
+      url: `${SITE.URL}${withLocalePrefix(i18n.defaultLanguage, path)}`,
+    });
+  }
+
+  const cliSlugs = [
+    ...new Map(
+      cliSource
+        .getPages()
+        .filter((page) => page.locale === i18n.defaultLanguage)
+        .map((page) => {
+          const slugs = page.slugs ?? [];
+          return [slugs.join("/"), slugs] as const;
+        })
+    ).values(),
+  ];
+
+  for (const slugs of cliSlugs) {
+    const path =
+      `${ROUTES.CLI}${slugs.length > 0 ? `/${slugs.join("/")}` : ""}` as `/${string}`;
+    entries.push({
+      alternates: buildAlternates(path),
+      changeFrequency: "weekly" as const,
+      lastModified,
+      priority: 0.8,
+      url: `${SITE.URL}${withLocalePrefix(i18n.defaultLanguage, path)}`,
     });
   }
 
