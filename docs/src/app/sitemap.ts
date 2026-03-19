@@ -27,13 +27,14 @@ const buildAlternates = (
 };
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const lastModified = new Date();
   const entries: MetadataRoute.Sitemap = [];
 
   for (const path of staticPaths) {
     entries.push({
       alternates: buildAlternates(path),
       changeFrequency: "weekly" as const,
-      lastModified: new Date(),
+      lastModified,
       priority: path === ROUTES.HOME ? 1 : 0.8,
       url: `${SITE.URL}${path}`,
     });
@@ -44,7 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entries.push({
       alternates: buildAlternates(path),
       changeFrequency: "weekly" as const,
-      lastModified: new Date(),
+      lastModified,
       priority: 0.7,
       url: `${SITE.URL}${path}`,
     });
