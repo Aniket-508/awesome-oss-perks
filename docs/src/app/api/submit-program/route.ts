@@ -23,12 +23,12 @@ const collapseShortArrays = (json: string): string =>
         .map((l) => l.trim().replace(/,$/, ""));
       const collapsed = `${indent}"${key}": [${values.join(", ")}]`;
       return collapsed.length <= PRINT_WIDTH ? collapsed : match;
-    }
+    },
   );
 
 const buildProgramJson = (
   submission: ProgramSubmission,
-  slug: string
+  slug: string,
 ): string => {
   const eligibility = submission.eligibility
     .map((s) => s.trim())
@@ -37,7 +37,7 @@ const buildProgramJson = (
     .map((s) => s.trim())
     .filter((s) => s.length > 0);
   const perks = submission.perks.filter(
-    (p) => p.title.trim().length > 0 && p.description.trim().length > 0
+    (p) => p.title.trim().length > 0 && p.description.trim().length > 0,
   );
   const tags =
     submission.tags && submission.tags.length > 0
@@ -123,7 +123,7 @@ ${perksList || "- (none)"}
 
 const createProgramPR = async (
   submission: ProgramSubmission,
-  githubToken: string
+  githubToken: string,
 ) => {
   const octokit = new Octokit({ auth: githubToken });
   const slug = formatSlug(submission.name);
@@ -180,7 +180,7 @@ export const POST = async (request: NextRequest) => {
         p &&
         typeof p === "object" &&
         String(p.title).trim().length > 0 &&
-        String(p.description).trim().length > 0
+        String(p.description).trim().length > 0,
     );
 
     if (
@@ -194,19 +194,19 @@ export const POST = async (request: NextRequest) => {
         {
           error: "Name, provider, URL, category, and description are required",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
     if (!hasEligibility) {
       return NextResponse.json(
         { error: "At least one eligibility item is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     if (!hasPerks) {
       return NextResponse.json(
         { error: "At least one perk with title and description is required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -214,7 +214,7 @@ export const POST = async (request: NextRequest) => {
     if (!githubToken) {
       return NextResponse.json(
         { error: "Server configuration error" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 

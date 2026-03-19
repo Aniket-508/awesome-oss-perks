@@ -18,7 +18,7 @@ const PROGRAMS_SRC = path.join(
   "packages",
   "core",
   "src",
-  "programs"
+  "programs",
 );
 const OUT_DIR = path.join(__dirname, "..", "content", "programs", "en");
 

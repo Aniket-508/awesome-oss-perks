@@ -12,7 +12,7 @@ interface TranslateReasonOptions {
 const interpolate = (
   template: string,
   params: Record<string, number | string>,
-  formatNumber?: (value: number) => string
+  formatNumber?: (value: number) => string,
 ) => {
   let result = template;
   for (const [k, v] of Object.entries(params)) {
@@ -31,7 +31,7 @@ const translateReason = (
   reason: EligibilityReason,
   translatedEligibility: string[],
   templates: ReasonTemplates,
-  { canTranslateRuleReasons = true, formatNumber }: TranslateReasonOptions = {}
+  { canTranslateRuleReasons = true, formatNumber }: TranslateReasonOptions = {},
 ) => {
   if (reason.code === "rule") {
     if (
@@ -55,8 +55,8 @@ export const translateReasons = (
   reasons: EligibilityReason[],
   translatedEligibility: string[],
   templates: ReasonTemplates,
-  options?: TranslateReasonOptions
+  options?: TranslateReasonOptions,
 ): string[] =>
   reasons.map((reason) =>
-    translateReason(reason, translatedEligibility, templates, options)
+    translateReason(reason, translatedEligibility, templates, options),
   );

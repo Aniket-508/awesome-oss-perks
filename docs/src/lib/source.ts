@@ -30,7 +30,7 @@ export const getCliPageImage = (page: InferPageType<typeof cliSource>) => {
 };
 
 export const getProgramPageImage = (
-  page: InferPageType<typeof programsSource>
+  page: InferPageType<typeof programsSource>,
 ) => {
   const locale = page.locale ?? i18n.defaultLanguage;
   const [slug] = page.slugs;
@@ -44,7 +44,7 @@ export const getProgramPageImage = (
 };
 
 export const getLLMText = async (
-  page: InferPageType<typeof cliSource> | InferPageType<typeof programsSource>
+  page: InferPageType<typeof cliSource> | InferPageType<typeof programsSource>,
 ) => {
   const processed = await page.data.getText("processed");
 

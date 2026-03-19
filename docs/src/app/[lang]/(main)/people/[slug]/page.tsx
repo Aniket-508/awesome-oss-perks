@@ -33,7 +33,7 @@ export default async function PersonPage({
     Promise.all(person.programs.map((p) => getProgram(p.slug, lang))),
   ]);
   const programs = translatedPrograms.filter(
-    (p): p is Program => p !== undefined
+    (p): p is Program => p !== undefined,
   );
 
   const { contact } = person;
@@ -49,7 +49,7 @@ export default async function PersonPage({
     (contact.url.includes("x.com") || contact.url.includes("twitter.com"));
 
   return (
-    <div className="max-w-3xl flex-1 flex flex-col w-full py-12 px-4 mx-auto">
+    <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 py-12">
       <div className="mb-8">
         <Button
           variant="link"
@@ -65,8 +65,8 @@ export default async function PersonPage({
       </div>
 
       {/* Profile header */}
-      <div className="flex items-start gap-6 mb-8">
-        <Avatar className="size-16 ring-2 ring-fd-primary/20">
+      <div className="mb-8 flex items-start gap-6">
+        <Avatar className="ring-fd-primary/20 size-16 ring-2">
           {contact.url &&
             (() => {
               const avatarUrl = getUnavatarUrl(contact.url);
@@ -78,10 +78,10 @@ export default async function PersonPage({
             {contact.name.charAt(0).toUpperCase()}
           </AvatarFallback>
         </Avatar>
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           <h1 className="text-3xl font-bold">{contact.name}</h1>
           <p className="text-fd-muted-foreground mt-1">{roleText}</p>
-          <div className="flex items-center gap-3 mt-3">
+          <div className="mt-3 flex items-center gap-3">
             {contact.url && isTwitterUrl && (
               <a
                 href={contact.url}
@@ -147,7 +147,7 @@ export default async function PersonPage({
               ] ?? program.category;
             const programHref = withLocalePrefix(
               lang,
-              `${ROUTES.PROGRAMS}/${program.slug}` as `/${string}`
+              `${ROUTES.PROGRAMS}/${program.slug}` as `/${string}`,
             );
             return (
               <ProgramCard
@@ -168,7 +168,7 @@ export default async function PersonPage({
 
 export const generateStaticParams = () =>
   i18n.languages.flatMap((lang) =>
-    getAllPeopleSlugs().map((slug) => ({ lang, slug }))
+    getAllPeopleSlugs().map((slug) => ({ lang, slug })),
   );
 
 export const generateMetadata = async ({

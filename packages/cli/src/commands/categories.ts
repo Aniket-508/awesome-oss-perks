@@ -23,8 +23,8 @@ export const categoriesCommand = new Command("categories")
             label: CATEGORY_LABELS[c],
           })),
           null,
-          2
-        )
+          2,
+        ),
       );
       return;
     }
@@ -36,7 +36,7 @@ export const categoriesCommand = new Command("categories")
       const count = getProgramsByCategory(category).length;
       const label = CATEGORY_LABELS[category].padEnd(30);
       console.log(
-        `  ${pc.bold(category.padEnd(16))} ${pc.dim(label)} ${pc.dim(`(${count})`)}`
+        `  ${pc.bold(category.padEnd(16))} ${pc.dim(label)} ${pc.dim(`(${count})`)}`,
       );
     }
     console.log();

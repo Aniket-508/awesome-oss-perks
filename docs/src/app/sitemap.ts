@@ -18,7 +18,7 @@ const STATIC_PATHS: { path: `/${string}`; priority: number }[] = [
 ];
 
 const buildAlternates = (
-  path: `/${string}`
+  path: `/${string}`,
 ): { languages: Record<string, string> } => {
   const languages: Record<string, string> = {};
   for (const lang of i18n.languages) {
@@ -61,7 +61,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         .map((page) => {
           const slugs = page.slugs ?? [];
           return [slugs.join("/"), slugs] as const;
-        })
+        }),
     ).values(),
   ];
 

@@ -21,7 +21,7 @@ const defaultLabels: SubmissionLabels = {
 
 export const useSubmission = (
   endpoint: string,
-  labels: SubmissionLabels = defaultLabels
+  labels: SubmissionLabels = defaultLabels,
 ) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
@@ -60,7 +60,7 @@ export const useSubmission = (
         setSubmissionStatus(null);
       }
     },
-    [endpoint, labels]
+    [endpoint, labels],
   );
 
   return { isSubmitting, submissionError, submissionStatus, submit };

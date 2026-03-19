@@ -20,7 +20,7 @@ export const listCommand = new Command("list")
       const categories = getCategories() as string[];
       if (!categories.includes(opts.category)) {
         error(
-          `Unknown category "${opts.category}". Valid categories: ${categories.join(", ")}`
+          `Unknown category "${opts.category}". Valid categories: ${categories.join(", ")}`,
         );
         process.exit(1);
       }

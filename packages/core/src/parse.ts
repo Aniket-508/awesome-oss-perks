@@ -14,7 +14,7 @@ const toUrl = (raw: string): URL | null => {
   }
   try {
     return new URL(
-      /^https?:\/\//i.test(normalized) ? normalized : `https://${normalized}`
+      /^https?:\/\//i.test(normalized) ? normalized : `https://${normalized}`,
     );
   } catch {
     return null;

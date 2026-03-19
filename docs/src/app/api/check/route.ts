@@ -53,7 +53,7 @@ const validateParams = (searchParams: URLSearchParams) => {
           error: "Missing required query parameters: owner, repo",
           errorCode: CheckApiErrorCode.MissingParams,
         },
-        { status: 400 }
+        { status: 400 },
       ),
     };
   }
@@ -65,7 +65,7 @@ const validateParams = (searchParams: URLSearchParams) => {
           error: 'Invalid provider. Must be "github" or "gitlab".',
           errorCode: CheckApiErrorCode.InvalidProvider,
         },
-        { status: 400 }
+        { status: 400 },
       ),
     };
   }
@@ -131,7 +131,7 @@ export const GET = async (req: NextRequest) => {
         error: "Rate limit exceeded. Try again in a minute.",
         errorCode: CheckApiErrorCode.RateLimit,
       },
-      { status: 429 }
+      { status: 429 },
     );
   }
 
@@ -158,7 +158,7 @@ export const GET = async (req: NextRequest) => {
     if (/not found/i.test(message)) {
       return NextResponse.json(
         { error: message, errorCode: CheckApiErrorCode.NotFound },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -167,7 +167,7 @@ export const GET = async (req: NextRequest) => {
         error: `Upstream API error: ${message}`,
         errorCode: CheckApiErrorCode.Upstream,
       },
-      { status: 502 }
+      { status: 502 },
     );
   }
 };

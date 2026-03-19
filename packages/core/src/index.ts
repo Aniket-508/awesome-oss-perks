@@ -5,7 +5,7 @@ import { formatSlug } from "./slug";
 import type { PersonDetail, PersonWithProgram, ProgramSummary } from "./types";
 
 export const programs: Program[] = rawPrograms.map((p) =>
-  programSchema.parse(p)
+  programSchema.parse(p),
 );
 
 const toProgramSummary = (program: Program): ProgramSummary => ({
@@ -19,7 +19,7 @@ const toProgramSummary = (program: Program): ProgramSummary => ({
 });
 
 const programsBySlug = new Map(
-  programs.map((program) => [program.slug, program] as const)
+  programs.map((program) => [program.slug, program] as const),
 );
 
 const peopleBySlug = new Map<string, PersonDetail>();
@@ -46,7 +46,7 @@ const people: PersonWithProgram[] = Array.from(
     contact: person.contact,
     programSlug: person.programs[0]?.slug ?? "",
     provider: person.programs[0]?.provider ?? "",
-  })
+  }),
 );
 
 export const getProgramBySlug = (slug: string): Program | undefined =>
@@ -65,7 +65,7 @@ export const FEATURED_PROGRAM_SLUGS: string[] = [
 
 export const getFeaturedPrograms = (): Program[] =>
   FEATURED_PROGRAM_SLUGS.map((slug) => getProgramBySlug(slug)).filter(
-    (p): p is Program => p !== undefined
+    (p): p is Program => p !== undefined,
   );
 
 export const getProgramsByCategory = (category: Category): Program[] =>

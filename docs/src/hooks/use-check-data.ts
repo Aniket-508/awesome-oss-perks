@@ -9,7 +9,7 @@ import type { CheckApiErrorResponse, CheckResponse } from "@/types/check";
 const getErrorMessage = (
   error: CheckApiErrorResponse,
   status: number,
-  t: CheckTranslations["errors"]
+  t: CheckTranslations["errors"],
 ) => {
   if (
     error.errorCode === CheckApiErrorCode.InvalidProvider ||
@@ -69,7 +69,7 @@ export const useCheckData = ({
           `/api/check?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo)}&provider=${encodeURIComponent(provider)}${
             path ? `&path=${encodeURIComponent(path)}` : ""
           }`,
-          { signal: controller.signal }
+          { signal: controller.signal },
         );
         const json = (await res.json()) as
           | CheckResponse
@@ -82,8 +82,8 @@ export const useCheckData = ({
             getErrorMessage(
               json as CheckApiErrorResponse,
               res.status,
-              translations.errors
-            )
+              translations.errors,
+            ),
           );
           return;
         }

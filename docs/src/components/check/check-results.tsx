@@ -12,7 +12,7 @@ import { ResultSection } from "./result-section";
 
 const formatAge = (iso: string, t: CheckTranslations["time"]): string => {
   const days = Math.floor(
-    (Date.now() - new Date(iso).getTime()) / (1000 * 60 * 60 * 24)
+    (Date.now() - new Date(iso).getTime()) / (1000 * 60 * 60 * 24),
   );
   if (days === 0) {
     return t.today;
@@ -46,7 +46,7 @@ export const CheckResults = ({
   return (
     <>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">{repo.path}</h1>
+        <h1 className="mb-2 text-3xl font-bold">{repo.path}</h1>
         {repo.description && (
           <p className="text-fd-muted-foreground mb-4">{repo.description}</p>
         )}
@@ -82,7 +82,7 @@ export const CheckResults = ({
 
       <Separator className="mb-8" />
 
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="mb-8 grid grid-cols-3 gap-4">
         {(
           [
             {
@@ -102,11 +102,11 @@ export const CheckResults = ({
             },
           ] as const
         ).map((s) => (
-          <div key={s.key} className="text-center p-4 rounded-lg border">
+          <div key={s.key} className="rounded-lg border p-4 text-center">
             <p className={`text-3xl font-bold ${STATUS_CONFIG[s.key].color}`}>
               {s.count}
             </p>
-            <p className="text-sm text-fd-muted-foreground">{s.label}</p>
+            <p className="text-fd-muted-foreground text-sm">{s.label}</p>
           </div>
         ))}
       </div>

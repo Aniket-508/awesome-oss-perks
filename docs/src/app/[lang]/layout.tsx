@@ -25,7 +25,7 @@ export default async function Layout({
 
   return (
     <html lang={lang} className={publicSans.variable} suppressHydrationWarning>
-      <body className="flex flex-col min-h-screen">
+      <body className="flex min-h-screen flex-col">
         <RootProvider i18n={provider(lang)}>{children}</RootProvider>
         <Analytics />
       </body>

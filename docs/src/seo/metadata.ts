@@ -22,7 +22,7 @@ const toOgLocale = (lang: string): string => ogLocaleMap[lang] ?? "en_US";
 const buildAlternates = (lang: string, path: `/${string}`) => {
   const canonical = withLocalePrefix(lang, path);
   const languages: Record<string, string> = Object.fromEntries(
-    i18n.languages.map((locale) => [locale, withLocalePrefix(locale, path)])
+    i18n.languages.map((locale) => [locale, withLocalePrefix(locale, path)]),
   );
   languages["x-default"] = withLocalePrefix(i18n.defaultLanguage, path);
   return { canonical, languages };

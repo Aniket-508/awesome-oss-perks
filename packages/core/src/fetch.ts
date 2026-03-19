@@ -41,16 +41,16 @@ const getErrorMessage = (error: unknown): string =>
 const throwGitHubError = (
   status: number,
   statusText: string,
-  ref: RepoRef
+  ref: RepoRef,
 ): never => {
   if (status === 404) {
     throw new Error(
-      `Repository ${ref.path} not found on GitHub (is it public?)`
+      `Repository ${ref.path} not found on GitHub (is it public?)`,
     );
   }
   if (status === 403 && /rate limit/i.test(statusText)) {
     throw new Error(
-      "GitHub API rate limit exceeded. Set GITHUB_TOKEN env var to increase the limit."
+      "GitHub API rate limit exceeded. Set GITHUB_TOKEN env var to increase the limit.",
     );
   }
   if (status === 403) {
@@ -102,7 +102,7 @@ export const fetchGitHub = async (ref: RepoRef): Promise<RepoContext> => {
 const throwGitLabError = (
   status: number,
   statusText: string,
-  ref: RepoRef
+  ref: RepoRef,
 ): never => {
   if (status === 404) {
     throw new Error(`Project ${ref.path} not found on GitLab (is it public?)`);

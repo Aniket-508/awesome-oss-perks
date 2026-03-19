@@ -38,7 +38,7 @@ export const RepoCheckInput = ({
             message: translations.invalidUrl,
           }),
       }),
-    [translations.required, translations.invalidUrl]
+    [translations.required, translations.invalidUrl],
   );
 
   const form = useForm({
@@ -62,20 +62,20 @@ export const RepoCheckInput = ({
       e.stopPropagation();
       form.handleSubmit();
     },
-    [form]
+    [form],
   );
 
   return (
     <form
       onSubmit={handleFormSubmit}
-      className={cn("w-full max-w-xl mx-auto", className)}
+      className={cn("mx-auto w-full max-w-xl", className)}
     >
       {/* eslint-disable react-perf/jsx-no-new-function-as-prop -- TanStack Form render prop */}
       <form.Field name="url">
         {(field) => (
           <>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-fd-muted-foreground pointer-events-none" />
+              <Search className="text-fd-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2" />
               <Input
                 type="text"
                 inputSize={compact ? "default" : "lg"}
@@ -88,7 +88,7 @@ export const RepoCheckInput = ({
               />
             </div>
             {field.state.meta.errors.length > 0 && (
-              <p className="mt-2 text-xs text-destructive">
+              <p className="text-destructive mt-2 text-xs">
                 {typeof field.state.meta.errors[0] === "string"
                   ? field.state.meta.errors[0]
                   : (field.state.meta.errors[0] as { message?: string })

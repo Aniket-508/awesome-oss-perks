@@ -21,7 +21,7 @@ interface CheckOpts {
 
 const formatAge = (date: Date): string => {
   const days = Math.floor(
-    (Date.now() - date.getTime()) / (1000 * 60 * 60 * 24)
+    (Date.now() - date.getTime()) / (1000 * 60 * 60 * 24),
   );
   if (days === 0) {
     return "today";
@@ -66,7 +66,7 @@ const resolveRef = (opts: CheckOpts): RepoRef | null => {
     displayError(
       provider === "gitlab"
         ? '--repo must be in the format "owner/repo" or "group/subgroup/repo"'
-        : '--repo must be in the format "owner/repo"'
+        : '--repo must be in the format "owner/repo"',
     );
     process.exit(1);
   }
@@ -80,7 +80,7 @@ const resolveRef = (opts: CheckOpts): RepoRef | null => {
 
 const printEligibilitySection = (
   items: ProgramEligibility[],
-  pad: number
+  pad: number,
 ): void => {
   for (const { program, result } of items) {
     console.log(eligibilityRow(program, result, pad));
@@ -93,7 +93,7 @@ const printEligibilitySection = (
 
 const printCheckResults = (
   ctx: RepoContext,
-  results: ProgramEligibility[]
+  results: ProgramEligibility[],
 ): void => {
   printRepoSummary(ctx);
   console.log();
@@ -104,7 +104,7 @@ const printCheckResults = (
   const pad = maxSlugLength(programs);
 
   header(
-    `Eligibility across ${programs.length} programs — ${eligible.length} eligible, ${review.length} need review, ${ineligible.length} ineligible`
+    `Eligibility across ${programs.length} programs — ${eligible.length} eligible, ${review.length} need review, ${ineligible.length} ineligible`,
   );
   console.log();
 
@@ -122,8 +122,8 @@ const printCheckResults = (
     console.log(
       pc.dim(
         `  ⚠️  Programs marked "needs review" have requirements that can't be\n` +
-          `     auto-determined (e.g. non-commercial use). Review them manually.`
-      )
+          `     auto-determined (e.g. non-commercial use). Review them manually.`,
+      ),
     );
     console.log();
   }
@@ -131,16 +131,16 @@ const printCheckResults = (
 
 export const checkCommand = new Command("check")
   .description(
-    "Check your project's eligibility for OSS perk programs by fetching live repo data"
+    "Check your project's eligibility for OSS perk programs by fetching live repo data",
   )
   .option(
     "--repo <owner/repo>",
-    "explicitly specify a GitHub/GitLab repo (e.g. vercel/next.js)"
+    "explicitly specify a GitHub/GitLab repo (e.g. vercel/next.js)",
   )
   .option(
     "--provider <provider>",
     'git provider to use with --repo: "github" or "gitlab"',
-    "github"
+    "github",
   )
   .option("--json", "output results as JSON")
   .action(async (opts: CheckOpts) => {
@@ -149,7 +149,7 @@ export const checkCommand = new Command("check")
     if (!ref) {
       displayError(
         "Could not detect a GitHub or GitLab repository.\n" +
-          "  Make sure your package.json has a repository field, or use --repo <owner/repo>."
+          "  Make sure your package.json has a repository field, or use --repo <owner/repo>.",
       );
       process.exit(1);
     }
@@ -190,8 +190,8 @@ export const checkCommand = new Command("check")
             })),
           },
           null,
-          2
-        )
+          2,
+        ),
       );
       return;
     }

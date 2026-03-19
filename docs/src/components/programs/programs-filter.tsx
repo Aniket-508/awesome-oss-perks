@@ -57,22 +57,22 @@ export const ProgramsFilter = ({
         }
         return true;
       }),
-    [programs, selectedCategory, selectedPerkType]
+    [programs, selectedCategory, selectedPerkType],
   );
 
   const handleCategoryChange = useCallback(
     (v: string | number | null) => setSelectedCategory(v as string),
-    []
+    [],
   );
 
   const handlePerkTypeChange = useCallback(
     (v: string | number | null) => setSelectedPerkType(v as string),
-    []
+    [],
   );
 
   return (
     <>
-      <div className="flex flex-wrap gap-3 mb-8">
+      <div className="mb-8 flex flex-wrap gap-3">
         <Select value={selectedCategory} onValueChange={handleCategoryChange}>
           <SelectTrigger>
             <SelectValue>
@@ -118,7 +118,7 @@ export const ProgramsFilter = ({
             categoryLabels[program.category] ?? program.category;
           const programHref = withLocalePrefix(
             lang,
-            `/programs/${program.slug}` as `/${string}`
+            `/programs/${program.slug}` as `/${string}`,
           );
           return (
             <ProgramCard
@@ -134,7 +134,7 @@ export const ProgramsFilter = ({
       </div>
 
       {filtered.length === 0 && (
-        <div className="rounded-lg border border-dashed bg-fd-muted/30 p-12 text-center">
+        <div className="bg-fd-muted/30 rounded-lg border border-dashed p-12 text-center">
           <p className="text-fd-muted-foreground">
             No programs match the selected filters.
           </p>

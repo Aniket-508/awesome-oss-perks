@@ -55,7 +55,7 @@ describe("@ossperks/core", () => {
 
   it("programSchema rejects non-canonical slugs", () => {
     expect(() =>
-      programSchema.parse({ ...programs[0], slug: "Not Canonical" })
+      programSchema.parse({ ...programs[0], slug: "Not Canonical" }),
     ).toThrow();
   });
 

@@ -10,7 +10,7 @@ const LOCALE_TO_BCP47: Record<string, string> = {
 
 const WebsiteJsonLd = () => {
   const inLanguage = i18n.languages.map(
-    (locale: string) => LOCALE_TO_BCP47[locale] ?? locale
+    (locale: string) => LOCALE_TO_BCP47[locale] ?? locale,
   );
 
   const jsonLd = {

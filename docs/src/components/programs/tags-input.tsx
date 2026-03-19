@@ -60,7 +60,7 @@ export const TagsInput = ({
     (newValue: string[]) => {
       onChange(newValue);
     },
-    [onChange]
+    [onChange],
   );
 
   const handleCreateTag = useCallback(() => {
@@ -78,7 +78,7 @@ export const TagsInput = ({
         handleCreateTag();
       }
     },
-    [canCreate, handleCreateTag]
+    [canCreate, handleCreateTag],
   );
 
   return (
@@ -120,7 +120,7 @@ export const TagsInput = ({
               e.preventDefault();
               handleCreateTag();
             }}
-            className="flex w-full items-center gap-2 border-t border-border px-2 py-1.5 text-sm text-fd-primary hover:bg-accent cursor-pointer"
+            className="border-border text-fd-primary hover:bg-accent flex w-full cursor-pointer items-center gap-2 border-t px-2 py-1.5 text-sm"
           >
             <Plus className="size-3.5" />
             {addNewLabel.replace("{value}", formatSlug(inputValue))}

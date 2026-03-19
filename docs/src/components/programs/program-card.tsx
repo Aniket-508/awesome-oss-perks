@@ -24,17 +24,17 @@ export const ProgramCard = ({
 
   return (
     <Link href={programHref} className="group block">
-      <Card className="h-full transition-colors hover:bg-fd-accent">
+      <Card className="hover:bg-fd-accent h-full transition-colors">
         <CardHeader>
           <Badge variant="default" className="w-fit text-xs">
             {categoryLabel}
           </Badge>
-          <CardTitle className="font-semibold group-hover:text-fd-primary mt-2">
+          <CardTitle className="group-hover:text-fd-primary mt-2 font-semibold">
             {program.name}
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <p className="text-sm text-fd-muted-foreground line-clamp-2">
+          <p className="text-fd-muted-foreground line-clamp-2 text-sm">
             {program.description}
           </p>
           <div className="flex flex-wrap gap-1.5">

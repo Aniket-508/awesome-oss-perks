@@ -42,11 +42,11 @@ export default async function PeoplePage({
   const programOptions = programs.map((p) => ({ name: p.name, slug: p.slug }));
 
   return (
-    <div className="container flex-1 flex flex-col w-full py-12 px-4 mx-auto">
+    <div className="container mx-auto flex w-full flex-1 flex-col px-4 py-12">
       <div className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h1 className="text-4xl font-bold mb-2">{t.people.heading}</h1>
-          <p className="text-fd-muted-foreground text-lg max-w-2xl">
+          <h1 className="mb-2 text-4xl font-bold">{t.people.heading}</h1>
+          <p className="text-fd-muted-foreground max-w-2xl text-lg">
             {people.length > 0
               ? `${people.length} ${t.people.description}`
               : t.people.description}
@@ -67,7 +67,7 @@ export default async function PeoplePage({
       </div>
 
       {people.length === 0 ? (
-        <div className="rounded-lg border border-dashed bg-fd-muted/30 p-12 text-center">
+        <div className="bg-fd-muted/30 rounded-lg border border-dashed p-12 text-center">
           <p className="text-fd-muted-foreground">{t.people.empty}</p>
         </div>
       ) : (
@@ -86,7 +86,7 @@ export default async function PeoplePage({
                 href={withLocalePrefix(lang, `/people/${slug}` as `/${string}`)}
                 className="group block"
               >
-                <div className="flex items-center gap-4 rounded-xl p-4 ring-1 ring-foreground/10 transition-colors hover:bg-fd-accent">
+                <div className="ring-foreground/10 hover:bg-fd-accent flex items-center gap-4 rounded-xl p-4 ring-1 transition-colors">
                   <Avatar className="size-12">
                     {contact.url &&
                       (() => {
@@ -99,16 +99,16 @@ export default async function PeoplePage({
                       {contact.name.charAt(0).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-semibold truncate group-hover:text-fd-primary transition-colors">
+                  <div className="min-w-0 flex-1">
+                    <p className="group-hover:text-fd-primary truncate font-semibold transition-colors">
                       {contact.name}
                     </p>
-                    <p className="text-sm text-fd-muted-foreground truncate">
+                    <p className="text-fd-muted-foreground truncate text-sm">
                       {roleText}
                     </p>
                   </div>
                   {contact.url && (
-                    <span className="shrink-0 text-fd-muted-foreground group-hover:text-fd-foreground transition-colors">
+                    <span className="text-fd-muted-foreground group-hover:text-fd-foreground shrink-0 transition-colors">
                       <ExternalLink className="size-4" />
                     </span>
                   )}

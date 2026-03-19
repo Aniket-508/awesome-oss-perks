@@ -25,7 +25,7 @@ const OSI_PERMISSIVE = new Set(
     "0BSD",
     "BlueOak-1.0.0",
     "UPL-1.0",
-  ].map((license) => license.toLowerCase())
+  ].map((license) => license.toLowerCase()),
 );
 
 const OSI_COPYLEFT = new Set(
@@ -53,14 +53,14 @@ const OSI_COPYLEFT = new Set(
     "EPL-1.0",
     "EPL-2.0",
     "OSL-3.0",
-  ].map((license) => license.toLowerCase())
+  ].map((license) => license.toLowerCase()),
 );
 
 const isOsiApproved = (spdx: string | null): boolean => {
   const normalized = normalizeLicense(spdx);
   return Boolean(
     normalized &&
-    (OSI_PERMISSIVE.has(normalized) || OSI_COPYLEFT.has(normalized))
+    (OSI_PERMISSIVE.has(normalized) || OSI_COPYLEFT.has(normalized)),
   );
 };
 
@@ -111,7 +111,7 @@ const formatCount = (value: number): string => value.toLocaleString("en-US");
 const makeReason = (
   code: EligibilityReason["code"],
   message: string,
-  params?: EligibilityReason["params"]
+  params?: EligibilityReason["params"],
 ): EligibilityReason => ({
   code,
   message,
@@ -121,13 +121,13 @@ const makeReason = (
 const checkSubjective = (rule: string): RuleVerdict | null => {
   if (
     /non[\s-]?commercial|non[\s-]?profit|not\s+for\s+commercial|solely\s+on\s+a\s+non/i.test(
-      rule
+      rule,
     )
   ) {
     return {
       reason: makeReason(
         "nonCommercial",
-        "non-commercial requirement cannot be auto-verified"
+        "non-commercial requirement cannot be auto-verified",
       ),
       verdict: "unknown",
     };
@@ -136,7 +136,7 @@ const checkSubjective = (rule: string): RuleVerdict | null => {
     return {
       reason: makeReason(
         "hostingPlatform",
-        "hosting platform requirement cannot be auto-verified"
+        "hosting platform requirement cannot be auto-verified",
       ),
       verdict: "unknown",
     };
@@ -145,14 +145,14 @@ const checkSubjective = (rule: string): RuleVerdict | null => {
     return {
       reason: makeReason(
         "codeOfConduct",
-        "Code of Conduct cannot be auto-verified"
+        "Code of Conduct cannot be auto-verified",
       ),
       verdict: "unknown",
     };
   }
   if (
     /applicant\s+must\s+be|must\s+be\s+a\s+(core|maintainer|owner|contributor)/i.test(
-      rule
+      rule,
     )
   ) {
     return {
@@ -168,13 +168,13 @@ const checkSubjective = (rule: string): RuleVerdict | null => {
   }
   if (
     /measurable\s+impact|quality|innovation|community\s+impact|stand\s+out|valuable\s+contributions|prioritized\s+based/i.test(
-      rule
+      rule,
     )
   ) {
     return {
       reason: makeReason(
         "subjective",
-        "subjective criteria cannot be auto-verified"
+        "subjective criteria cannot be auto-verified",
       ),
       verdict: "unknown",
     };
@@ -183,7 +183,7 @@ const checkSubjective = (rule: string): RuleVerdict | null => {
     return {
       reason: makeReason(
         "criteriaUnverifiable",
-        "criteria cannot be auto-verified"
+        "criteria cannot be auto-verified",
       ),
       verdict: "unknown",
     };
@@ -227,7 +227,7 @@ const checkStars = (rule: string, ctx: RepoContext): RuleVerdict | null => {
     return {
       reason: makeReason(
         "popularityThreshold",
-        "popularity threshold is determined by the provider"
+        "popularity threshold is determined by the provider",
       ),
       verdict: "unknown",
     };
@@ -242,7 +242,7 @@ const checkStars = (rule: string, ctx: RepoContext): RuleVerdict | null => {
     return {
       reason: makeReason(
         "popularityThreshold",
-        "eligibility may also depend on downloads or contributors"
+        "eligibility may also depend on downloads or contributors",
       ),
       verdict: "unknown",
     };
@@ -252,7 +252,7 @@ const checkStars = (rule: string, ctx: RepoContext): RuleVerdict | null => {
       reason: makeReason(
         "starsBelow",
         `requires ${formatCount(threshold)}+ stars (you have ${formatCount(ctx.stars)})`,
-        { current: ctx.stars, threshold }
+        { current: ctx.stars, threshold },
       ),
       verdict: "fail",
     };
@@ -261,7 +261,7 @@ const checkStars = (rule: string, ctx: RepoContext): RuleVerdict | null => {
     reason: makeReason(
       "starsMet",
       `${formatCount(ctx.stars)} stars meets the ${formatCount(threshold)}+ threshold`,
-      { current: ctx.stars, threshold }
+      { current: ctx.stars, threshold },
     ),
     verdict: "pass",
   };
@@ -275,14 +275,14 @@ const checkActivity = (rule: string, ctx: RepoContext): RuleVerdict | null => {
       reason: makeReason(
         "projectTooNew",
         `project must be at least ${ageDays} days old (yours is ${current} days old)`,
-        { current, required: ageDays }
+        { current, required: ageDays },
       ),
       verdict: "fail",
     };
   }
   if (
     /actively\s+maintained|actively\s+developed|active\s+open[\s-]?source|active\s+project/i.test(
-      rule
+      rule,
     )
   ) {
     const age = daysSince(ctx.pushedAt);
@@ -291,7 +291,7 @@ const checkActivity = (rule: string, ctx: RepoContext): RuleVerdict | null => {
           reason: makeReason(
             "inactive",
             `last commit was ${age} days ago (project may be inactive)`,
-            { days: age }
+            { days: age },
           ),
           verdict: "fail",
         }
@@ -309,14 +309,14 @@ const checkLicense = (rule: string, ctx: RepoContext): RuleVerdict | null => {
           reason: makeReason(
             "permissiveLicense",
             `requires a permissive license (detected: ${label})`,
-            { license: label }
+            { license: label },
           ),
           verdict: "fail",
         };
   }
   if (
     /open[\s-]?source\s+licen[sc]e|oss\s+licen[sc]e|recognized\s+licen[sc]e/i.test(
-      rule
+      rule,
     )
   ) {
     return isOsiApproved(ctx.license)
@@ -325,14 +325,14 @@ const checkLicense = (rule: string, ctx: RepoContext): RuleVerdict | null => {
           reason: makeReason(
             "osiLicense",
             `requires an OSI-approved license (detected: ${label})`,
-            { license: label }
+            { license: label },
           ),
           verdict: "fail",
         };
   }
   if (
     /open[\s-]?source\s+project|oss\s+project|open[\s-]?source\s+repositor/i.test(
-      rule
+      rule,
     )
   ) {
     return isOsiApproved(ctx.license)
@@ -341,7 +341,7 @@ const checkLicense = (rule: string, ctx: RepoContext): RuleVerdict | null => {
           reason: makeReason(
             "noOsiLicense",
             `no OSI-approved license detected (detected: ${label})`,
-            { license: label }
+            { license: label },
           ),
           verdict: "fail",
         };
@@ -352,7 +352,7 @@ const checkLicense = (rule: string, ctx: RepoContext): RuleVerdict | null => {
 const checkRepoAttrs = (rule: string, ctx: RepoContext): RuleVerdict | null => {
   if (
     /publicly\s+available|public\s+repo(?:sitory)?|public\s+repositor|publicly\s+accessible|repository\s+must\s+be\s+public|repo\s+must\s+be\s+public|public\s+on\s+(?:github|gitlab|bitbucket)/i.test(
-      rule
+      rule,
     )
   ) {
     return ctx.isPrivate
@@ -374,7 +374,7 @@ const checkRepoAttrs = (rule: string, ctx: RepoContext): RuleVerdict | null => {
     return {
       reason: makeReason(
         "communitySize",
-        "community size cannot be auto-verified"
+        "community size cannot be auto-verified",
       ),
       verdict: "unknown",
     };
@@ -383,7 +383,7 @@ const checkRepoAttrs = (rule: string, ctx: RepoContext): RuleVerdict | null => {
     return {
       reason: makeReason(
         "usageRestriction",
-        "usage restriction cannot be auto-verified"
+        "usage restriction cannot be auto-verified",
       ),
       verdict: "unknown",
     };
@@ -392,7 +392,7 @@ const checkRepoAttrs = (rule: string, ctx: RepoContext): RuleVerdict | null => {
     return {
       reason: makeReason(
         "missionAlignment",
-        "mission alignment cannot be auto-verified"
+        "mission alignment cannot be auto-verified",
       ),
       verdict: "unknown",
     };
@@ -410,7 +410,7 @@ const OBJECTIVE_CHECKS = [
 
 const matchRule = (rule: string, ctx: RepoContext): RuleVerdict | null => {
   const verdicts = OBJECTIVE_CHECKS.map((check) => check(rule, ctx)).filter(
-    (verdict): verdict is RuleVerdict => verdict !== null
+    (verdict): verdict is RuleVerdict => verdict !== null,
   );
   const failVerdict = verdicts.find((verdict) => verdict.verdict === "fail");
   if (failVerdict) {
@@ -421,7 +421,7 @@ const matchRule = (rule: string, ctx: RepoContext): RuleVerdict | null => {
     return subjectiveVerdict;
   }
   const unknownVerdict = verdicts.find(
-    (verdict) => verdict.verdict === "unknown"
+    (verdict) => verdict.verdict === "unknown",
   );
   if (unknownVerdict) {
     return unknownVerdict;
@@ -431,7 +431,7 @@ const matchRule = (rule: string, ctx: RepoContext): RuleVerdict | null => {
 
 export const checkEligibilityDetailed = (
   program: Program,
-  ctx: RepoContext
+  ctx: RepoContext,
 ): EligibilityResultDetailed => {
   const failReasons: EligibilityReason[] = [];
   const unknownReasons: EligibilityReason[] = [];
@@ -466,7 +466,7 @@ export const checkEligibilityDetailed = (
 
 export const checkEligibility = (
   program: Program,
-  ctx: RepoContext
+  ctx: RepoContext,
 ): EligibilityResult => {
   const detailed = checkEligibilityDetailed(program, ctx);
   return {
@@ -477,7 +477,7 @@ export const checkEligibility = (
 
 export const checkAllProgramsDetailed = (
   programs: Program[],
-  ctx: RepoContext
+  ctx: RepoContext,
 ): ProgramEligibilityDetailed[] =>
   programs
     .map((program) => ({
@@ -491,7 +491,7 @@ export const checkAllProgramsDetailed = (
 
 export const checkAllPrograms = (
   programs: Program[],
-  ctx: RepoContext
+  ctx: RepoContext,
 ): ProgramEligibility[] =>
   programs
     .map((program) => ({ program, result: checkEligibility(program, ctx) }))

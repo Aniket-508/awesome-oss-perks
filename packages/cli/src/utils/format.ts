@@ -72,7 +72,7 @@ const printProgramUrls = (program: Program): void => {
   console.log(`  ${pc.dim("URL:")} ${pc.underline(pc.blue(program.url))}`);
   if (program.applicationUrl && program.applicationUrl !== program.url) {
     console.log(
-      `  ${pc.dim("Apply:")} ${pc.underline(pc.blue(program.applicationUrl))}`
+      `  ${pc.dim("Apply:")} ${pc.underline(pc.blue(program.applicationUrl))}`,
     );
   }
   console.log();
@@ -105,7 +105,7 @@ const getStatusDisplay = (status: EligibilityStatus): [string, string] => {
 export const eligibilityRow = (
   program: Program,
   result: EligibilityResult,
-  padSlug = 20
+  padSlug = 20,
 ): string => {
   const [icon, statusText] = getStatusDisplay(result.status);
   const slug = program.slug.padEnd(padSlug);

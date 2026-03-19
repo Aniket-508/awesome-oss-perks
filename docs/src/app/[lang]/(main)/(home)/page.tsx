@@ -64,10 +64,10 @@ export default async function HomePage({
   ];
 
   return (
-    <div className="container flex-1 flex flex-col w-full py-12 px-4 mx-auto">
+    <div className="container mx-auto flex w-full flex-1 flex-col px-4 py-12">
       {/* Hero */}
-      <section className="pt-8 pb-16 sm:pt-24 sm:pb-32 text-center">
-        <h1 className="text-5xl font-bold tracking-tight mb-4">
+      <section className="pt-8 pb-16 text-center sm:pt-24 sm:pb-32">
+        <h1 className="mb-4 text-5xl font-bold tracking-tight">
           {t.home.heading}
           <span className="text-fd-primary">.</span>
         </h1>
@@ -85,30 +85,30 @@ export default async function HomePage({
       <section>
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0 flex-1 py-16">
-            <p className="text-xs font-medium uppercase tracking-wider text-fd-muted-foreground mb-2">
+            <p className="text-fd-muted-foreground mb-2 text-xs font-medium tracking-wider uppercase">
               {t.home.builtFor.subheading}
             </p>
-            <h2 className="text-2xl font-bold mb-2">
+            <h2 className="mb-2 text-2xl font-bold">
               {t.home.builtFor.heading}
             </h2>
             <p className="text-fd-muted-foreground max-w-2xl">
               {t.home.builtFor.description}
             </p>
           </div>
-          <div className="relative grid self-stretch sm:w-[30%] grid-cols-2">
+          <div className="relative grid grid-cols-2 self-stretch sm:w-[30%]">
             <div className="pointer-events-none absolute inset-0">
-              <div className="absolute left-1/2 top-[15%] bottom-[15%] w-px -translate-x-1/2 bg-linear-to-b from-transparent via-fd-border to-transparent" />
-              <div className="absolute top-1/2 left-[15%] right-[15%] h-px -translate-y-1/2 bg-linear-to-r from-transparent via-fd-border to-transparent" />
+              <div className="via-fd-border absolute top-[15%] bottom-[15%] left-1/2 w-px -translate-x-1/2 bg-linear-to-b from-transparent to-transparent" />
+              <div className="via-fd-border absolute top-1/2 right-[15%] left-[15%] h-px -translate-y-1/2 bg-linear-to-r from-transparent to-transparent" />
             </div>
             {stats.map((stat) => (
               <div
                 key={stat.label}
                 className="flex flex-col items-center justify-center p-8"
               >
-                <p className="text-3xl font-bold text-fd-primary">
+                <p className="text-fd-primary text-3xl font-bold">
                   {stat.value}
                 </p>
-                <p className="text-sm text-fd-muted-foreground">{stat.label}</p>
+                <p className="text-fd-muted-foreground text-sm">{stat.label}</p>
               </div>
             ))}
           </div>
@@ -119,12 +119,12 @@ export default async function HomePage({
 
       {/* Featured Programs */}
       <section className="space-y-4 py-16">
-        <div className="flex gap-2 items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <h2 className="text-2xl font-bold">{t.home.featured.heading}</h2>
           <Button
             variant="ghost"
             size="sm"
-            className="shrink-0 max-sm:hidden text-fd-primary"
+            className="text-fd-primary shrink-0 max-sm:hidden"
             nativeButton={false}
             render={
               <Link href={withLocalePrefix(lang, ROUTES.PROGRAMS)}>
@@ -142,7 +142,7 @@ export default async function HomePage({
               ] ?? program.category;
             const programHref = withLocalePrefix(
               lang,
-              `${ROUTES.PROGRAMS}/${program.slug}` as `/${string}`
+              `${ROUTES.PROGRAMS}/${program.slug}` as `/${string}`,
             );
             return (
               <ProgramCard
@@ -158,7 +158,7 @@ export default async function HomePage({
         </div>
         <Button
           variant="ghost"
-          className="w-full shrink-0 sm:hidden text-fd-primary"
+          className="text-fd-primary w-full shrink-0 sm:hidden"
           nativeButton={false}
           render={
             <Link href={withLocalePrefix(lang, ROUTES.PROGRAMS)}>
@@ -175,7 +175,7 @@ export default async function HomePage({
       <section className="space-y-4 py-16">
         <div className="flex items-end justify-between">
           <div>
-            <h2 className="text-2xl font-bold mb-1">{t.home.people.heading}</h2>
+            <h2 className="mb-1 text-2xl font-bold">{t.home.people.heading}</h2>
             <p className="text-fd-muted-foreground">
               {t.home.people.description}
             </p>
@@ -183,7 +183,7 @@ export default async function HomePage({
           <Button
             variant="ghost"
             size="sm"
-            className="shrink-0 max-sm:hidden text-fd-primary"
+            className="text-fd-primary shrink-0 max-sm:hidden"
             nativeButton={false}
             render={
               <Link href={withLocalePrefix(lang, ROUTES.PEOPLE)}>
@@ -198,7 +198,7 @@ export default async function HomePage({
             const personSlug = getPersonSlug(contact.name);
             const personHref = withLocalePrefix(
               lang,
-              `/people/${personSlug}` as `/${string}`
+              `/people/${personSlug}` as `/${string}`,
             );
             const roleText = contact.role
               ? t.people.roleAt
@@ -212,8 +212,8 @@ export default async function HomePage({
                 href={personHref}
                 className="group block"
               >
-                <div className="flex flex-col items-center gap-3 rounded-xl p-8 ring-1 ring-foreground/10 transition-colors hover:bg-fd-accent">
-                  <Avatar className="size-16 ring-2 ring-fd-primary/20 group-hover:ring-fd-primary/40 transition-all">
+                <div className="ring-foreground/10 hover:bg-fd-accent flex flex-col items-center gap-3 rounded-xl p-8 ring-1 transition-colors">
+                  <Avatar className="ring-fd-primary/20 group-hover:ring-fd-primary/40 size-16 ring-2 transition-all">
                     {contact.url &&
                       (() => {
                         const avatarUrl = getUnavatarUrl(contact.url);
@@ -227,7 +227,7 @@ export default async function HomePage({
                   </Avatar>
                   <div className="text-center">
                     <p className="font-semibold">{contact.name}</p>
-                    <p className="text-sm text-fd-muted-foreground">
+                    <p className="text-fd-muted-foreground text-sm">
                       {roleText}
                     </p>
                   </div>
@@ -238,7 +238,7 @@ export default async function HomePage({
         </div>
         <Button
           variant="ghost"
-          className="w-full shrink-0 sm:hidden text-fd-primary"
+          className="text-fd-primary w-full shrink-0 sm:hidden"
           nativeButton={false}
           render={
             <Link href={withLocalePrefix(lang, ROUTES.PEOPLE)}>
@@ -253,21 +253,21 @@ export default async function HomePage({
 
       {/* How it works */}
       <section className="py-16 text-center">
-        <p className="text-xs font-medium uppercase tracking-wider text-fd-muted-foreground mb-2">
+        <p className="text-fd-muted-foreground mb-2 text-xs font-medium tracking-wider uppercase">
           {t.home.howItWorks.subheading}
         </p>
-        <h2 className="text-2xl font-bold mb-8">{t.home.howItWorks.heading}</h2>
-        <div className="grid gap-8 sm:grid-cols-3 max-w-5xl mx-auto">
+        <h2 className="mb-8 text-2xl font-bold">{t.home.howItWorks.heading}</h2>
+        <div className="mx-auto grid max-w-5xl gap-8 sm:grid-cols-3">
           {t.home.howItWorks.steps.map((step, index) => (
             <div
               key={step.title}
               className="flex flex-col items-center gap-3 text-center"
             >
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-fd-primary text-fd-primary-foreground font-bold text-sm">
+              <div className="bg-fd-primary text-fd-primary-foreground flex size-10 shrink-0 items-center justify-center rounded-full text-sm font-bold">
                 {index + 1}
               </div>
               <h3 className="font-semibold">{step.title}</h3>
-              <p className="text-balance text-sm text-fd-muted-foreground">
+              <p className="text-fd-muted-foreground text-sm text-balance">
                 {step.description}
               </p>
             </div>

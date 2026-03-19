@@ -22,8 +22,8 @@ export const searchCommand = new Command("search")
         p.perks.some(
           (k) =>
             k.title.toLowerCase().includes(q) ||
-            k.description.toLowerCase().includes(q)
-        )
+            k.description.toLowerCase().includes(q),
+        ),
     );
 
     if (opts.json) {
@@ -32,7 +32,7 @@ export const searchCommand = new Command("search")
     }
 
     header(
-      `Search results for "${query}" — ${results.length} program${results.length === 1 ? "" : "s"}`
+      `Search results for "${query}" — ${results.length} program${results.length === 1 ? "" : "s"}`,
     );
     console.log();
 

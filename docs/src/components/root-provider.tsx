@@ -27,10 +27,10 @@ export const RootProvider = ({
           : (pathname as `/${string}`);
       const nextPath = withLocalePrefix(newLocale, pathWithoutLocale);
       router.push(
-        `${nextPath}${window.location.search}${window.location.hash}`
+        `${nextPath}${window.location.search}${window.location.hash}`,
       );
     },
-    [pathname, router]
+    [pathname, router],
   );
 
   return (

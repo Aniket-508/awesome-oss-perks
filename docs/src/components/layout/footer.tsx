@@ -9,15 +9,15 @@ interface FooterProps {
 }
 
 export const Footer = ({ translation }: FooterProps) => (
-  <footer className="border-t border-fd-border mt-auto">
-    <div className="mx-auto flex w-full max-w-(--fd-layout-width) flex-col items-center justify-between gap-4 p-4 text-sm text-fd-muted-foreground sm:flex-row">
+  <footer className="border-fd-border mt-auto border-t">
+    <div className="text-fd-muted-foreground mx-auto flex w-full max-w-(--fd-layout-width) flex-col items-center justify-between gap-4 p-4 text-sm sm:flex-row">
       <p className="text-center sm:text-left">
         {translation.builtBy}{" "}
         <a
           href={LINK.PORTFOLIO}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-medium text-fd-foreground underline underline-offset-4"
+          className="text-fd-foreground font-medium underline underline-offset-4"
         >
           {SITE.AUTHOR.NAME}
         </a>
@@ -26,7 +26,7 @@ export const Footer = ({ translation }: FooterProps) => (
           href={LINK.VERCEL}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-medium text-fd-foreground underline underline-offset-4"
+          className="text-fd-foreground font-medium underline underline-offset-4"
         >
           Vercel
         </a>
@@ -35,7 +35,7 @@ export const Footer = ({ translation }: FooterProps) => (
           href={LINK.LINGO}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-medium text-fd-foreground underline underline-offset-4"
+          className="text-fd-foreground font-medium underline underline-offset-4"
         >
           Lingo.dev
         </a>
@@ -47,14 +47,14 @@ export const Footer = ({ translation }: FooterProps) => (
           href={LINK.TWITTER}
           target="_blank"
           rel="noopener noreferrer"
-          className="transition-colors hover:text-fd-foreground"
+          className="hover:text-fd-foreground transition-colors"
           aria-label={translation.twitter}
         >
           <XIcon className="size-4" />
         </a>
         <a
           href={ROUTES.LLMS_FULL}
-          className="transition-colors hover:text-fd-foreground"
+          className="hover:text-fd-foreground transition-colors"
           aria-label={translation.llms}
         >
           <LlmsIcon className="size-4" />

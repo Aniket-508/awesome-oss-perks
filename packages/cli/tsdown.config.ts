@@ -3,7 +3,7 @@ import fs from "node:fs";
 import { defineConfig } from "tsdown";
 
 const packageJson = JSON.parse(
-  fs.readFileSync(new URL("package.json", import.meta.url), "utf8")
+  fs.readFileSync(new URL("package.json", import.meta.url), "utf8"),
 ) as {
   version: string;
 };

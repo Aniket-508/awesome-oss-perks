@@ -33,15 +33,15 @@ export const generateMetadata = async ({
 type CheckPageSearchParams = Record<string, string | string[] | undefined>;
 
 const getSearchParam = (
-  value: string | string[] | undefined
+  value: string | string[] | undefined,
 ): string | undefined => (Array.isArray(value) ? value[0] : value);
 
 const buildProgramTranslations = async (
-  lang: string
+  lang: string,
 ): Promise<ProgramTranslationMap> => {
   const translated = await getPrograms(lang);
   const englishPrograms = new Map(
-    corePrograms.map((program) => [program.slug, program])
+    corePrograms.map((program) => [program.slug, program]),
   );
   const map: ProgramTranslationMap = {};
   for (const p of translated) {
@@ -66,12 +66,12 @@ const CheckLanding = ({
   translations: Awaited<ReturnType<typeof getT>>["check"];
 }) => (
   <div className={CHECK_PAGE_CONTAINER}>
-    <section className="py-16 sm:py-24 text-center">
-      <h1 className="text-4xl font-bold tracking-tight mb-4">
+    <section className="py-16 text-center sm:py-24">
+      <h1 className="mb-4 text-4xl font-bold tracking-tight">
         {translations.heading}
         <span className="text-fd-primary">.</span>
       </h1>
-      <p className="text-fd-muted-foreground mb-8 max-w-2xl mx-auto">
+      <p className="text-fd-muted-foreground mx-auto mb-8 max-w-2xl">
         {translations.description}
       </p>
       <RepoCheckInput lang={lang} translations={translations.input} />
@@ -89,7 +89,7 @@ const CheckPageFooter = ({
   <>
     <Separator className="mb-8" />
     <section className="text-center">
-      <h2 className="text-lg font-semibold mb-4">
+      <h2 className="mb-4 text-lg font-semibold">
         {translations.checkAnother}
       </h2>
       <RepoCheckInput lang={lang} translations={translations.input} />

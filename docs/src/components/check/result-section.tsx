@@ -45,7 +45,7 @@ export const ResultSection = ({
   return (
     <section className="mb-8">
       <h2
-        className={`text-lg font-semibold mb-4 flex items-center gap-2 ${config.color}`}
+        className={`mb-4 flex items-center gap-2 text-lg font-semibold ${config.color}`}
       >
         <Icon className="size-5" />
         {label} ({items.length})
@@ -54,7 +54,7 @@ export const ResultSection = ({
         {items.map((result) => (
           <Card key={result.slug} className={config.ring}>
             <CardHeader>
-              <CardTitle className="text-base min-w-0 truncate">
+              <CardTitle className="min-w-0 truncate text-base">
                 {result.name}
               </CardTitle>
               <CardAction>
@@ -65,7 +65,7 @@ export const ResultSection = ({
                     <Link
                       href={withLocalePrefix(
                         lang,
-                        `${ROUTES.PROGRAMS}/${result.slug}`
+                        `${ROUTES.PROGRAMS}/${result.slug}`,
                       )}
                     >
                       {result.perksCount} {translations.perks}
@@ -81,9 +81,9 @@ export const ResultSection = ({
                   {[...new Set(result.reasons)].map((reason) => (
                     <li
                       key={`${result.slug}-${reason}`}
-                      className="flex items-center text-sm text-fd-muted-foreground gap-2"
+                      className="text-fd-muted-foreground flex items-center gap-2 text-sm"
                     >
-                      <span className="size-1 rounded-full bg-fd-muted-foreground/50 shrink-0" />
+                      <span className="bg-fd-muted-foreground/50 size-1 shrink-0 rounded-full" />
                       {reason}
                     </li>
                   ))}

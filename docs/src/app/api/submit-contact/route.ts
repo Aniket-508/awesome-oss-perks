@@ -9,7 +9,7 @@ type ContactSubmission = Pick<Contact, "name" | "url"> &
   Required<Pick<Contact, "role">> & { programSlug: string };
 
 const buildPRBody = (
-  submission: ContactSubmission
+  submission: ContactSubmission,
 ): string => `## New Contact Submission
 
 **Contact:** ${submission.name}
@@ -23,7 +23,7 @@ ${submission.url ? `**URL:** ${submission.url}` : ""}
 
 const createContactPR = async (
   submission: ContactSubmission,
-  githubToken: string
+  githubToken: string,
 ) => {
   const octokit = new Octokit({ auth: githubToken });
   const filePath = `packages/core/src/programs/${submission.programSlug}.json`;
@@ -93,7 +93,7 @@ export const POST = async (request: NextRequest) => {
     if (!submission.name || !submission.role || !submission.programSlug) {
       return NextResponse.json(
         { error: "Name, role, and program are required" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -101,7 +101,7 @@ export const POST = async (request: NextRequest) => {
     if (!githubToken) {
       return NextResponse.json(
         { error: "Server configuration error" },
-        { status: 500 }
+        { status: 500 },
       );
     }
 

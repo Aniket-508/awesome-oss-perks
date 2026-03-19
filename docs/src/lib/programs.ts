@@ -10,7 +10,7 @@ import { i18n } from "@/i18n/config";
 import { programsSource } from "@/lib/source";
 
 const parsePerks = (
-  section: string
+  section: string,
 ): { title: string; description: string }[] =>
   section
     .split("\n")
@@ -62,7 +62,7 @@ const parseSections = (sections: string[], program: Program) => {
 
 const translateProgram = async (
   program: Program,
-  lang: string
+  lang: string,
 ): Promise<Program> => {
   if (lang === i18n.defaultLanguage) {
     return program;
@@ -90,14 +90,14 @@ const translateProgram = async (
 
 export const getPrograms = async (lang: string) => {
   const results = await Promise.all(
-    allPrograms.map((p) => translateProgram(p, lang))
+    allPrograms.map((p) => translateProgram(p, lang)),
   );
   return results;
 };
 
 export const getProgram = async (
   slug: string,
-  lang: string
+  lang: string,
 ): Promise<Program | undefined> => {
   const program = getProgramBySlug(slug);
   if (!program) {
@@ -108,7 +108,7 @@ export const getProgram = async (
 
 export const getFeaturedPrograms = async (lang: string) => {
   const results = await Promise.all(
-    getFeaturedProgramsBase().map((p) => translateProgram(p, lang))
+    getFeaturedProgramsBase().map((p) => translateProgram(p, lang)),
   );
   return results;
 };

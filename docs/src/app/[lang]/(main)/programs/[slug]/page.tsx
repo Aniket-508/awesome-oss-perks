@@ -32,7 +32,7 @@ export default async function ProgramPage({
     program.category;
 
   return (
-    <div className="max-w-4xl flex-1 flex flex-col w-full py-12 px-4 mx-auto">
+    <div className="mx-auto flex w-full max-w-4xl flex-1 flex-col px-4 py-12">
       <div className="mb-6">
         <Button
           variant="link"
@@ -48,18 +48,18 @@ export default async function ProgramPage({
       </div>
 
       <div className="mb-8">
-        <div className="flex flex-wrap items-center gap-2 mb-2">
+        <div className="mb-2 flex flex-wrap items-center gap-2">
           <Badge variant="default">{categoryLabel}</Badge>
           {program.duration && (
             <Badge variant="outline">{program.duration}</Badge>
           )}
         </div>
-        <h1 className="text-3xl font-bold mb-2">{program.name}</h1>
+        <h1 className="mb-2 text-3xl font-bold">{program.name}</h1>
         <p className="text-fd-muted-foreground text-lg">
           {t.programs.by} {program.provider}
         </p>
-        <p className="mt-4 text-fd-foreground">{program.description}</p>
-        <div className="mt-6 flex flex-col sm:flex-row gap-3">
+        <p className="text-fd-foreground mt-4">{program.description}</p>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <Button
             variant="default"
             size="sm"
@@ -91,7 +91,7 @@ export default async function ProgramPage({
       <Separator className="mb-10" />
 
       <section className="mb-10">
-        <h2 id="perks" className="text-xl font-semibold mb-4">
+        <h2 id="perks" className="mb-4 text-xl font-semibold">
           {t.programs.sections.perks}
         </h2>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -101,7 +101,7 @@ export default async function ProgramPage({
                 <CardTitle className="text-base">{perk.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-fd-muted-foreground">
+                <p className="text-fd-muted-foreground text-sm">
                   {perk.description}
                 </p>
               </CardContent>
@@ -113,10 +113,10 @@ export default async function ProgramPage({
       <Separator className="mb-10" />
 
       <section className="mb-10">
-        <h2 id="eligibility" className="text-xl font-semibold mb-4">
+        <h2 id="eligibility" className="mb-4 text-xl font-semibold">
           {t.programs.sections.eligibility}
         </h2>
-        <ul className="list-disc list-inside space-y-2 text-fd-foreground">
+        <ul className="text-fd-foreground list-inside list-disc space-y-2">
           {program.eligibility.map((item) => (
             <li key={item}>{item}</li>
           ))}
@@ -127,10 +127,10 @@ export default async function ProgramPage({
         <>
           <Separator className="mb-10" />
           <section className="mb-10">
-            <h2 id="requirements" className="text-xl font-semibold mb-4">
+            <h2 id="requirements" className="mb-4 text-xl font-semibold">
               {t.programs.sections.requirements}
             </h2>
-            <ul className="list-disc list-inside space-y-2 text-fd-foreground">
+            <ul className="text-fd-foreground list-inside list-disc space-y-2">
               {program.requirements.map((item) => (
                 <li key={item}>{item}</li>
               ))}
@@ -143,10 +143,10 @@ export default async function ProgramPage({
         <>
           <Separator className="mb-10" />
           <section className="mb-10">
-            <h2 id="how-to-apply" className="text-xl font-semibold mb-4">
+            <h2 id="how-to-apply" className="mb-4 text-xl font-semibold">
               {t.programs.sections.howToApply}
             </h2>
-            <ol className="list-decimal list-inside space-y-2 text-fd-foreground">
+            <ol className="text-fd-foreground list-inside list-decimal space-y-2">
               {program.applicationProcess.map((step) => (
                 <li key={step}>{step}</li>
               ))}
@@ -159,7 +159,7 @@ export default async function ProgramPage({
         <>
           <Separator className="mb-10" />
           <section>
-            <h2 id="tags" className="text-xl font-semibold mb-4">
+            <h2 id="tags" className="mb-4 text-xl font-semibold">
               {t.programs.sections.tags}
             </h2>
             <div className="flex flex-wrap gap-2">
@@ -178,7 +178,7 @@ export default async function ProgramPage({
 
 export const generateStaticParams = () =>
   i18n.languages.flatMap((lang) =>
-    getAllProgramSlugs().map((slug) => ({ lang, slug }))
+    getAllProgramSlugs().map((slug) => ({ lang, slug })),
   );
 
 export const generateMetadata = async ({

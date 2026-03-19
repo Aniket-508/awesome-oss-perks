@@ -28,7 +28,7 @@ describe("parseRepoUrl: URL detection", () => {
         path: "owner/repo",
         provider: "github",
         repo: "repo",
-      }
+      },
     );
   });
 
@@ -52,7 +52,7 @@ describe("parseRepoUrl: URL detection", () => {
 
   it("parses GitLab subgroup URLs", () => {
     expect(
-      parseRepoUrl("https://gitlab.com/group/subgroup/project/-/tree/main")
+      parseRepoUrl("https://gitlab.com/group/subgroup/project/-/tree/main"),
     ).toStrictEqual({
       owner: "group",
       path: "group/subgroup/project",
@@ -64,7 +64,7 @@ describe("parseRepoUrl: URL detection", () => {
   it("rejects malformed hosts that contain github.com as a substring", () => {
     expect(parseRepoUrl("https://notgithub.com/vercel/next.js")).toBeNull();
     expect(
-      parseRepoUrl("https://example.com/path/github.com/vercel/next.js")
+      parseRepoUrl("https://example.com/path/github.com/vercel/next.js"),
     ).toBeNull();
   });
 
@@ -126,7 +126,7 @@ describe("checkEligibility: program matching", () => {
         sentry,
         makeCtx({
           pushedAt: new Date(Date.now() - 200 * 24 * 60 * 60 * 1000),
-        })
+        }),
       );
       expect(result.status).toBe("ineligible");
     });
@@ -163,7 +163,7 @@ describe("checkEligibility: program matching", () => {
     it("does not fail GitHub-or-GitLab rules for GitHub repos", () => {
       const result = checkEligibility(
         sourcery,
-        makeCtx({ provider: "github" })
+        makeCtx({ provider: "github" }),
       );
       expect(result.status).not.toBe("ineligible");
     });
@@ -177,7 +177,7 @@ describe("checkEligibility: program matching", () => {
           path: "group/subgroup/project",
           provider: "gitlab",
           repo: "project",
-        })
+        }),
       );
       expect(result.status).not.toBe("ineligible");
     });
@@ -186,7 +186,7 @@ describe("checkEligibility: program matching", () => {
       const result = checkEligibility(anthropic, makeCtx({ isPrivate: true }));
       expect(result.status).toBe("ineligible");
       expect(
-        result.reasons.some((reason) => /private|public/i.test(reason))
+        result.reasons.some((reason) => /private|public/i.test(reason)),
       ).toBe(true);
     });
 
@@ -217,7 +217,7 @@ describe("checkEligibility: program matching", () => {
           path: "group/project",
           provider: "gitlab",
           repo: "project",
-        })
+        }),
       );
       expect(result.status).toBe("eligible");
     });
@@ -237,7 +237,7 @@ describe("checkEligibility: program matching", () => {
     it("fails with AGPL-3.0 (non-permissive) license", () => {
       const result = checkEligibility(
         onepassword,
-        makeCtx({ license: "AGPL-3.0" })
+        makeCtx({ license: "AGPL-3.0" }),
       );
       expect(result.status).toBe("ineligible");
       expect(result.reasons[0]).toMatch(/permissive/i);
@@ -248,7 +248,7 @@ describe("checkEligibility: program matching", () => {
         onepassword,
         makeCtx({
           createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
-        })
+        }),
       );
       expect(result.status).toBe("ineligible");
       expect(result.reasons[0]).toMatch(/30 days old/i);
@@ -266,8 +266,8 @@ describe("checkEligibility: program matching", () => {
       expect(result.status).toBe("needs-review");
       expect(
         result.reasons.some((r) =>
-          /non[\s-]?commercial|non[\s-]?profit/i.test(r)
-        )
+          /non[\s-]?commercial|non[\s-]?profit/i.test(r),
+        ),
       ).toBeTruthy();
     });
   });

@@ -30,8 +30,8 @@ export const HomeCtaWithDialogs = ({
   categoryLabels,
 }: HomeCtaWithDialogsProps) => (
   <section className="pt-16 pb-8 text-center">
-    <h2 className="text-2xl font-bold mb-2">{translations.heading}</h2>
-    <p className="text-fd-muted-foreground max-w-lg mx-auto mb-6">
+    <h2 className="mb-2 text-2xl font-bold">{translations.heading}</h2>
+    <p className="text-fd-muted-foreground mx-auto mb-6 max-w-lg">
       {translations.description}
     </p>
     <div className="flex flex-wrap justify-center gap-4">

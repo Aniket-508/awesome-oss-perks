@@ -51,13 +51,13 @@ export default async function ProgramsPage({
   }));
 
   return (
-    <div className="container flex-1 flex flex-col w-full py-12 px-4 mx-auto">
+    <div className="container mx-auto flex w-full flex-1 flex-col px-4 py-12">
       <div className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h1 className="text-4xl font-bold mb-2">
+          <h1 className="mb-2 text-4xl font-bold">
             {t.programs.listing.heading}
           </h1>
-          <p className="text-fd-muted-foreground text-lg max-w-2xl">
+          <p className="text-fd-muted-foreground max-w-2xl text-lg">
             {translatedPrograms.length} curated programs for open-source
             projects. {t.programs.listing.description}
           </p>

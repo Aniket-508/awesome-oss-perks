@@ -35,9 +35,9 @@ export default async function SponsorsPage({
   const t = await getT(lang);
 
   return (
-    <div className="container flex-1 flex flex-col w-full py-12 px-4 mx-auto">
+    <div className="container mx-auto flex w-full flex-1 flex-col px-4 py-12">
       <div className="mb-10">
-        <h1 className="text-4xl font-bold mb-4">{t.sponsors.heading}</h1>
+        <h1 className="mb-4 text-4xl font-bold">{t.sponsors.heading}</h1>
         <p className="text-fd-muted-foreground text-lg leading-relaxed">
           {t.sponsors.intro}
         </p>
@@ -46,7 +46,7 @@ export default async function SponsorsPage({
       <Separator className="mb-10" />
 
       <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-6">
+        <h2 className="mb-6 text-2xl font-semibold">
           {t.sponsors.tiers.gold.name}
         </h2>
         <p className="text-fd-muted-foreground mb-4">
@@ -62,7 +62,7 @@ export default async function SponsorsPage({
       </section>
 
       <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-6">
+        <h2 className="mb-6 text-2xl font-semibold">
           {t.sponsors.tiers.silver.name}
         </h2>
         <p className="text-fd-muted-foreground mb-4">
@@ -78,7 +78,7 @@ export default async function SponsorsPage({
       </section>
 
       <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-6">
+        <h2 className="mb-6 text-2xl font-semibold">
           {t.sponsors.tiers.bronze.name}
         </h2>
         <p className="text-fd-muted-foreground mb-4">
@@ -96,7 +96,7 @@ export default async function SponsorsPage({
       <Separator className="mb-10" />
 
       <section>
-        <h2 className="text-2xl font-semibold mb-4">
+        <h2 className="mb-4 text-2xl font-semibold">
           {t.sponsors.cta.heading}
         </h2>
         <p className="text-fd-muted-foreground mb-4">

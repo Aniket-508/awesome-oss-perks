@@ -11,13 +11,13 @@ const fetchGoogleFont = async (weight: number): Promise<ArrayBuffer> => {
         "User-Agent":
           "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; de-at) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1",
       },
-    }
+    },
   ).then((res) => res.text());
 
   const url = css.match(/src: url\((.+?)\)/)?.[1];
   if (!url) {
     throw new Error(
-      `Could not resolve Public Sans wght@${weight} from Google Fonts`
+      `Could not resolve Public Sans wght@${weight} from Google Fonts`,
     );
   }
   return fetch(url).then((res) => res.arrayBuffer());

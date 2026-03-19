@@ -86,7 +86,7 @@ const validateOgRequest = (params: {
 
 const getOgContent = async (
   lang: string,
-  context: OgContext
+  context: OgContext,
 ): Promise<{ description: string; title: string }> => {
   const t = await getT(lang);
   switch (context.type) {
@@ -137,7 +137,7 @@ const getOgContent = async (
 
 export const GET = async (
   _req: Request,
-  { params }: { params: Promise<{ lang: string; slug?: string[] }> }
+  { params }: { params: Promise<{ lang: string; slug?: string[] }> },
 ) => {
   const { context, lang } = validateOgRequest(await params);
   const { description, title } = await getOgContent(lang, context);
@@ -156,7 +156,7 @@ export const GET = async (
       fonts,
       height: 630,
       width: 1200,
-    }
+    },
   );
 };
 

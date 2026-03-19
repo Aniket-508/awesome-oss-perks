@@ -38,9 +38,9 @@ export default async function AboutPage({
   const t = await getT(lang);
 
   return (
-    <div className="max-w-4xl flex-1 flex flex-col w-full py-12 px-4 mx-auto">
+    <div className="mx-auto flex w-full max-w-4xl flex-1 flex-col px-4 py-12">
       <div className="mb-10">
-        <h1 className="text-4xl font-bold mb-4">{t.about.heading}</h1>
+        <h1 className="mb-4 text-4xl font-bold">{t.about.heading}</h1>
         <p className="text-fd-muted-foreground text-lg leading-relaxed">
           {t.about.intro}
         </p>
@@ -49,7 +49,7 @@ export default async function AboutPage({
       <Separator className="mb-10" />
 
       <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-6">
+        <h2 className="mb-6 text-2xl font-semibold">
           {t.about.principles.title}
         </h2>
         <div className="grid gap-4 sm:grid-cols-2">
@@ -59,7 +59,7 @@ export default async function AboutPage({
                 <CardTitle className="text-base">{item.title}</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-fd-muted-foreground">
+                <p className="text-fd-muted-foreground text-sm">
                   {item.description}
                 </p>
               </CardContent>
@@ -71,7 +71,7 @@ export default async function AboutPage({
       <Separator className="mb-10" />
 
       <section className="mb-10">
-        <h2 className="text-2xl font-semibold mb-4">
+        <h2 className="mb-4 text-2xl font-semibold">
           {t.about.maintainer.heading}
         </h2>
         <p className="text-fd-muted-foreground mb-4">
@@ -80,7 +80,7 @@ export default async function AboutPage({
             href={`https://github.com/${GITHUB_CONFIG.user}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-fd-primary hover:underline font-medium"
+            className="text-fd-primary font-medium hover:underline"
           >
             @{GITHUB_CONFIG.user}
           </a>
@@ -90,7 +90,7 @@ export default async function AboutPage({
       <Separator className="mb-10" />
 
       <section>
-        <h2 className="text-2xl font-semibold mb-4">{t.about.cta.heading}</h2>
+        <h2 className="mb-4 text-2xl font-semibold">{t.about.cta.heading}</h2>
         <p className="text-fd-muted-foreground mb-4">
           Ready to find perks for your open-source project?
         </p>

@@ -48,7 +48,7 @@ const FieldError = ({ errors }: { errors: unknown[] }) => {
   if (!message) {
     return null;
   }
-  return <p className="text-xs text-destructive">{message}</p>;
+  return <p className="text-destructive text-xs">{message}</p>;
 };
 
 const TextField = ({
@@ -69,7 +69,7 @@ const TextField = ({
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) =>
       field.handleChange(e.target.value),
-    [field]
+    [field],
   );
 
   return (
@@ -150,7 +150,7 @@ export const ContactSubmissionDialog = ({
         role: z.string().min(1, t.validation.roleRequired),
         url: z.string().url(t.validation.invalidUrl).or(z.literal("")),
       }),
-    [t.validation]
+    [t.validation],
   );
 
   const { isSubmitting, submissionError, submissionStatus, submit } =
@@ -198,7 +198,7 @@ export const ContactSubmissionDialog = ({
 
   const handleOpenChange = useCallback(
     (val: boolean) => (val ? setOpen(true) : handleClose()),
-    [handleClose]
+    [handleClose],
   );
 
   const handleFormSubmit = useCallback(
@@ -207,7 +207,7 @@ export const ContactSubmissionDialog = ({
       e.stopPropagation();
       form.handleSubmit();
     },
-    [form]
+    [form],
   );
 
   return (
@@ -300,7 +300,7 @@ export const ContactSubmissionDialog = ({
                 </form.Field>
 
                 {submissionError && (
-                  <p className="text-sm text-destructive">{submissionError}</p>
+                  <p className="text-destructive text-sm">{submissionError}</p>
                 )}
               </div>
               {/* eslint-enable react-perf/jsx-no-new-function-as-prop */}
@@ -335,12 +335,12 @@ export const ContactSubmissionDialog = ({
             <CheckCircle2 className="size-12 text-green-500" />
             <div>
               <h3 className="text-lg font-semibold">{t.success.heading}</h3>
-              <p className="text-sm text-fd-muted-foreground">
+              <p className="text-fd-muted-foreground text-sm">
                 {t.success.message}
               </p>
             </div>
             {result && (
-              <div className="flex flex-col gap-3 w-full">
+              <div className="flex w-full flex-col gap-3">
                 <Button
                   variant="outline"
                   nativeButton={false}
@@ -352,7 +352,7 @@ export const ContactSubmissionDialog = ({
                     >
                       {t.success.viewPr.replace(
                         "{prNumber}",
-                        String(result.prNumber)
+                        String(result.prNumber),
                       )}
                       <ArrowRight />
                     </a>

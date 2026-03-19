@@ -73,5 +73,5 @@ for (const [category, heading] of Object.entries(CATEGORY_HEADINGS)) {
 
 fs.writeFileSync(README_PATH, readme, "utf8");
 console.log(
-  `✔ Updated README.md with ${programs.length} programs across ${byCategory.size} categories.`
+  `✔ Updated README.md with ${programs.length} programs across ${byCategory.size} categories.`,
 );

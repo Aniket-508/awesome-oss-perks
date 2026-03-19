@@ -18,19 +18,19 @@ export const HeroActions = ({
   browseProgramsLabel,
   inputTranslations,
 }: HeroActionsProps) => (
-  <div className="flex flex-col sm:flex-row items-center gap-4 w-full max-w-2xl mx-auto">
+  <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-4 sm:flex-row">
     <RepoCheckInput
       lang={lang}
       translations={inputTranslations}
       className="max-w-none"
     />
 
-    <div className="flex sm:flex-col items-center gap-3 sm:gap-1 w-full sm:w-auto">
-      <div className="h-px sm:h-auto sm:w-px flex-1 sm:flex-none sm:min-h-2 bg-fd-border" />
-      <span className="text-xs font-medium uppercase text-fd-muted-foreground shrink-0">
+    <div className="flex w-full items-center gap-3 sm:w-auto sm:flex-col sm:gap-1">
+      <div className="bg-fd-border h-px flex-1 sm:h-auto sm:min-h-2 sm:w-px sm:flex-none" />
+      <span className="text-fd-muted-foreground shrink-0 text-xs font-medium uppercase">
         or
       </span>
-      <div className="h-px sm:h-auto sm:w-px flex-1 sm:flex-none sm:min-h-2 bg-fd-border" />
+      <div className="bg-fd-border h-px flex-1 sm:h-auto sm:min-h-2 sm:w-px sm:flex-none" />
     </div>
 
     <Button

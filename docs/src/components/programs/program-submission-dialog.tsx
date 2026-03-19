@@ -80,7 +80,7 @@ const FieldError = ({ errors }: { errors: unknown[] }) => {
   if (!message) {
     return null;
   }
-  return <p className="text-xs text-destructive">{message}</p>;
+  return <p className="text-destructive text-xs">{message}</p>;
 };
 
 const TextField = ({
@@ -101,7 +101,7 @@ const TextField = ({
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) =>
       field.handleChange(e.target.value),
-    [field]
+    [field],
   );
 
   return (
@@ -137,7 +137,7 @@ const TextareaField = ({
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) =>
       field.handleChange(e.target.value),
-    [field]
+    [field],
   );
 
   return (
@@ -273,7 +273,7 @@ export const ProgramSubmissionDialog = ({
           .array(z.string())
           .refine(
             (arr) => arr.some((s) => s.trim().length > 0),
-            t.validation.eligibilityRequired
+            t.validation.eligibilityRequired,
           ),
         name: z.string().min(1, t.validation.nameRequired),
         perks: z
@@ -282,15 +282,15 @@ export const ProgramSubmissionDialog = ({
             (arr) =>
               arr.some(
                 (p) =>
-                  p.title.trim().length > 0 && p.description.trim().length > 0
+                  p.title.trim().length > 0 && p.description.trim().length > 0,
               ),
-            t.validation.perkRequired
+            t.validation.perkRequired,
           ),
         provider: z.string().min(1, t.validation.providerRequired),
         tags: z.array(z.string()),
         url: z.string().url(t.validation.invalidUrl),
       }),
-    [t.validation]
+    [t.validation],
   );
 
   const { isSubmitting, submissionError, submissionStatus, submit } =
@@ -315,10 +315,10 @@ export const ProgramSubmissionDialog = ({
     onSubmit: async ({ value }) => {
       const eligibility = value.eligibility.filter((s) => s.trim().length > 0);
       const perks = value.perks.filter(
-        (p) => p.title.trim().length > 0 && p.description.trim().length > 0
+        (p) => p.title.trim().length > 0 && p.description.trim().length > 0,
       );
       const applicationProcess = value.applicationProcess.filter(
-        (s) => s.trim().length > 0
+        (s) => s.trim().length > 0,
       );
       const res = await submit({
         applicationProcess,
@@ -360,7 +360,7 @@ export const ProgramSubmissionDialog = ({
 
   const handleOpenChange = useCallback(
     (val: boolean) => (val ? setOpen(true) : handleClose()),
-    [handleClose]
+    [handleClose],
   );
 
   const handleFormSubmit = useCallback(
@@ -369,7 +369,7 @@ export const ProgramSubmissionDialog = ({
       e.stopPropagation();
       form.handleSubmit();
     },
-    [form]
+    [form],
   );
 
   return (
@@ -430,7 +430,7 @@ export const ProgramSubmissionDialog = ({
                 </form.Field>
 
                 <div className="space-y-4">
-                  <label className="flex items-center gap-2 text-sm cursor-pointer">
+                  <label className="flex cursor-pointer items-center gap-2 text-sm">
                     <Checkbox
                       checked={hasApplicationUrl}
                       onCheckedChange={(checked) => {
@@ -510,29 +510,29 @@ export const ProgramSubmissionDialog = ({
                     return (
                       <div className="space-y-2">
                         <Label>{t.form.eligibilityLabel}</Label>
-                        <p className="text-xs text-fd-muted-foreground">
+                        <p className="text-fd-muted-foreground text-xs">
                           {t.form.eligibilityHelp}
                         </p>
                         <div className="space-y-4">
                           {value.map((item, index) => (
                             <div
                               key={eligibilityKeys[index]}
-                              className="relative rounded-lg border border-fd-border bg-fd-muted/20 p-3 space-y-2"
+                              className="border-fd-border bg-fd-muted/20 relative space-y-2 rounded-lg border p-3"
                             >
                               {value.length > 1 && (
                                 <Button
                                   type="button"
                                   variant="ghost"
                                   size="icon-xs"
-                                  className="absolute top-3 right-3 text-fd-muted-foreground hover:text-destructive"
+                                  className="text-fd-muted-foreground hover:text-destructive absolute top-3 right-3"
                                   disabled={isSubmitting}
                                   onClick={() => {
                                     const next = value.filter(
-                                      (_, i) => i !== index
+                                      (_, i) => i !== index,
                                     );
                                     field.handleChange(next);
                                     setEligibilityKeys((prev) =>
-                                      prev.filter((_, i) => i !== index)
+                                      prev.filter((_, i) => i !== index),
                                     );
                                   }}
                                 >
@@ -540,10 +540,10 @@ export const ProgramSubmissionDialog = ({
                                 </Button>
                               )}
                               <div className="pr-9">
-                                <span className="text-xs font-medium text-fd-muted-foreground">
+                                <span className="text-fd-muted-foreground text-xs font-medium">
                                   {t.form.requirementLabel.replace(
                                     "{index}",
-                                    String(index + 1)
+                                    String(index + 1),
                                   )}
                                 </span>
                               </div>
@@ -591,29 +591,29 @@ export const ProgramSubmissionDialog = ({
                     return (
                       <div className="space-y-2">
                         <Label>{t.form.applicationProcessLabel}</Label>
-                        <p className="text-xs text-fd-muted-foreground">
+                        <p className="text-fd-muted-foreground text-xs">
                           {t.form.applicationProcessHelp}
                         </p>
                         <div className="space-y-4">
                           {value.map((item, index) => (
                             <div
                               key={applicationProcessKeys[index]}
-                              className="relative rounded-lg border border-fd-border bg-fd-muted/20 p-3 space-y-2"
+                              className="border-fd-border bg-fd-muted/20 relative space-y-2 rounded-lg border p-3"
                             >
                               {value.length > 1 && (
                                 <Button
                                   type="button"
                                   variant="ghost"
                                   size="icon-xs"
-                                  className="absolute top-3 right-3 text-fd-muted-foreground hover:text-destructive"
+                                  className="text-fd-muted-foreground hover:text-destructive absolute top-3 right-3"
                                   disabled={isSubmitting}
                                   onClick={() => {
                                     const next = value.filter(
-                                      (_, i) => i !== index
+                                      (_, i) => i !== index,
                                     );
                                     field.handleChange(next);
                                     setApplicationProcessKeys((prev) =>
-                                      prev.filter((_, i) => i !== index)
+                                      prev.filter((_, i) => i !== index),
                                     );
                                   }}
                                 >
@@ -621,10 +621,10 @@ export const ProgramSubmissionDialog = ({
                                 </Button>
                               )}
                               <div className="pr-9">
-                                <span className="text-xs font-medium text-fd-muted-foreground">
+                                <span className="text-fd-muted-foreground text-xs font-medium">
                                   {t.form.stepLabel.replace(
                                     "{index}",
-                                    String(index + 1)
+                                    String(index + 1),
                                   )}
                                 </span>
                               </div>
@@ -676,29 +676,29 @@ export const ProgramSubmissionDialog = ({
                     return (
                       <div className="space-y-2">
                         <Label>{t.form.perksLabel}</Label>
-                        <p className="text-xs text-fd-muted-foreground">
+                        <p className="text-fd-muted-foreground text-xs">
                           {t.form.perksHelp}
                         </p>
                         <div className="space-y-4">
                           {perksValue.map((perk, index) => (
                             <div
                               key={perkKeys[index]}
-                              className="relative rounded-lg border border-fd-border bg-fd-muted/20 p-3 space-y-2"
+                              className="border-fd-border bg-fd-muted/20 relative space-y-2 rounded-lg border p-3"
                             >
                               {perksValue.length > 1 && (
                                 <Button
                                   type="button"
                                   variant="ghost"
                                   size="icon-xs"
-                                  className="absolute top-3 right-3 shrink-0 text-fd-muted-foreground hover:text-destructive"
+                                  className="text-fd-muted-foreground hover:text-destructive absolute top-3 right-3 shrink-0"
                                   disabled={isSubmitting}
                                   onClick={() => {
                                     const next = perksValue.filter(
-                                      (_, i) => i !== index
+                                      (_, i) => i !== index,
                                     );
                                     field.handleChange(next);
                                     setPerkKeys((prev) =>
-                                      prev.filter((_, i) => i !== index)
+                                      prev.filter((_, i) => i !== index),
                                     );
                                   }}
                                 >
@@ -706,10 +706,10 @@ export const ProgramSubmissionDialog = ({
                                 </Button>
                               )}
                               <div className="pr-9">
-                                <span className="text-xs font-medium text-fd-muted-foreground">
+                                <span className="text-fd-muted-foreground text-xs font-medium">
                                   {t.form.perkLabel.replace(
                                     "{index}",
-                                    String(index + 1)
+                                    String(index + 1),
                                   )}
                                 </span>
                               </div>
@@ -776,7 +776,7 @@ export const ProgramSubmissionDialog = ({
                   {(field) => (
                     <div className="space-y-2">
                       <Label>{t.form.tagsLabel}</Label>
-                      <p className="text-xs text-fd-muted-foreground">
+                      <p className="text-fd-muted-foreground text-xs">
                         {t.form.tagsHelp}
                       </p>
                       <TagsInput
@@ -793,7 +793,7 @@ export const ProgramSubmissionDialog = ({
                 </form.Field>
 
                 {submissionError && (
-                  <p className="text-sm text-destructive">{submissionError}</p>
+                  <p className="text-destructive text-sm">{submissionError}</p>
                 )}
               </div>
               {/* eslint-enable react/no-array-index-key, react-perf/jsx-no-new-function-as-prop */}
@@ -828,12 +828,12 @@ export const ProgramSubmissionDialog = ({
             <CheckCircle2 className="size-12 text-green-500" />
             <div>
               <h3 className="text-lg font-semibold">{t.success.heading}</h3>
-              <p className="text-sm text-fd-muted-foreground">
+              <p className="text-fd-muted-foreground text-sm">
                 {t.success.message}
               </p>
             </div>
             {result && (
-              <div className="flex flex-col gap-3 w-full">
+              <div className="flex w-full flex-col gap-3">
                 <Button
                   variant="outline"
                   nativeButton={false}
@@ -845,7 +845,7 @@ export const ProgramSubmissionDialog = ({
                     >
                       {t.success.viewPr.replace(
                         "{prNumber}",
-                        String(result.prNumber)
+                        String(result.prNumber),
                       )}
                       <ArrowRight />
                     </a>
