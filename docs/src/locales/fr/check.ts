@@ -28,46 +28,48 @@ const check = {
   private: "Privé",
   reasons: {
     codeOfConduct:
-      "le Code de Conduite ne peut pas être vérifié automatiquement",
+      "Le Code de Conduite ne peut pas être vérifié automatiquement",
     communitySize:
-      "la taille de la communauté ne peut pas être vérifiée automatiquement",
+      "La taille de la communauté ne peut pas être vérifiée automatiquement",
+    configFileMet: "Fichier de configuration détecté ({matched})",
+    configFileUnknown: "Aucun fichier de configuration d'hébergement détecté",
     criteriaUnverifiable:
-      "les critères ne peuvent pas être vérifiés automatiquement",
+      "Les critères ne peuvent pas être vérifiés automatiquement",
     hostingPlatform:
-      "l'exigence de plateforme d'hébergement ne peut pas être vérifiée automatiquement",
+      "L'exigence de plateforme d'hébergement ne peut pas être vérifiée automatiquement",
     inactive:
-      "dernier commit : il y a {days} j (le projet est peut-être inactif)",
+      "Dernier commit : il y a {days} j (le projet est peut-être inactif)",
     missionAlignment:
-      "l'alignement avec la mission ne peut pas être vérifié automatiquement",
+      "L'alignement avec la mission ne peut pas être vérifié automatiquement",
     noOsiLicense:
-      "aucune licence approuvée par l'OSI détectée (détectée : {license})",
+      "Aucune licence approuvée par l'OSI détectée (détectée : {license})",
     nonCommercial:
-      "l'exigence non commerciale ne peut pas être vérifiée automatiquement",
+      "L'exigence non commerciale ne peut pas être vérifiée automatiquement",
     osiLicense:
-      "nécessite une licence approuvée par l'OSI (détectée : {license})",
+      "Nécessite une licence approuvée par l'OSI (détectée : {license})",
     permissiveLicense:
-      "nécessite une licence permissive (détectée : {license})",
+      "Nécessite une licence permissive (détectée : {license})",
     popularityThreshold:
-      "le seuil de popularité est déterminé par le fournisseur",
-    procedural: "étape procédurale — postuler manuellement",
+      "Le seuil de popularité est déterminé par le fournisseur",
+    procedural: "Étape procédurale — postuler manuellement",
     projectTooNew:
-      "le projet doit avoir au moins {required} j (actuel : {current} j)",
-    repoFork: "le dépôt est un fork",
-    repoPrivate: "le dépôt est privé",
-    requiresGithub: "nécessite un dépôt GitHub",
-    requiresGitlab: "nécessite un dépôt GitLab",
-    role: "l'exigence de rôle ne peut pas être vérifiée automatiquement",
-    starsBelow: "nécessite {threshold}+ étoiles (actuel : {current})",
-    starsMet: "seuil d'étoiles atteint ({current}/{threshold}+)",
+      "Le projet doit avoir au moins {required} j (actuel : {current} j)",
+    repoFork: "Le dépôt est un fork",
+    repoPrivate: "Le dépôt est privé",
+    requiresGithub: "Nécessite un dépôt GitHub",
+    requiresGitlab: "Nécessite un dépôt GitLab",
+    role: "L'exigence de rôle ne peut pas être vérifiée automatiquement",
+    starsBelow: "Nécessite {threshold}+ étoiles (actuel : {current})",
+    starsMet: "Seuil d'étoiles atteint ({current}/{threshold}+)",
     subjective:
-      "les critères subjectifs ne peuvent pas être vérifiés automatiquement",
-    techStackMet: "dépendance technologique détectée ({matched})",
+      "Les critères subjectifs ne peuvent pas être vérifiés automatiquement",
+    techStackMet: "Dépendance technologique détectée ({matched})",
     techStackMissing:
-      "aucune dépendance technologique correspondante trouvée dans package.json",
+      "Aucune dépendance technologique correspondante trouvée dans package.json",
     techStackUnknown:
-      "impossible de détecter les dépendances du projet",
+      "Impossible de détecter les dépendances du projet",
     usageRestriction:
-      "la restriction d'utilisation ne peut pas être vérifiée automatiquement",
+      "La restriction d'utilisation ne peut pas être vérifiée automatiquement",
   },
   stars: "étoiles",
   time: {

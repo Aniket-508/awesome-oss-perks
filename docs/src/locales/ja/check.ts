@@ -28,6 +28,8 @@ const check = {
   reasons: {
     codeOfConduct: "行動規範は自動検証できません",
     communitySize: "コミュニティの規模は自動検証できません",
+    configFileMet: "設定ファイルが検出されました（{matched}）",
+    configFileUnknown: "ホスティング設定ファイルが検出されませんでした",
     criteriaUnverifiable: "基準は自動検証できません",
     hostingPlatform: "ホスティングプラットフォームの要件は自動検証できません",
     inactive:

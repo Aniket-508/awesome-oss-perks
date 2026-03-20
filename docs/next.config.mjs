@@ -30,6 +30,7 @@ const config = {
       },
     ];
   },
+  serverExternalPackages: ["license-similarity"],
   transpilePackages: ["@ossperks/core"],
 };
 

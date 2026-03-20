@@ -27,6 +27,8 @@ const check = {
   reasons: {
     codeOfConduct: "행동 강령은 자동 확인할 수 없습니다",
     communitySize: "커뮤니티 규모는 자동 확인할 수 없습니다",
+    configFileMet: "설정 파일이 감지되었습니다 ({matched})",
+    configFileUnknown: "호스팅 설정 파일이 감지되지 않았습니다",
     criteriaUnverifiable: "기준을 자동 확인할 수 없습니다",
     hostingPlatform: "호스팅 플랫폼 요구사항은 자동 확인할 수 없습니다",
     inactive:
