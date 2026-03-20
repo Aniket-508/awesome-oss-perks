@@ -1,5 +1,11 @@
 # ossperks
 
+## 0.3.1
+
+### Patch Changes
+
+- 320081f: - Mark `license-similarity` as an external dependency in the CLI build and add it as a direct runtime dependency
+
 ## 0.3.0
 
 ### Minor Changes
