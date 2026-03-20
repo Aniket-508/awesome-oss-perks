@@ -30,34 +30,36 @@ const check = {
   reasons: {
     codeOfConduct: "Verhaltenskodex kann nicht automatisch überprüft werden",
     communitySize: "Communitygröße kann nicht automatisch überprüft werden",
+    configFileMet: "Konfigurationsdatei erkannt ({matched})",
+    configFileUnknown: "Keine Hosting-Konfigurationsdatei erkannt",
     criteriaUnverifiable: "Kriterien können nicht automatisch überprüft werden",
     hostingPlatform:
       "Hosting-Plattform-Anforderung kann nicht automatisch überprüft werden",
     inactive:
-      "letzter Commit: vor {days} T (Projekt ist möglicherweise inaktiv)",
+      "Letzter Commit: vor {days} T (Projekt ist möglicherweise inaktiv)",
     missionAlignment:
       "Missionsausrichtung kann nicht automatisch überprüft werden",
-    noOsiLicense: "keine OSI-genehmigte Lizenz erkannt (erkannt: {license})",
+    noOsiLicense: "Keine OSI-genehmigte Lizenz erkannt (erkannt: {license})",
     nonCommercial:
-      "nicht-kommerzielle Anforderung kann nicht automatisch überprüft werden",
-    osiLicense: "erfordert eine OSI-genehmigte Lizenz (erkannt: {license})",
-    permissiveLicense: "erfordert eine permissive Lizenz (erkannt: {license})",
+      "Nicht-kommerzielle Anforderung kann nicht automatisch überprüft werden",
+    osiLicense: "Erfordert eine OSI-genehmigte Lizenz (erkannt: {license})",
+    permissiveLicense: "Erfordert eine permissive Lizenz (erkannt: {license})",
     popularityThreshold: "Popularitätsschwelle wird vom Anbieter bestimmt",
     procedural: "Verfahrensschritt — manuell bewerben",
     projectTooNew:
       "Projektalter muss mindestens {required} T betragen (aktuell: {current} T)",
     repoFork: "Repository ist ein Fork",
     repoPrivate: "Repository ist privat",
-    requiresGithub: "erfordert ein GitHub-Repository",
-    requiresGitlab: "erfordert ein GitLab-Repository",
+    requiresGithub: "Erfordert ein GitHub-Repository",
+    requiresGitlab: "Erfordert ein GitLab-Repository",
     role: "Rollenanforderung kann nicht automatisch überprüft werden",
-    starsBelow: "erfordert {threshold}+ Sterne (aktuell: {current})",
+    starsBelow: "Erfordert {threshold}+ Sterne (aktuell: {current})",
     starsMet: "Sterneschwelle erreicht ({current}/{threshold}+)",
     subjective:
-      "subjektive Kriterien können nicht automatisch überprüft werden",
+      "Subjektive Kriterien können nicht automatisch überprüft werden",
     techStackMet: "Technologie-Abhängigkeit erkannt ({matched})",
     techStackMissing:
-      "keine passende Technologie-Abhängigkeit in package.json gefunden",
+      "Keine passende Technologie-Abhängigkeit in package.json gefunden",
     techStackUnknown: "Projektabhängigkeiten konnten nicht erkannt werden",
     usageRestriction:
       "Nutzungsbeschränkung kann nicht automatisch überprüft werden",

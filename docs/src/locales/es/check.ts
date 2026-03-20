@@ -31,40 +31,42 @@ const check = {
     codeOfConduct:
       "El Código de Conducta no se puede verificar automáticamente",
     communitySize:
-      "el tamaño de la comunidad no se puede verificar automáticamente",
+      "El tamaño de la comunidad no se puede verificar automáticamente",
+    configFileMet: "Archivo de configuración detectado ({matched})",
+    configFileUnknown: "No se detectó archivo de configuración de hosting",
     criteriaUnverifiable:
-      "los criterios no se pueden verificar automáticamente",
+      "Los criterios no se pueden verificar automáticamente",
     hostingPlatform:
-      "el requisito de plataforma de alojamiento no se puede verificar automáticamente",
-    inactive: "último commit: hace {days} d (el proyecto puede estar inactivo)",
+      "El requisito de plataforma de alojamiento no se puede verificar automáticamente",
+    inactive: "Último commit: hace {days} d (el proyecto puede estar inactivo)",
     missionAlignment:
-      "la alineación con la misión no se puede verificar automáticamente",
+      "La alineación con la misión no se puede verificar automáticamente",
     noOsiLicense:
-      "no se detectó una licencia aprobada por la OSI (detectada: {license})",
+      "No se detectó una licencia aprobada por la OSI (detectada: {license})",
     nonCommercial:
-      "el requisito no comercial no se puede verificar automáticamente",
+      "El requisito no comercial no se puede verificar automáticamente",
     osiLicense:
-      "requiere una licencia aprobada por la OSI (detectada: {license})",
-    permissiveLicense: "requiere una licencia permisiva (detectada: {license})",
-    popularityThreshold: "el umbral de popularidad lo determina el proveedor",
-    procedural: "paso procedimental — solicitar manualmente",
+      "Requiere una licencia aprobada por la OSI (detectada: {license})",
+    permissiveLicense: "Requiere una licencia permisiva (detectada: {license})",
+    popularityThreshold: "El umbral de popularidad lo determina el proveedor",
+    procedural: "Paso procedimental — solicitar manualmente",
     projectTooNew:
-      "el proyecto debe tener al menos {required} d (actual: {current} d)",
-    repoFork: "el repositorio es un fork",
-    repoPrivate: "el repositorio es privado",
-    requiresGithub: "requiere un repositorio de GitHub",
-    requiresGitlab: "requiere un repositorio de GitLab",
-    role: "el requisito de rol no se puede verificar automáticamente",
-    starsBelow: "requiere {threshold}+ estrellas (actual: {current})",
-    starsMet: "umbral de estrellas alcanzado ({current}/{threshold}+)",
+      "El proyecto debe tener al menos {required} d (actual: {current} d)",
+    repoFork: "El repositorio es un fork",
+    repoPrivate: "El repositorio es privado",
+    requiresGithub: "Requiere un repositorio de GitHub",
+    requiresGitlab: "Requiere un repositorio de GitLab",
+    role: "El requisito de rol no se puede verificar automáticamente",
+    starsBelow: "Requiere {threshold}+ estrellas (actual: {current})",
+    starsMet: "Umbral de estrellas alcanzado ({current}/{threshold}+)",
     subjective:
-      "los criterios subjetivos no se pueden verificar automáticamente",
-    techStackMet: "dependencia tecnológica detectada ({matched})",
+      "Los criterios subjetivos no se pueden verificar automáticamente",
+    techStackMet: "Dependencia tecnológica detectada ({matched})",
     techStackMissing:
-      "no se encontró ninguna dependencia tecnológica en package.json",
-    techStackUnknown: "no se pudieron detectar las dependencias del proyecto",
+      "No se encontró ninguna dependencia tecnológica en package.json",
+    techStackUnknown: "No se pudieron detectar las dependencias del proyecto",
     usageRestriction:
-      "la restricción de uso no se puede verificar automáticamente",
+      "La restricción de uso no se puede verificar automáticamente",
   },
   stars: "estrellas",
   time: {

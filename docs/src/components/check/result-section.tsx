@@ -78,15 +78,17 @@ export const ResultSection = ({
             {result.reasons.length > 0 && (
               <CardContent className="pt-0">
                 <ul className="space-y-1">
-                  {[...new Set(result.reasons)].map((reason) => (
-                    <li
-                      key={`${result.slug}-${reason}`}
-                      className="text-fd-muted-foreground flex items-center gap-2 text-sm"
-                    >
-                      <span className="bg-fd-muted-foreground/50 size-1 shrink-0 rounded-full" />
-                      {reason}
-                    </li>
-                  ))}
+                  {[...new Set(result.reasons)]
+                    .filter(Boolean)
+                    .map((reason) => (
+                      <li
+                        key={`${result.slug}-${reason}`}
+                        className="text-fd-muted-foreground flex items-center gap-2 text-sm"
+                      >
+                        <span className="bg-fd-muted-foreground/50 size-1 shrink-0 rounded-full" />
+                        {reason}
+                      </li>
+                    ))}
                 </ul>
               </CardContent>
             )}

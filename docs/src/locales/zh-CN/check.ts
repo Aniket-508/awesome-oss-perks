@@ -27,6 +27,8 @@ const check = {
   reasons: {
     codeOfConduct: "行为准则无法自动验证",
     communitySize: "社区规模无法自动验证",
+    configFileMet: "检测到配置文件（{matched}）",
+    configFileUnknown: "未检测到托管配置文件",
     criteriaUnverifiable: "标准无法自动验证",
     hostingPlatform: "托管平台要求无法自动验证",
     inactive: "最后一次提交是 {days} 天前（项目可能不活跃）",
