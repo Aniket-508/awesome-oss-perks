@@ -38,5 +38,12 @@
     "Include your project URL, license type, and a brief description.",
     "OpenPanel reviews and responds within a few business days."
   ],
-  "tags": ["analytics", "web-analytics", "tracking", "dashboards"]
+  "tags": ["analytics", "web-analytics", "tracking", "dashboards"],
+  "techPackages": [
+    "@openpanel/nextjs",
+    "@openpanel/web",
+    "@openpanel/react",
+    "@openpanel/node",
+    "@openpanel/sdk"
+  ]
 }

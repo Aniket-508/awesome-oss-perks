@@ -3,6 +3,7 @@ import {
   getProgramBySlug,
   parseRepoUrl,
   checkEligibility,
+  checkEligibilityDetailed,
   checkAllPrograms,
 } from "@ossperks/core";
 import type { RepoContext } from "@ossperks/core";
@@ -121,6 +122,7 @@ describe("parseRepoUrl: URL detection", () => {
 
 const makeCtx = (overrides: Partial<RepoContext> = {}): RepoContext => ({
   createdAt: new Date(Date.now() - 365 * 24 * 60 * 60 * 1000),
+  dependencies: [],
   description: "A test library",
   isFork: false,
   isOrgOwned: false,
@@ -346,6 +348,112 @@ describe("checkEligibility: program matching", () => {
         makeCtx({ provider: "codeberg" }),
       );
       expect(result.status).toBe("eligible");
+    });
+  });
+});
+
+// ---------------------------------------------------------------------------
+// eligibility — tech stack detection
+// ---------------------------------------------------------------------------
+
+describe("checkEligibility: tech stack detection", () => {
+  describe("convex (requires convex package)", () => {
+    const convex = getProgramBySlug("convex");
+    if (!convex) {
+      throw new Error("convex test data missing");
+    }
+
+    it("passes tech check when convex is in dependencies", () => {
+      const result = checkEligibilityDetailed(
+        convex,
+        makeCtx({ dependencies: ["convex", "react"] }),
+      );
+      const techReasons = result.reasons.filter(
+        (r) => r.code === "techStackMissing" || r.code === "techStackUnknown",
+      );
+      expect(techReasons).toHaveLength(0);
+    });
+
+    it("fails tech check when no matching dependency is found", () => {
+      const result = checkEligibilityDetailed(
+        convex,
+        makeCtx({ dependencies: ["react", "next"] }),
+      );
+      expect(result.status).toBe("ineligible");
+      const techReason = result.reasons.find(
+        (r) => r.code === "techStackMissing",
+      );
+      expect(techReason).toBeDefined();
+    });
+
+    it("returns unknown when dependencies list is empty", () => {
+      const result = checkEligibilityDetailed(
+        convex,
+        makeCtx({ dependencies: [] }),
+      );
+      const techReason = result.reasons.find(
+        (r) => r.code === "techStackUnknown",
+      );
+      expect(techReason).toBeDefined();
+      expect(result.status).toBe("needs-review");
+    });
+  });
+
+  describe("neon (requires postgres-related package)", () => {
+    const neon = getProgramBySlug("neon");
+    if (!neon) {
+      throw new Error("neon test data missing");
+    }
+
+    it("passes when pg is in dependencies", () => {
+      const result = checkEligibilityDetailed(
+        neon,
+        makeCtx({ dependencies: ["pg", "express"] }),
+      );
+      const techReasons = result.reasons.filter(
+        (r) => r.code === "techStackMissing" || r.code === "techStackUnknown",
+      );
+      expect(techReasons).toHaveLength(0);
+    });
+
+    it("passes when drizzle-orm is in dependencies", () => {
+      const result = checkEligibilityDetailed(
+        neon,
+        makeCtx({ dependencies: ["drizzle-orm", "next"] }),
+      );
+      const techReasons = result.reasons.filter(
+        (r) => r.code === "techStackMissing" || r.code === "techStackUnknown",
+      );
+      expect(techReasons).toHaveLength(0);
+    });
+
+    it("fails when no postgres-related dependency found", () => {
+      const result = checkEligibilityDetailed(
+        neon,
+        makeCtx({ dependencies: ["mongoose", "express"] }),
+      );
+      expect(result.status).toBe("ineligible");
+    });
+  });
+
+  describe("programs without techPackages", () => {
+    const sentry = getProgramBySlug("sentry");
+    if (!sentry) {
+      throw new Error("sentry test data missing");
+    }
+
+    it("does not produce tech stack reasons for programs without techPackages", () => {
+      const result = checkEligibilityDetailed(
+        sentry,
+        makeCtx({ dependencies: ["react"] }),
+      );
+      const techReasons = result.reasons.filter(
+        (r) =>
+          r.code === "techStackMet" ||
+          r.code === "techStackMissing" ||
+          r.code === "techStackUnknown",
+      );
+      expect(techReasons).toHaveLength(0);
     });
   });
 });

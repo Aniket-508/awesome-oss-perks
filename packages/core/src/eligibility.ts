@@ -429,12 +429,56 @@ const matchRule = (rule: string, ctx: RepoContext): RuleVerdict | null => {
   return verdicts.find((verdict) => verdict.verdict === "pass") ?? null;
 };
 
+const checkTechStack = (
+  program: Program,
+  ctx: RepoContext,
+): RuleVerdict | null => {
+  if (!program.techPackages || program.techPackages.length === 0) {
+    return null;
+  }
+  if (ctx.dependencies.length === 0) {
+    return {
+      reason: makeReason(
+        "techStackUnknown",
+        `could not detect project dependencies (requires ${program.techPackages.join(" or ")})`,
+      ),
+      verdict: "unknown",
+    };
+  }
+  const depSet = new Set(ctx.dependencies);
+  const matched = program.techPackages.find((pkg) => depSet.has(pkg));
+  if (matched) {
+    return {
+      reason: makeReason(
+        "techStackMet",
+        `technology dependency detected (${matched})`,
+        { matched },
+      ),
+      verdict: "pass",
+    };
+  }
+  return {
+    reason: makeReason(
+      "techStackMissing",
+      `no matching technology dependency found in package.json (requires ${program.techPackages.join(" or ")})`,
+    ),
+    verdict: "fail",
+  };
+};
+
 export const checkEligibilityDetailed = (
   program: Program,
   ctx: RepoContext,
 ): EligibilityResultDetailed => {
   const failReasons: EligibilityReason[] = [];
   const unknownReasons: EligibilityReason[] = [];
+
+  const techVerdict = checkTechStack(program, ctx);
+  if (techVerdict?.verdict === "fail" && techVerdict.reason) {
+    failReasons.push(techVerdict.reason);
+  } else if (techVerdict?.verdict === "unknown" && techVerdict.reason) {
+    unknownReasons.push(techVerdict.reason);
+  }
 
   for (const [ruleIndex, rule] of program.eligibility.entries()) {
     const verdict = matchRule(rule, ctx) ?? {

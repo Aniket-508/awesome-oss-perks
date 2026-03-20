@@ -47,6 +47,10 @@ const check = {
     starsBelow: "Requires {threshold}+ stars (current: {current})",
     starsMet: "Star threshold met ({current}/{threshold}+)",
     subjective: "subjective criteria cannot be auto-verified",
+    techStackMet: "technology dependency detected ({matched})",
+    techStackMissing:
+      "no matching technology dependency found in package.json",
+    techStackUnknown: "could not detect project dependencies",
     usageRestriction: "usage restriction cannot be auto-verified",
   },
   stars: "stars",

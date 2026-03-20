@@ -53,6 +53,7 @@ export const programSchema = z.object({
     .min(1)
     .refine(isCanonicalSlug, "Program slug must already be canonical"),
   tags: z.array(z.string()).optional(),
+  techPackages: z.array(z.string()).optional(),
   url: z.url(),
 });
 

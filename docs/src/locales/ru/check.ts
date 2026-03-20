@@ -53,6 +53,10 @@ const check = {
     starsBelow: "нужно {threshold}+ звёзд (сейчас {current})",
     starsMet: "порог {threshold}+ звёзд достигнут (сейчас {current})",
     subjective: "субъективные критерии невозможно проверить автоматически",
+    techStackMet: "обнаружена технологическая зависимость ({matched})",
+    techStackMissing:
+      "соответствующая технологическая зависимость не найдена в package.json",
+    techStackUnknown: "не удалось определить зависимости проекта",
     usageRestriction:
       "ограничение использования невозможно проверить автоматически",
   },

@@ -61,6 +61,11 @@ const check = {
     starsMet: "seuil d'étoiles atteint ({current}/{threshold}+)",
     subjective:
       "les critères subjectifs ne peuvent pas être vérifiés automatiquement",
+    techStackMet: "dépendance technologique détectée ({matched})",
+    techStackMissing:
+      "aucune dépendance technologique correspondante trouvée dans package.json",
+    techStackUnknown:
+      "impossible de détecter les dépendances du projet",
     usageRestriction:
       "la restriction d'utilisation ne peut pas être vérifiée automatiquement",
   },

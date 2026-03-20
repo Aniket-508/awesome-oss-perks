@@ -33,5 +33,11 @@
     "Algolia reviews the application for eligibility.",
     "Contact community@algolia.com for questions about eligibility or application status."
   ],
-  "tags": ["search", "discovery", "ai", "documentation"]
+  "tags": ["search", "discovery", "ai", "documentation"],
+  "techPackages": [
+    "algoliasearch",
+    "react-instantsearch",
+    "instantsearch.js",
+    "@algolia/client-search"
+  ]
 }

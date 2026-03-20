@@ -29,5 +29,6 @@
     "Apply through the Convex OSS program page.",
     "Applications are reviewed on a rolling basis with responses within 60 days."
   ],
-  "tags": ["backend", "database", "real-time", "serverless"]
+  "tags": ["backend", "database", "real-time", "serverless"],
+  "techPackages": ["convex"]
 }

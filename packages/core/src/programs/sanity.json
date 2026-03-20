@@ -31,5 +31,6 @@
     "Fill out the application form with a valid Sanity project ID.",
     "Receive a decision via email within 14 business days."
   ],
-  "tags": ["cms", "headless-cms", "content-management", "developer-tools"]
+  "tags": ["cms", "headless-cms", "content-management", "developer-tools"],
+  "techPackages": ["sanity", "@sanity/client"]
 }

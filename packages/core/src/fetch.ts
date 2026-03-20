@@ -4,6 +4,28 @@ import { Octokit } from "@octokit/rest";
 import { PROVIDER_HOSTS } from "./parse";
 import type { RepoContext, RepoRef } from "./types";
 
+const DEP_FIELDS = [
+  "dependencies",
+  "devDependencies",
+  "peerDependencies",
+  "optionalDependencies",
+] as const;
+
+export const extractDependencyNames = (
+  pkg: Record<string, unknown>,
+): string[] => {
+  const names = new Set<string>();
+  for (const field of DEP_FIELDS) {
+    const deps = pkg[field];
+    if (typeof deps === "object" && deps !== null) {
+      for (const name of Object.keys(deps)) {
+        names.add(name);
+      }
+    }
+  }
+  return [...names];
+};
+
 const githubClient = new Octokit({
   userAgent: "ossperks-cli",
   ...(process.env.GITHUB_TOKEN ? { auth: process.env.GITHUB_TOKEN } : {}),
@@ -60,20 +82,44 @@ const throwGitHubError = (
   throw new Error(`GitHub API error: ${status} ${statusText}`);
 };
 
-export const fetchGitHub = async (ref: RepoRef): Promise<RepoContext> => {
+const fetchGitHubDependencies = async (ref: RepoRef): Promise<string[]> => {
   try {
-    const { data } = await githubClient.repos.get({
-      headers: {
-        "X-GitHub-Api-Version": "2022-11-28",
-      },
+    const { data } = await githubClient.repos.getContent({
+      headers: { "X-GitHub-Api-Version": "2022-11-28" },
       owner: ref.owner,
+      path: "package.json",
       repo: ref.repo,
     });
+    if (!("content" in data) || typeof data.content !== "string") {
+      return [];
+    }
+    const pkg = JSON.parse(
+      Buffer.from(data.content, "base64").toString("utf8"),
+    ) as Record<string, unknown>;
+    return extractDependencyNames(pkg);
+  } catch {
+    return [];
+  }
+};
+
+export const fetchGitHub = async (ref: RepoRef): Promise<RepoContext> => {
+  try {
+    const [{ data }, dependencies] = await Promise.all([
+      githubClient.repos.get({
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
+        owner: ref.owner,
+        repo: ref.repo,
+      }),
+      fetchGitHubDependencies(ref),
+    ]);
     const createdAt = new Date(data.created_at);
     const pushedAt = data.pushed_at ? new Date(data.pushed_at) : createdAt;
 
     return {
       createdAt,
+      dependencies,
       description: data.description,
       isFork: data.fork,
       isOrgOwned: data.owner.type === "Organization",
@@ -111,14 +157,35 @@ const throwGitLabError = (
   throw new Error(`GitLab API error: ${status} ${statusText}`);
 };
 
+const fetchGitLabDependencies = async (ref: RepoRef): Promise<string[]> => {
+  try {
+    const data = await gitlabClient.RepositoryFiles.show(
+      ref.path,
+      "package.json",
+      "HEAD",
+    );
+    if (typeof data.content !== "string") {
+      return [];
+    }
+    const pkg = JSON.parse(
+      Buffer.from(data.content, "base64").toString("utf8"),
+    ) as Record<string, unknown>;
+    return extractDependencyNames(pkg);
+  } catch {
+    return [];
+  }
+};
+
 export const fetchGitLab = async (ref: RepoRef): Promise<RepoContext> => {
   try {
-    const data = await gitlabClient.Projects.show(ref.path, {
-      license: true,
-    });
+    const [data, dependencies] = await Promise.all([
+      gitlabClient.Projects.show(ref.path, { license: true }),
+      fetchGitLabDependencies(ref),
+    ]);
 
     return {
       createdAt: new Date(data.created_at),
+      dependencies,
       description: data.description,
       isFork: Boolean(data.forked_from_project),
       isOrgOwned: data.namespace.kind === "group",
@@ -165,23 +232,50 @@ const throwGiteaError = (status: number, host: string, ref: RepoRef): never => {
   throw new Error(`${host} API error: ${status}`);
 };
 
+const fetchGiteaDependencies = async (
+  ref: RepoRef,
+  host: string,
+): Promise<string[]> => {
+  try {
+    const url = `https://${host}/api/v1/repos/${ref.owner}/${ref.repo}/contents/package.json`;
+    const res = await fetch(url, {
+      headers: { Accept: "application/json" },
+    });
+    if (!res.ok) {
+      return [];
+    }
+    const file = (await res.json()) as { content?: string };
+    if (!file.content) {
+      return [];
+    }
+    const pkg = JSON.parse(
+      Buffer.from(file.content, "base64").toString("utf8"),
+    ) as Record<string, unknown>;
+    return extractDependencyNames(pkg);
+  } catch {
+    return [];
+  }
+};
+
 export const fetchGitea = async (ref: RepoRef): Promise<RepoContext> => {
   const host = PROVIDER_HOSTS[ref.provider];
 
-  const url = `https://${host}/api/v1/repos/${ref.owner}/${ref.repo}`;
-  const res = await fetch(url, {
-    headers: { Accept: "application/json" },
-  });
+  const repoUrl = `https://${host}/api/v1/repos/${ref.owner}/${ref.repo}`;
+  const [repoRes, dependencies] = await Promise.all([
+    fetch(repoUrl, { headers: { Accept: "application/json" } }),
+    fetchGiteaDependencies(ref, host),
+  ]);
 
-  if (!res.ok) {
-    throwGiteaError(res.status, host, ref);
+  if (!repoRes.ok) {
+    throwGiteaError(repoRes.status, host, ref);
   }
 
-  const data = (await res.json()) as GiteaRepoResponse;
+  const data = (await repoRes.json()) as GiteaRepoResponse;
   const createdAt = new Date(data.created_at);
 
   return {
     createdAt,
+    dependencies,
     description: data.description || null,
     isFork: data.fork,
     isOrgOwned: data.owner.type === "Organization",

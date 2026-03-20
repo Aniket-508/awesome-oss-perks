@@ -13,7 +13,7 @@ import type {
 import { Command } from "commander";
 import pc from "picocolors";
 
-import { detectRepo } from "../utils/detect.js";
+import { detectDependencies, detectRepo } from "../utils/detect.js";
 import {
   eligibilityRow,
   error as displayError,
@@ -186,6 +186,12 @@ export const checkCommand = new Command("check")
       process.exit(1);
     }
 
+    const localDeps = detectDependencies();
+    ctx = {
+      ...ctx,
+      dependencies: [...new Set([...ctx.dependencies, ...localDeps])],
+    };
+
     const results = checkAllPrograms(programs, ctx);
 
     if (opts.json) {
@@ -193,6 +199,7 @@ export const checkCommand = new Command("check")
         JSON.stringify(
           {
             repo: {
+              dependencies: ctx.dependencies,
               isFork: ctx.isFork,
               isPrivate: ctx.isPrivate,
               license: ctx.license,

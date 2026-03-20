@@ -46,6 +46,7 @@ export interface RepoContext {
   createdAt: Date;
   topics: string[];
   description: string | null;
+  dependencies: string[];
 }
 
 export type EligibilityStatus = "eligible" | "needs-review" | "ineligible";
@@ -73,6 +74,9 @@ export type EligibilityReasonCode =
   | "starsBelow"
   | "starsMet"
   | "subjective"
+  | "techStackMet"
+  | "techStackMissing"
+  | "techStackUnknown"
   | "usageRestriction";
 
 export interface EligibilityReason {

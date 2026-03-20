@@ -48,6 +48,10 @@ const check = {
     starsBelow: "{threshold}+ 스타가 필요합니다 (현재 {current}개)",
     starsMet: "{current}개 스타가 {threshold}+ 임계값을 충족합니다",
     subjective: "주관적 기준은 자동 확인할 수 없습니다",
+    techStackMet: "기술 종속성이 감지되었습니다 ({matched})",
+    techStackMissing:
+      "package.json에서 일치하는 기술 종속성을 찾을 수 없습니다",
+    techStackUnknown: "프로젝트 종속성을 감지할 수 없습니다",
     usageRestriction: "사용 제한은 자동 확인할 수 없습니다",
   },
   stars: "스타",

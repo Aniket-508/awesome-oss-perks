@@ -103,6 +103,7 @@ export {
   checkAllProgramsDetailed,
 } from "./eligibility";
 export {
+  extractDependencyNames,
   fetchGitHub,
   fetchGitLab,
   fetchGitea,

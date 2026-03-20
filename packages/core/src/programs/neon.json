@@ -31,5 +31,15 @@
     "After the first year, projects are reviewed for renewal based on progress and credit usage."
   ],
   "duration": "Annual (renewable)",
-  "tags": ["database", "postgres", "serverless", "infrastructure"]
+  "tags": ["database", "postgres", "serverless", "infrastructure"],
+  "techPackages": [
+    "pg",
+    "postgres",
+    "@neondatabase/serverless",
+    "@prisma/client",
+    "drizzle-orm",
+    "typeorm",
+    "knex",
+    "sequelize"
+  ]
 }

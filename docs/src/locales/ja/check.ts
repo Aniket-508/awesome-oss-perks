@@ -49,6 +49,10 @@ const check = {
     starsBelow: "{threshold}+スターが必要です（現在{current}）",
     starsMet: "{current}スターが{threshold}+の閾値を満たしています",
     subjective: "主観的な基準は自動検証できません",
+    techStackMet: "技術依存関係が検出されました（{matched}）",
+    techStackMissing:
+      "package.json に一致する技術依存関係が見つかりませんでした",
+    techStackUnknown: "プロジェクトの依存関係を検出できませんでした",
     usageRestriction: "使用制限は自動検証できません",
   },
   stars: "スター",

@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { parseRepoUrl } from "@ossperks/core";
+import { extractDependencyNames, parseRepoUrl } from "@ossperks/core";
 import type { RepoRef } from "@ossperks/core";
 
 const extractRepoUrl = (repo: unknown): string | null => {
@@ -65,3 +65,11 @@ const fromGitConfig = (cwd: string): RepoRef | null => {
 
 export const detectRepo = (cwd = process.cwd()): RepoRef | null =>
   fromPackageJson(cwd) ?? fromGitConfig(cwd);
+
+export const detectDependencies = (cwd = process.cwd()): string[] => {
+  const pkg = safeReadPkg(path.join(cwd, "package.json"));
+  if (!pkg) {
+    return [];
+  }
+  return extractDependencyNames(pkg);
+};
