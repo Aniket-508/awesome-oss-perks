@@ -21,11 +21,15 @@
     }
   ],
   "eligibility": [
-    "Licensed under an approved OSI open source license.",
-    "Source code must be publicly available for download.",
-    "No commercial products related to the project.",
-    "You must be the project lead.",
-    "Project must have been active for a minimum period."
+    "You have created a translation project in Crowdin.",
+    "The project is licensed under an approved license from an open-source initiative.",
+    "Your project's source code is publicly available for download.",
+    "You do not have any commercial products related to the open-source project you are requesting a license for.",
+    "You are the project lead.",
+    "You have been working on your open-source project for at least three months.",
+    "You have an active community of collaborators.",
+    "You keep the \"News\" section of your website up to date.",
+    "You release updated builds on a regular basis."
   ],
   "applicationProcess": [
     "Submit the open source project setup request form on Crowdin's website.",
