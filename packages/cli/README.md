@@ -1,7 +1,7 @@
 <h1>
   <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://ossperks.com/icon.svg">
-   <source media="(prefers-color-scheme: light)" srcset="https://ossperks.com/icon-light.svg">
+   <source media="(prefers-color-scheme: dark)" srcset="https://ossperks.com/icon-light.svg">
+   <source media="(prefers-color-scheme: light)" srcset="https://ossperks.com/icon.svg">
    <img alt="OSS Perks" src="https://ossperks.com/icon.svg" height="40">
   </picture>
   OSS Perks CLI
