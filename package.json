@@ -3,9 +3,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "pnpm -r --filter './packages/*' dev",
     "build": "pnpm -r --filter './packages/*' build",
-    "clean": "pnpm -r --filter './packages/*' clean && rm -rf docs/.next docs/tsconfig.tsbuildinfo docs/tsconfig.typecheck.tsbuildinfo",
-    "typecheck": "pnpm -r --filter './packages/*' typecheck && pnpm --filter docs types:check",
+    "clean": "pnpm -r --filter './packages/*' clean",
+    "typecheck": "pnpm -r --filter './packages/*' typecheck",
     "test": "pnpm -r --filter './packages/*' test",
     "check": "ultracite check",
     "fix": "ultracite fix",
