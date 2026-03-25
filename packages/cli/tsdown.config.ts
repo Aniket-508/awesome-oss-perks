@@ -13,7 +13,7 @@ const sharedConfig = {
   deps: {
     alwaysBundle: ["@ossperks/core"],
     externals: ["license-similarity"],
-    onlyAllowBundle: false,
+    onlyBundle: false,
   },
   dts: true,
   env: {
