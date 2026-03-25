@@ -13,6 +13,7 @@ const programs = {
   },
   more: "+{count} de plus",
   sections: {
+    checkEligibility: "Vérifier l'éligibilité",
     eligibility: "Éligibilité",
     howToApply: "Comment postuler",
     perks: "Avantages",
@@ -23,13 +24,11 @@ const programs = {
     backToAll: "Tous les programmes",
     autofill: {
       button: "Remplissage auto",
-      description:
-        "Entrez simplement l'URL du programme et nous remplirons automatiquement les détails pour vous !",
-      error:
-        "Impossible d'extraire les détails de cette URL. Veuillez remplir le formulaire manuellement.",
+      description: "Entrez simplement l'URL du programme et nous remplirons automatiquement les détails pour vous !",
+      error: "Impossible d'extraire les détails de cette URL. Veuillez remplir le formulaire manuellement.",
       heading: "Remplissage auto avec l'IA",
       loading: "Remplissage en cours...",
-      placeholder: "https://...",
+      placeholder: "https://..."
     },
     buttonText: "Soumettre un programme",
     description: "Vous avez un programme à suggérer ? Soumettez ses détails et nous l'ajouterons à la liste.",
@@ -67,7 +66,14 @@ const programs = {
       tagsNoResults: "Aucun tag trouvé.",
       tagsPlaceholder: "Rechercher ou ajouter des tags...",
       urlLabel: "URL",
-      urlPlaceholder: "https://..."
+      urlPlaceholder: "https://...",
+      contactToggle: "Ajouter également un contact du programme ?",
+      contactNameLabel: "Nom du contact",
+      contactNamePlaceholder: "p. ex., Jane Doe",
+      contactRoleLabel: "Rôle",
+      contactRolePlaceholder: "p. ex., Responsable du programme OSS",
+      contactUrlLabel: "URL du contact (facultatif)",
+      contactUrlPlaceholder: "https://..."
     },
     heading: "Soumettre un programme",
     submitButton: "Soumettre la PR",
@@ -89,7 +95,7 @@ const programs = {
       perkRequired: "Au moins un avantage avec titre et description est requis",
       providerRequired: "Le fournisseur est requis"
     }
-  },
+  }
 };
 export default programs;
 export type ProgramsTranslations = typeof programs;

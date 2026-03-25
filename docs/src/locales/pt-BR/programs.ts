@@ -13,6 +13,7 @@ const programs = {
   },
   more: "+{count} mais",
   sections: {
+    checkEligibility: "Verificar Elegibilidade",
     eligibility: "Elegibilidade",
     howToApply: "Como se inscrever",
     perks: "Benefícios",
@@ -23,13 +24,11 @@ const programs = {
     backToAll: "Todos os programas",
     autofill: {
       button: "Preenchimento automático",
-      description:
-        "Basta inserir a URL do programa e preencheremos automaticamente os detalhes para você!",
-      error:
-        "Não foi possível extrair os detalhes desta URL. Por favor, preencha o formulário manualmente.",
+      description: "Basta inserir a URL do programa e preencheremos automaticamente os detalhes para você!",
+      error: "Não foi possível extrair os detalhes desta URL. Por favor, preencha o formulário manualmente.",
       heading: "Preenchimento automático com IA",
       loading: "Preenchendo...",
-      placeholder: "https://...",
+      placeholder: "https://..."
     },
     buttonText: "Enviar um programa",
     description: "Tem um programa para sugerir? Envie os detalhes e nós o adicionaremos à lista.",
@@ -67,7 +66,14 @@ const programs = {
       tagsNoResults: "Nenhuma tag encontrada.",
       tagsPlaceholder: "Pesquisar ou adicionar tags...",
       urlLabel: "URL",
-      urlPlaceholder: "https://..."
+      urlPlaceholder: "https://...",
+      contactToggle: "Adicionar também um contato do programa?",
+      contactNameLabel: "Nome do contato",
+      contactNamePlaceholder: "ex: Maria Silva",
+      contactRoleLabel: "Função",
+      contactRolePlaceholder: "ex: Gerente do Programa OSS",
+      contactUrlLabel: "URL do contato (opcional)",
+      contactUrlPlaceholder: "https://..."
     },
     heading: "Enviar um programa",
     submitButton: "Enviar PR",
@@ -89,7 +95,7 @@ const programs = {
       perkRequired: "Pelo menos um benefício com título e descrição é necessário",
       providerRequired: "O provedor é obrigatório"
     }
-  },
+  }
 };
 export default programs;
 export type ProgramsTranslations = typeof programs;

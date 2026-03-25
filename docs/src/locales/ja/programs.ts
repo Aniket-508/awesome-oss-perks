@@ -13,6 +13,7 @@ const programs = {
   },
   more: "他{count}件",
   sections: {
+    checkEligibility: "適格性を確認",
     eligibility: "応募資格",
     howToApply: "応募方法",
     perks: "特典",
@@ -23,13 +24,11 @@ const programs = {
     backToAll: "すべてのプログラム",
     autofill: {
       button: "自動入力",
-      description:
-        "プログラムのURLを入力するだけで、詳細を自動的に入力します！",
-      error:
-        "このURLから詳細を抽出できませんでした。フォームを手動で入力してください。",
+      description: "プログラムのURLを入力するだけで、詳細を自動的に入力します！",
+      error: "このURLから詳細を抽出できませんでした。フォームを手動で入力してください。",
       heading: "AIで自動入力",
       loading: "自動入力中...",
-      placeholder: "https://...",
+      placeholder: "https://..."
     },
     buttonText: "プログラムを提案",
     description: "提案したいプログラムはありますか?詳細を送信していただければ、リストに追加いたします。",
@@ -67,7 +66,14 @@ const programs = {
       tagsNoResults: "タグが見つかりません。",
       tagsPlaceholder: "タグを検索または追加...",
       urlLabel: "URL",
-      urlPlaceholder: "https://..."
+      urlPlaceholder: "https://...",
+      contactToggle: "プログラムの連絡先も追加しますか？",
+      contactNameLabel: "連絡先名",
+      contactNamePlaceholder: "例：山田太郎",
+      contactRoleLabel: "役割",
+      contactRolePlaceholder: "例：OSSプログラムマネージャー",
+      contactUrlLabel: "連絡先URL（任意）",
+      contactUrlPlaceholder: "https://..."
     },
     heading: "プログラムを提案",
     submitButton: "PRを送信",
@@ -89,7 +95,7 @@ const programs = {
       perkRequired: "タイトルと説明を含む特典が少なくとも1つ必要です",
       providerRequired: "提供元は必須です"
     }
-  },
+  }
 };
 export default programs;
 export type ProgramsTranslations = typeof programs;

@@ -13,6 +13,7 @@ const programs = {
   },
   more: "ещё {count}",
   sections: {
+    checkEligibility: "Проверка соответствия",
     eligibility: "Условия участия",
     howToApply: "Как подать заявку",
     perks: "Преимущества",
@@ -23,13 +24,11 @@ const programs = {
     backToAll: "Все программы",
     autofill: {
       button: "Автозаполнение",
-      description:
-        "Просто введите URL программы, и мы автоматически заполним данные за вас!",
-      error:
-        "Не удалось извлечь данные из этого URL. Пожалуйста, заполните форму вручную.",
+      description: "Просто введите URL программы, и мы автоматически заполним данные за вас!",
+      error: "Не удалось извлечь данные из этого URL. Пожалуйста, заполните форму вручную.",
       heading: "Автозаполнение с ИИ",
       loading: "Заполнение...",
-      placeholder: "https://...",
+      placeholder: "https://..."
     },
     buttonText: "Предложить программу",
     description: "Есть программа для предложения? Отправьте её описание, и мы добавим её в список.",
@@ -67,7 +66,14 @@ const programs = {
       tagsNoResults: "Теги не найдены.",
       tagsPlaceholder: "Поиск или добавление тегов...",
       urlLabel: "URL",
-      urlPlaceholder: "https://..."
+      urlPlaceholder: "https://...",
+      contactToggle: "Добавить контактное лицо программы?",
+      contactNameLabel: "Имя контактного лица",
+      contactNamePlaceholder: "например, Иван Иванов",
+      contactRoleLabel: "Должность",
+      contactRolePlaceholder: "например, Менеджер программы OSS",
+      contactUrlLabel: "URL контактного лица (необязательно)",
+      contactUrlPlaceholder: "https://..."
     },
     heading: "Предложить программу",
     submitButton: "Отправить PR",
@@ -89,7 +95,7 @@ const programs = {
       perkRequired: "Необходимо хотя бы одно преимущество с заголовком и описанием",
       providerRequired: "Провайдер обязателен"
     }
-  },
+  }
 };
 export default programs;
 export type ProgramsTranslations = typeof programs;

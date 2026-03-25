@@ -10,7 +10,7 @@
     "generate:i18n": "pnpm generate:programs && npx lingo.dev@latest run",
     "i18n:run": "npx lingo.dev@latest run",
     "i18n:init": "npx lingo.dev@latest init",
-    "types:check": "fumadocs-mdx && next typegen && tsc --noEmit",
+    "typecheck": "fumadocs-mdx && next typegen && tsc --noEmit",
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
