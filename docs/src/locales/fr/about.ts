@@ -29,3 +29,4 @@ const about = {
   }
 };
 export default about;
+export type AboutTranslations = typeof about;

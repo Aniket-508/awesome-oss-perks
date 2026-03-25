@@ -99,3 +99,4 @@ const programs = {
   }
 };
 export default programs;
+export type ProgramsTranslations = typeof programs;

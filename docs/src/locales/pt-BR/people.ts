@@ -49,3 +49,4 @@ const people = {
   }
 };
 export default people;
+export type PeopleTranslations = typeof people;

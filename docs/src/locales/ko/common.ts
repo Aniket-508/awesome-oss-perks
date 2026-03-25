@@ -16,3 +16,4 @@ const common = {
   }
 };
 export default common;
+export type CommonTranslations = typeof common;

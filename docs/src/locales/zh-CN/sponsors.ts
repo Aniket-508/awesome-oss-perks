@@ -23,3 +23,4 @@ const sponsors = {
   }
 };
 export default sponsors;
+export type SponsorsTranslations = typeof sponsors;
