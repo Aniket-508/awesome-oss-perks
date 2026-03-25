@@ -30,7 +30,7 @@ export const POST = async (request: NextRequest) => {
       return NextResponse.json({ error: "URL is required" }, { status: 400 });
     }
 
-    if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+    if (!process.env.AI_GATEWAY_API_KEY) {
       return NextResponse.json(
         { error: "Server configuration error" },
         { status: 500 },
@@ -40,7 +40,7 @@ export const POST = async (request: NextRequest) => {
     const markdown = await fetchPageContent(url);
 
     const { output } = await generateText({
-      model: "google/gemini-2.0-flash",
+      model: "google/gemini-2.5-flash-lite",
       output: Output.object({ schema: autofillSchema }),
       prompt: `Extract the person's name and role from the following profile page.\n\nPage URL: ${url}\n\n---\n\n${markdown}`,
       system: systemPrompt,
