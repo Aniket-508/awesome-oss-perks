@@ -5,12 +5,14 @@ import {
 } from "@ossperks/core";
 import { Plus } from "lucide-react";
 import type { Metadata } from "next";
+import Link from "next/link";
 
-import { ProgramSubmissionDialog } from "@/components/programs/program-submission-dialog";
 import { ProgramsFilter } from "@/components/programs/programs-filter";
 import { Button } from "@/components/ui/button";
+import { ROUTES } from "@/constants/routes";
 import { i18n } from "@/i18n/config";
 import { getT } from "@/i18n/get-t";
+import { withLocalePrefix } from "@/i18n/navigation";
 import { getPrograms } from "@/lib/programs";
 import { createMetadata } from "@/seo/metadata";
 
@@ -63,15 +65,15 @@ export default async function ProgramsPage({
           </p>
         </div>
         <div className="shrink-0">
-          <ProgramSubmissionDialog
-            trigger={
-              <Button size="lg">
+          <Button
+            size="lg"
+            nativeButton={false}
+            render={
+              <Link href={withLocalePrefix(lang, ROUTES.SUBMIT_PROGRAM)}>
                 <Plus />
                 {t.programs.submit.buttonText}
-              </Button>
+              </Link>
             }
-            translations={t.programs.submit}
-            categoryLabels={t.common.categories}
           />
         </div>
       </div>

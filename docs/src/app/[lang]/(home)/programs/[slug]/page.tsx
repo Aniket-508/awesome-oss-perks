@@ -1,5 +1,5 @@
 import { getAllProgramSlugs } from "@ossperks/core";
-import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
+import { ArrowRightIcon, ArrowLeftIcon, Search } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -83,6 +83,22 @@ export default async function ProgramPage({
               <a href={program.url} target="_blank" rel="noopener noreferrer">
                 {t.programs.viewDetails.replace("{provider}", program.provider)}
               </a>
+            }
+          />
+          <Button
+            variant="outline"
+            size="sm"
+            nativeButton={false}
+            render={
+              <Link
+                href={withLocalePrefix(
+                  lang,
+                  `${ROUTES.PROGRAMS}/${program.slug}/check`,
+                )}
+              >
+                <Search />
+                {t.programs.sections.checkEligibility}
+              </Link>
             }
           />
         </div>
