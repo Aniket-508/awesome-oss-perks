@@ -1,7 +1,14 @@
 "use client";
 
 import { useForm } from "@tanstack/react-form";
-import { ArrowRight, CheckCircle2, Loader2, Plus, Trash2 } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Loader2,
+  Plus,
+  Sparkles,
+  Trash2,
+} from "lucide-react";
 import React, { useCallback, useMemo, useRef, useState } from "react";
 import { z } from "zod";
 
@@ -28,6 +35,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { useAutofill } from "@/hooks/use-autofill";
 import { useSubmission } from "@/hooks/use-submission";
 
 const COMMON_TAGS = [
@@ -159,6 +167,14 @@ const TextareaField = ({
 const canSubmitSelector = (s: { canSubmit: boolean }) => s.canSubmit;
 
 interface ProgramSubmissionTranslations {
+  autofill: {
+    button: string;
+    description: string;
+    error: string;
+    heading: string;
+    loading: string;
+    placeholder: string;
+  };
   heading: string;
   description: string;
   form: {
@@ -242,8 +258,14 @@ export const ProgramSubmissionDialog = ({
     number[]
   >([0]);
   const [hasApplicationUrl, setHasApplicationUrl] = useState(false);
+  const [autofillUrl, setAutofillUrl] = useState("");
 
   const t = translations;
+
+  const { autofill, autofillError, isAutofilling } = useAutofill(
+    "/api/autofill-program",
+    { error: t.autofill.error, loading: t.autofill.loading },
+  );
 
   const programSchema = useMemo(
     () =>
@@ -330,6 +352,80 @@ export const ProgramSubmissionDialog = ({
     },
   });
 
+  const handleAutofill = useCallback(async () => {
+    if (!autofillUrl.trim()) {
+      return;
+    }
+    const data = await autofill(autofillUrl.trim());
+    if (!data) {
+      return;
+    }
+
+    const d = data as Record<string, unknown>;
+    if (typeof d.name === "string") {
+      form.setFieldValue("name", d.name);
+    }
+    if (typeof d.provider === "string") {
+      form.setFieldValue("provider", d.provider);
+    }
+    if (typeof d.url === "string") {
+      form.setFieldValue("url", d.url);
+    } else {
+      form.setFieldValue("url", autofillUrl.trim());
+    }
+    if (typeof d.category === "string") {
+      form.setFieldValue("category", d.category);
+    }
+    if (typeof d.description === "string") {
+      form.setFieldValue("description", d.description);
+    }
+
+    if (Array.isArray(d.eligibility) && d.eligibility.length > 0) {
+      form.setFieldValue("eligibility", d.eligibility as string[]);
+      const keys = (d.eligibility as string[]).map(() => {
+        nextIdRef.current += 1;
+        return nextIdRef.current;
+      });
+      setEligibilityKeys(keys);
+    }
+
+    if (Array.isArray(d.perks) && d.perks.length > 0) {
+      form.setFieldValue(
+        "perks",
+        d.perks as { title: string; description: string }[],
+      );
+      const keys = (d.perks as unknown[]).map(() => {
+        nextIdRef.current += 1;
+        return nextIdRef.current;
+      });
+      setPerkKeys(keys);
+    }
+
+    if (
+      Array.isArray(d.applicationProcess) &&
+      d.applicationProcess.length > 0
+    ) {
+      form.setFieldValue(
+        "applicationProcess",
+        d.applicationProcess as string[],
+      );
+      const keys = (d.applicationProcess as string[]).map(() => {
+        nextIdRef.current += 1;
+        return nextIdRef.current;
+      });
+      setApplicationProcessKeys(keys);
+    }
+
+    if (typeof d.applicationUrl === "string" && d.applicationUrl) {
+      form.setFieldValue("applicationUrl", d.applicationUrl);
+      setHasApplicationUrl(true);
+    }
+
+    if (Array.isArray(d.tags)) {
+      form.setFieldValue("tags", d.tags as string[]);
+    }
+  }, [autofillUrl, autofill, form]);
+
   const handleClose = useCallback(() => {
     setOpen(false);
     nextIdRef.current = 0;
@@ -337,6 +433,7 @@ export const ProgramSubmissionDialog = ({
     setPerkKeys([0]);
     setApplicationProcessKeys([0]);
     setHasApplicationUrl(false);
+    setAutofillUrl("");
     setTimeout(() => {
       setStep("form");
       form.reset();
@@ -377,6 +474,51 @@ export const ProgramSubmissionDialog = ({
               {/* Dynamic list keys and inline handlers required by TanStack Form render props */}
               {/* eslint-disable react/no-array-index-key, react-perf/jsx-no-new-function-as-prop */}
               <div className="grid gap-4">
+                <div className="bg-fd-muted/50 border-fd-border rounded-lg border p-4">
+                  <div className="mb-3">
+                    <h4 className="text-sm font-semibold">
+                      {t.autofill.heading}
+                    </h4>
+                    <p className="text-fd-muted-foreground text-xs">
+                      {t.autofill.description}
+                    </p>
+                  </div>
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder={t.autofill.placeholder}
+                      value={autofillUrl}
+                      onChange={(e) => setAutofillUrl(e.target.value)}
+                      disabled={isAutofilling || isSubmitting}
+                      className="flex-1"
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      disabled={
+                        isAutofilling || isSubmitting || !autofillUrl.trim()
+                      }
+                      onClick={handleAutofill}
+                    >
+                      {isAutofilling ? (
+                        <>
+                          <Loader2 className="animate-spin" />
+                          {t.autofill.loading}
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="size-4" />
+                          {t.autofill.button}
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                  {autofillError && (
+                    <p className="text-destructive mt-2 text-xs">
+                      {autofillError}
+                    </p>
+                  )}
+                </div>
+
                 <div className="grid grid-cols-2 gap-4">
                   <form.Field name="name">
                     {(field) => (
