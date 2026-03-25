@@ -89,7 +89,6 @@ const programs = {
       providerRequired: "O provedor é obrigatório"
     }
   },
-  viewDetails: "Ver detalhes do programa {provider}"
 };
 export default programs;
 export type ProgramsTranslations = typeof programs;

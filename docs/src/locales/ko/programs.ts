@@ -89,7 +89,6 @@ const programs = {
       providerRequired: "제공업체는 필수입니다"
     }
   },
-  viewDetails: "{provider} 프로그램 세부정보 보기"
 };
 export default programs;
 export type ProgramsTranslations = typeof programs;

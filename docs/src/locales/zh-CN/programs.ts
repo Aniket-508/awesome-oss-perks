@@ -89,7 +89,6 @@ const programs = {
       providerRequired: "提供方为必填项"
     }
   },
-  viewDetails: "查看 {provider} 项目详情"
 };
 export default programs;
 export type ProgramsTranslations = typeof programs;

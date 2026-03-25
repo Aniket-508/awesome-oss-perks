@@ -100,7 +100,6 @@ const programs = {
       providerRequired: "Provider is required",
     },
   },
-  viewDetails: "View {provider} program details",
 };
 
 export default programs;

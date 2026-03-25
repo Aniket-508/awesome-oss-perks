@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LinkText } from "@/components/ui/link-text";
 import { Separator } from "@/components/ui/separator";
 import { ROUTES } from "@/constants/routes";
 import { i18n } from "@/i18n/config";
@@ -54,7 +55,9 @@ export default async function ProgramPage({
             <Badge variant="outline">{program.duration}</Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">{program.name}</h1>
+        <h1 className="mb-2 text-3xl font-bold">
+          <LinkText href={program.url}>{program.name}</LinkText>
+        </h1>
         <p className="text-fd-muted-foreground text-lg">
           {t.programs.by} {program.provider}
         </p>
@@ -72,16 +75,6 @@ export default async function ProgramPage({
               >
                 {t.programs.applyNow}
                 <ArrowRightIcon />
-              </a>
-            }
-          />
-          <Button
-            variant="outline"
-            size="sm"
-            nativeButton={false}
-            render={
-              <a href={program.url} target="_blank" rel="noopener noreferrer">
-                {t.programs.viewDetails.replace("{provider}", program.provider)}
               </a>
             }
           />

@@ -89,7 +89,6 @@ const programs = {
       providerRequired: "提供元は必須です"
     }
   },
-  viewDetails: "{provider}のプログラム詳細を見る"
 };
 export default programs;
 export type ProgramsTranslations = typeof programs;

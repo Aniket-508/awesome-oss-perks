@@ -459,7 +459,6 @@ checksums:
     submit/validation/nameRequired: 938d04e63f999c7c9f8128c50a2a307c
     submit/validation/perkRequired: bf655f2b2dd96c8caed7a24c0c2bf578
     submit/validation/providerRequired: fc2dc4b572eb864d493fa0ed5d8fd5fb
-    viewDetails: 127861f6c1e4c11da005fc373137fe5c
   c360dce988b3de0edd3ecb747c4b169a:
     cta/description: 3f023c755ee401ec2b5c721e95818c27
     cta/heading: 018629fc3046fa1d005d2ade0586f500
