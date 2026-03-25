@@ -8,6 +8,7 @@ const programs = {
   },
   learnMore: "了解更多",
   listing: {
+    countSuffix: "个精选的开源项目计划。",
     description: "为开源项目提供的免费工具、额度和服务。按类别浏览,找到您的项目符合条件的项目。",
     heading: "项目"
   },
@@ -98,4 +99,3 @@ const programs = {
   }
 };
 export default programs;
-export type ProgramsTranslations = typeof programs;

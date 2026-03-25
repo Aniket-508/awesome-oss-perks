@@ -65,4 +65,3 @@ const check = {
   }
 };
 export default check;
-export type CheckTranslations = typeof check;

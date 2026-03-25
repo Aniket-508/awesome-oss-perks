@@ -1,5 +1,6 @@
 const about = {
   cta: {
+    description: "Ready to find perks for your open-source project?",
     heading: "Get started",
     linkText: "Browse all programs",
   },

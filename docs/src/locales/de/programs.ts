@@ -8,6 +8,7 @@ const programs = {
   },
   learnMore: "mehr erfahren",
   listing: {
+    countSuffix: "kuratierte Programme für Open-Source-Projekte.",
     description: "Kostenlose Tools, Guthaben und Dienste, die für Open-Source-Projekte verfügbar sind. Durchsuchen Sie nach Kategorie und finden Sie Programme, für die Ihr Projekt qualifiziert ist.",
     heading: "Programme"
   },
@@ -98,4 +99,3 @@ const programs = {
   }
 };
 export default programs;
-export type ProgramsTranslations = typeof programs;

@@ -47,4 +47,3 @@ const home = {
   }
 };
 export default home;
-export type HomeTranslations = typeof home;

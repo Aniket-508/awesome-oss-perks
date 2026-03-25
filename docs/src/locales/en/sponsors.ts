@@ -13,6 +13,7 @@ const sponsors = {
       description: "For individual supporters",
       name: "Bronze",
     },
+    empty: "No {tier} sponsors yet",
     gold: {
       description: "For companies making a significant impact",
       name: "Gold",

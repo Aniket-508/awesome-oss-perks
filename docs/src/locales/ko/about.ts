@@ -1,5 +1,6 @@
 const about = {
   cta: {
+    description: "오픈소스 프로젝트를 위한 혜택을 찾을 준비가 되셨나요?",
     heading: "시작하기",
     linkText: "모든 프로그램 둘러보기"
   },
@@ -28,4 +29,3 @@ const about = {
   }
 };
 export default about;
-export type AboutTranslations = typeof about;

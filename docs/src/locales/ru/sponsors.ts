@@ -11,6 +11,7 @@ const sponsors = {
       description: "Для индивидуальных сторонников",
       name: "Бронзовый"
     },
+    empty: "Пока нет спонсоров уровня {tier}",
     gold: {
       description: "Для компаний, оказывающих значительное влияние",
       name: "Золотой"
@@ -22,4 +23,3 @@ const sponsors = {
   }
 };
 export default sponsors;
-export type SponsorsTranslations = typeof sponsors;

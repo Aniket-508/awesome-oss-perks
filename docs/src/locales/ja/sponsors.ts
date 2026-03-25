@@ -11,6 +11,7 @@ const sponsors = {
       description: "個人サポーター向け",
       name: "ブロンズ"
     },
+    empty: "まだ{tier}スポンサーはいません",
     gold: {
       description: "大きな影響を与える企業向け",
       name: "ゴールド"
@@ -22,4 +23,3 @@ const sponsors = {
   }
 };
 export default sponsors;
-export type SponsorsTranslations = typeof sponsors;

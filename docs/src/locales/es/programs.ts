@@ -8,6 +8,7 @@ const programs = {
   },
   learnMore: "más información",
   listing: {
+    countSuffix: "programas seleccionados para proyectos open source.",
     description: "Herramientas gratuitas, créditos y servicios disponibles para proyectos de código abierto. Explora por categoría y encuentra programas para los que tu proyecto cumple los requisitos.",
     heading: "Programas"
   },
@@ -98,4 +99,3 @@ const programs = {
   }
 };
 export default programs;
-export type ProgramsTranslations = typeof programs;

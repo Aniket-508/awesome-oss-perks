@@ -1,5 +1,6 @@
 const about = {
   cta: {
+    description: "¿Listo para encontrar beneficios para tu proyecto open source?",
     heading: "Comienza ahora",
     linkText: "Explorar todos los programas"
   },
@@ -28,4 +29,3 @@ const about = {
   }
 };
 export default about;
-export type AboutTranslations = typeof about;

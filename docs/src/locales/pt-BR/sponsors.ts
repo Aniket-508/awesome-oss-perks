@@ -11,6 +11,7 @@ const sponsors = {
       description: "Para apoiadores individuais",
       name: "Bronze"
     },
+    empty: "Ainda não há patrocinadores {tier}",
     gold: {
       description: "Para empresas que causam um impacto significativo",
       name: "Ouro"
@@ -22,4 +23,3 @@ const sponsors = {
   }
 };
 export default sponsors;
-export type SponsorsTranslations = typeof sponsors;

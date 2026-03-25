@@ -8,6 +8,7 @@ const programs = {
   },
   learnMore: "자세히 알아보기",
   listing: {
+    countSuffix: "개의 오픈소스 프로젝트용 엄선된 프로그램.",
     description: "오픈소스 프로젝트에 제공되는 무료 도구, 크레딧 및 서비스입니다. 카테고리별로 찾아보고 프로젝트에 적합한 프로그램을 찾아보세요.",
     heading: "프로그램"
   },
@@ -98,4 +99,3 @@ const programs = {
   }
 };
 export default programs;
-export type ProgramsTranslations = typeof programs;

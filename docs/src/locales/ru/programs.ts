@@ -8,6 +8,7 @@ const programs = {
   },
   learnMore: "подробнее",
   listing: {
+    countSuffix: "отобранных программ для проектов с открытым кодом.",
     description: "Бесплатные инструменты, кредиты и сервисы, доступные для проектов с открытым исходным кодом. Просматривайте по категориям и находите программы, для которых подходит ваш проект.",
     heading: "Программы"
   },
@@ -98,4 +99,3 @@ const programs = {
   }
 };
 export default programs;
-export type ProgramsTranslations = typeof programs;

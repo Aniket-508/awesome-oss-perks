@@ -8,6 +8,7 @@ const programs = {
   },
   learnMore: "learn more",
   listing: {
+    countSuffix: "curated programs for open-source projects.",
     description:
       "Free tools, credits, and services available to open-source projects. Browse by category and find programs your project qualifies for.",
     heading: "Programs",

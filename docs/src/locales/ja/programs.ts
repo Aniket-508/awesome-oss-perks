@@ -8,6 +8,7 @@ const programs = {
   },
   learnMore: "詳細を見る",
   listing: {
+    countSuffix: "のオープンソースプロジェクト向け厳選プログラム。",
     description: "オープンソースプロジェクト向けの無料ツール、クレジット、サービスをご紹介します。カテゴリー別に参照して、あなたのプロジェクトが対象となるプログラムを見つけましょう。",
     heading: "プログラム一覧"
   },
@@ -98,4 +99,3 @@ const programs = {
   }
 };
 export default programs;
-export type ProgramsTranslations = typeof programs;

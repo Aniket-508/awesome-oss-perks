@@ -11,6 +11,7 @@ const sponsors = {
       description: "개인 후원자를 위한 등급",
       name: "브론즈"
     },
+    empty: "아직 {tier} 스폰서가 없습니다",
     gold: {
       description: "큰 영향을 미치는 기업을 위한 등급",
       name: "골드"
@@ -22,4 +23,3 @@ const sponsors = {
   }
 };
 export default sponsors;
-export type SponsorsTranslations = typeof sponsors;
