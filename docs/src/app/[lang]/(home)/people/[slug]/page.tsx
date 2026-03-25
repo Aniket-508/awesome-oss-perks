@@ -16,6 +16,7 @@ import { getT } from "@/i18n/get-t";
 import { withLocalePrefix } from "@/i18n/navigation";
 import { getProgram } from "@/lib/programs";
 import { getUnavatarUrl } from "@/lib/unavatar";
+import { BreadcrumbJsonLd, PersonPageJsonLd } from "@/seo/json-ld";
 import { createMetadata } from "@/seo/metadata";
 
 export default async function PersonPage({
@@ -49,120 +50,137 @@ export default async function PersonPage({
     (contact.url.includes("x.com") || contact.url.includes("twitter.com"));
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 py-12">
-      <div className="mb-8">
-        <Button
-          variant="link"
-          size="sm"
-          nativeButton={false}
-          render={
-            <Link href={withLocalePrefix(lang, ROUTES.PEOPLE)}>
-              <ArrowLeftIcon />
-              {t.people.backToPeople}
-            </Link>
-          }
-        />
-      </div>
+    <>
+      <BreadcrumbJsonLd
+        lang={lang}
+        items={[
+          { name: "Home", path: "/" },
+          { name: t.people.heading, path: "/people" },
+          { name: contact.name, path: `/people/${slug}` },
+        ]}
+      />
+      <PersonPageJsonLd
+        name={contact.name}
+        role={contact.role}
+        url={contact.url}
+      />
+      <div className="mx-auto flex w-full max-w-3xl flex-1 flex-col px-4 py-12">
+        <div className="mb-8">
+          <Button
+            variant="link"
+            size="sm"
+            nativeButton={false}
+            render={
+              <Link href={withLocalePrefix(lang, ROUTES.PEOPLE)}>
+                <ArrowLeftIcon />
+                {t.people.backToPeople}
+              </Link>
+            }
+          />
+        </div>
 
-      {/* Profile header */}
-      <div className="mb-8 flex items-start gap-6">
-        <Avatar className="ring-fd-primary/20 size-16 ring-2">
-          {contact.url &&
-            (() => {
-              const avatarUrl = getUnavatarUrl(contact.url);
-              return avatarUrl ? (
-                <AvatarImage src={avatarUrl} alt={contact.name} />
-              ) : null;
-            })()}
-          <AvatarFallback className="text-xl">
-            {contact.name.charAt(0).toUpperCase()}
-          </AvatarFallback>
-        </Avatar>
-        <div className="min-w-0 flex-1">
-          <h1 className="text-3xl font-bold">{contact.name}</h1>
-          <p className="text-fd-muted-foreground mt-1">{roleText}</p>
-          <div className="mt-3 flex items-center gap-3">
-            {contact.url && isTwitterUrl && (
-              <a
-                href={contact.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-fd-muted-foreground hover:text-fd-foreground transition-colors"
-                aria-label="X (Twitter)"
-              >
-                <XIcon className="size-4" />
-              </a>
-            )}
-            {contact.linkedin && (
-              <a
-                href={contact.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-fd-muted-foreground hover:text-fd-foreground transition-colors"
-                aria-label="LinkedIn"
-              >
-                <LinkedInIcon className="size-4" />
-              </a>
-            )}
-            {contact.url && !isTwitterUrl && (
-              <a
-                href={contact.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-fd-muted-foreground hover:text-fd-foreground transition-colors"
-                aria-label="Website"
-              >
-                <ExternalLink className="size-4" />
-              </a>
-            )}
+        {/* Profile header */}
+        <div className="mb-8 flex items-start gap-6">
+          <Avatar className="ring-fd-primary/20 size-16 ring-2">
+            {contact.url &&
+              (() => {
+                const avatarUrl = getUnavatarUrl(contact.url);
+                return avatarUrl ? (
+                  <AvatarImage src={avatarUrl} alt={contact.name} />
+                ) : null;
+              })()}
+            <AvatarFallback className="text-xl">
+              {contact.name.charAt(0).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <div className="min-w-0 flex-1">
+            <h1 className="text-3xl font-bold">{contact.name}</h1>
+            <p className="text-fd-muted-foreground mt-1">{roleText}</p>
+            <div className="mt-3 flex items-center gap-3">
+              {contact.url && isTwitterUrl && (
+                <a
+                  href={contact.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-fd-muted-foreground hover:text-fd-foreground transition-colors"
+                  aria-label="X (Twitter)"
+                >
+                  <XIcon className="size-4" />
+                </a>
+              )}
+              {contact.linkedin && (
+                <a
+                  href={contact.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-fd-muted-foreground hover:text-fd-foreground transition-colors"
+                  aria-label="LinkedIn"
+                >
+                  <LinkedInIcon className="size-4" />
+                </a>
+              )}
+              {contact.url && !isTwitterUrl && (
+                <a
+                  href={contact.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-fd-muted-foreground hover:text-fd-foreground transition-colors"
+                  aria-label="Website"
+                >
+                  <ExternalLink className="size-4" />
+                </a>
+              )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* About */}
-      {contact.bio && (
-        <Card className="mb-8">
-          <CardHeader>
-            <CardTitle className="text-lg">{t.people.detail.about}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-fd-muted-foreground">{contact.bio}</p>
-          </CardContent>
-        </Card>
-      )}
+        {/* About */}
+        {contact.bio && (
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle className="text-lg">{t.people.detail.about}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-fd-muted-foreground">{contact.bio}</p>
+            </CardContent>
+          </Card>
+        )}
 
-      {/* Associated programs */}
-      <div className="mb-2">
-        <h2 className="text-lg font-semibold">{t.people.associatedWith}</h2>
-      </div>
-
-      {programs.length === 0 ? (
-        <p className="text-fd-muted-foreground">{t.people.detail.noPrograms}</p>
-      ) : (
-        <div className="flex flex-col gap-4">
-          {programs.map((program) => {
-            const categoryLabel =
-              t.common.categories[
-                program.category as keyof typeof t.common.categories
-              ] ?? program.category;
-            const programHref = withLocalePrefix(
-              lang,
-              `${ROUTES.PROGRAMS}/${program.slug}` as `/${string}`,
-            );
-            return (
-              <ProgramCard
-                key={program.slug}
-                program={program}
-                programHref={programHref}
-                categoryLabel={categoryLabel}
-                learnMore={t.programs.learnMore}
-                more={t.programs.more}
-              />
-            );
-          })}
+        {/* Associated programs */}
+        <div className="mb-2">
+          <h2 className="text-lg font-semibold">{t.people.associatedWith}</h2>
         </div>
-      )}
-    </div>
+
+        {programs.length === 0 ? (
+          <p className="text-fd-muted-foreground">
+            {t.people.detail.noPrograms}
+          </p>
+        ) : (
+          <div className="flex flex-col gap-4">
+            {programs.map((program) => {
+              const categoryLabel =
+                t.common.categories[
+                  program.category as keyof typeof t.common.categories
+                ] ?? program.category;
+              const programHref = withLocalePrefix(
+                lang,
+                `${ROUTES.PROGRAMS}/${program.slug}` as `/${string}`,
+              );
+              return (
+                <ProgramCard
+                  key={program.slug}
+                  program={program}
+                  programHref={programHref}
+                  categoryLabel={categoryLabel}
+                  learnMore={t.programs.learnMore}
+                  more={t.programs.more}
+                />
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
@@ -181,8 +199,17 @@ export const generateMetadata = async ({
   }
 
   const personPath = `${ROUTES.PEOPLE}/${slug}` as `/${string}`;
+  const primaryProvider = person.programs[0]?.provider ?? "";
+  const roleDesc = person.contact.role
+    ? `${person.contact.role} at ${primaryProvider}`
+    : primaryProvider;
+  const programNames = person.programs.map((p) => p.name).join(", ");
+  const description = programNames
+    ? `${person.contact.name} is ${roleDesc}. Contact for ${programNames} on OSS Perks.`
+    : `${person.contact.name} — ${roleDesc}`;
+
   return createMetadata({
-    description: `${person.contact.name} — ${person.contact.role ?? person.programs[0]?.provider ?? ""}`,
+    description,
     lang,
     path: personPath,
     title: person.contact.name,

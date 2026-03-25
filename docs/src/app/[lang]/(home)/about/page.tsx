@@ -91,7 +91,7 @@ export default async function AboutPage({
       <section>
         <h2 className="mb-4 text-2xl font-semibold">{t.about.cta.heading}</h2>
         <p className="text-fd-muted-foreground mb-4">
-          Ready to find perks for your open-source project?
+          {t.about.cta.description}
         </p>
         <Button
           variant="default"

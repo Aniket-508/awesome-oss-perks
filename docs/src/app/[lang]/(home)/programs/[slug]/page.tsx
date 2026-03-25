@@ -15,6 +15,7 @@ import { getT } from "@/i18n/get-t";
 import { withLocalePrefix } from "@/i18n/navigation";
 import { getProgram } from "@/lib/programs";
 import { getProgramPageImage, programsSource } from "@/lib/source";
+import { BreadcrumbJsonLd, ProgramJsonLd } from "@/seo/json-ld";
 import { createMetadata } from "@/seo/metadata";
 
 export default async function ProgramPage({
@@ -33,155 +34,167 @@ export default async function ProgramPage({
     program.category;
 
   return (
-    <div className="mx-auto flex w-full max-w-4xl flex-1 flex-col px-4 py-12">
-      <div className="mb-6">
-        <Button
-          variant="link"
-          size="sm"
-          nativeButton={false}
-          render={
-            <Link href={withLocalePrefix(lang, ROUTES.PROGRAMS)}>
-              <ArrowLeftIcon />
-              {t.programs.backToAll}
-            </Link>
-          }
-        />
-      </div>
-
-      <div className="mb-8">
-        <div className="mb-2 flex flex-wrap items-center gap-2">
-          <Badge variant="default">{categoryLabel}</Badge>
-          {program.duration && (
-            <Badge variant="outline">{program.duration}</Badge>
-          )}
-        </div>
-        <h1 className="mb-2 text-3xl font-bold">
-          <LinkText href={program.url}>{program.name}</LinkText>
-        </h1>
-        <p className="text-fd-muted-foreground text-lg">
-          {t.programs.by} {program.provider}
-        </p>
-        <p className="text-fd-foreground mt-4">{program.description}</p>
-        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+    <>
+      <BreadcrumbJsonLd
+        lang={lang}
+        items={[
+          { name: "Home", path: "/" },
+          { name: t.programs.listing.heading, path: "/programs" },
+          { name: program.name, path: `/programs/${program.slug}` },
+        ]}
+      />
+      <ProgramJsonLd lang={lang} program={program} />
+      <div className="mx-auto flex w-full max-w-4xl flex-1 flex-col px-4 py-12">
+        <div className="mb-6">
           <Button
-            variant="default"
+            variant="link"
             size="sm"
             nativeButton={false}
             render={
-              <a
-                href={program.applicationUrl ?? program.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {t.programs.applyNow}
-                <ArrowRightIcon />
-              </a>
-            }
-          />
-          <Button
-            variant="outline"
-            size="sm"
-            nativeButton={false}
-            render={
-              <Link
-                href={withLocalePrefix(
-                  lang,
-                  `${ROUTES.PROGRAMS}/${program.slug}/check`,
-                )}
-              >
-                <Search />
-                {t.programs.sections.checkEligibility}
+              <Link href={withLocalePrefix(lang, ROUTES.PROGRAMS)}>
+                <ArrowLeftIcon />
+                {t.programs.backToAll}
               </Link>
             }
           />
         </div>
-      </div>
 
-      <Separator className="mb-10" />
-
-      <section className="mb-10">
-        <h2 id="perks" className="mb-4 text-xl font-semibold">
-          {t.programs.sections.perks}
-        </h2>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {program.perks.map((perk) => (
-            <Card key={perk.title}>
-              <CardHeader>
-                <CardTitle className="text-base">{perk.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-fd-muted-foreground text-sm">
-                  {perk.description}
-                </p>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="mb-8">
+          <div className="mb-2 flex flex-wrap items-center gap-2">
+            <Badge variant="default">{categoryLabel}</Badge>
+            {program.duration && (
+              <Badge variant="outline">{program.duration}</Badge>
+            )}
+          </div>
+          <h1 className="mb-2 text-3xl font-bold">
+            <LinkText href={program.url}>{program.name}</LinkText>
+          </h1>
+          <p className="text-fd-muted-foreground text-lg">
+            {t.programs.by} {program.provider}
+          </p>
+          <p className="text-fd-foreground mt-4">{program.description}</p>
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <Button
+              variant="default"
+              size="sm"
+              nativeButton={false}
+              render={
+                <a
+                  href={program.applicationUrl ?? program.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t.programs.applyNow}
+                  <ArrowRightIcon />
+                </a>
+              }
+            />
+            <Button
+              variant="outline"
+              size="sm"
+              nativeButton={false}
+              render={
+                <Link
+                  href={withLocalePrefix(
+                    lang,
+                    `${ROUTES.PROGRAMS}/${program.slug}/check`,
+                  )}
+                >
+                  <Search />
+                  {t.programs.sections.checkEligibility}
+                </Link>
+              }
+            />
+          </div>
         </div>
-      </section>
 
-      <Separator className="mb-10" />
+        <Separator className="mb-10" />
 
-      <section className="mb-10">
-        <h2 id="eligibility" className="mb-4 text-xl font-semibold">
-          {t.programs.sections.eligibility}
-        </h2>
-        <ul className="text-fd-foreground list-inside list-disc space-y-2">
-          {program.eligibility.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </section>
+        <section className="mb-10">
+          <h2 id="perks" className="mb-4 text-xl font-semibold">
+            {t.programs.sections.perks}
+          </h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {program.perks.map((perk) => (
+              <Card key={perk.title}>
+                <CardHeader>
+                  <CardTitle className="text-base">{perk.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-fd-muted-foreground text-sm">
+                    {perk.description}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
 
-      {program.requirements && program.requirements.length > 0 && (
-        <>
-          <Separator className="mb-10" />
-          <section className="mb-10">
-            <h2 id="requirements" className="mb-4 text-xl font-semibold">
-              {t.programs.sections.requirements}
-            </h2>
-            <ul className="text-fd-foreground list-inside list-disc space-y-2">
-              {program.requirements.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </section>
-        </>
-      )}
+        <Separator className="mb-10" />
 
-      {program.applicationProcess && program.applicationProcess.length > 0 && (
-        <>
-          <Separator className="mb-10" />
-          <section className="mb-10">
-            <h2 id="how-to-apply" className="mb-4 text-xl font-semibold">
-              {t.programs.sections.howToApply}
-            </h2>
-            <ol className="text-fd-foreground list-inside list-decimal space-y-2">
-              {program.applicationProcess.map((step) => (
-                <li key={step}>{step}</li>
-              ))}
-            </ol>
-          </section>
-        </>
-      )}
+        <section className="mb-10">
+          <h2 id="eligibility" className="mb-4 text-xl font-semibold">
+            {t.programs.sections.eligibility}
+          </h2>
+          <ul className="text-fd-foreground list-inside list-disc space-y-2">
+            {program.eligibility.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </section>
 
-      {program.tags && program.tags.length > 0 && (
-        <>
-          <Separator className="mb-10" />
-          <section>
-            <h2 id="tags" className="mb-4 text-xl font-semibold">
-              {t.programs.sections.tags}
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              {program.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-          </section>
-        </>
-      )}
-    </div>
+        {program.requirements && program.requirements.length > 0 && (
+          <>
+            <Separator className="mb-10" />
+            <section className="mb-10">
+              <h2 id="requirements" className="mb-4 text-xl font-semibold">
+                {t.programs.sections.requirements}
+              </h2>
+              <ul className="text-fd-foreground list-inside list-disc space-y-2">
+                {program.requirements.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </section>
+          </>
+        )}
+
+        {program.applicationProcess &&
+          program.applicationProcess.length > 0 && (
+            <>
+              <Separator className="mb-10" />
+              <section className="mb-10">
+                <h2 id="how-to-apply" className="mb-4 text-xl font-semibold">
+                  {t.programs.sections.howToApply}
+                </h2>
+                <ol className="text-fd-foreground list-inside list-decimal space-y-2">
+                  {program.applicationProcess.map((step) => (
+                    <li key={step}>{step}</li>
+                  ))}
+                </ol>
+              </section>
+            </>
+          )}
+
+        {program.tags && program.tags.length > 0 && (
+          <>
+            <Separator className="mb-10" />
+            <section>
+              <h2 id="tags" className="mb-4 text-xl font-semibold">
+                {t.programs.sections.tags}
+              </h2>
+              <div className="flex flex-wrap gap-2">
+                {program.tags.map((tag) => (
+                  <Badge key={tag} variant="secondary">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
+      </div>
+    </>
   );
 }
 

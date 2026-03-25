@@ -14,6 +14,7 @@ import { generateLangParams } from "@/i18n/config";
 import { getT } from "@/i18n/get-t";
 import { withLocalePrefix } from "@/i18n/navigation";
 import { getPrograms } from "@/lib/programs";
+import { ProgramListJsonLd } from "@/seo/json-ld";
 import { createMetadata } from "@/seo/metadata";
 
 export const generateStaticParams = generateLangParams;
@@ -52,43 +53,52 @@ export default async function ProgramsPage({
   }));
 
   return (
-    <div className="container mx-auto flex w-full flex-1 flex-col px-4 py-12">
-      <div className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
-        <div>
-          <h1 className="mb-2 text-4xl font-bold">
-            {t.programs.listing.heading}
-          </h1>
-          <p className="text-fd-muted-foreground max-w-2xl text-lg">
-            {translatedPrograms.length} curated programs for open-source
-            projects. {t.programs.listing.description}
-          </p>
-        </div>
-        <div className="shrink-0">
-          <Button
-            size="lg"
-            nativeButton={false}
-            render={
-              <Link href={withLocalePrefix(lang, ROUTES.SUBMIT_PROGRAM)}>
-                <Plus />
-                {t.programs.submit.buttonText}
-              </Link>
-            }
-          />
-        </div>
-      </div>
-
-      <ProgramsFilter
-        programs={programsWithPerkTypes}
-        categories={categories}
-        perkTypes={perkTypes}
+    <>
+      <ProgramListJsonLd
         lang={lang}
-        translations={{
-          filters: t.programs.filters,
-          learnMore: t.programs.learnMore,
-          more: t.programs.more,
-        }}
-        categoryLabels={t.common.categories}
+        programs={translatedPrograms.map((p) => ({
+          name: p.name,
+          slug: p.slug,
+        }))}
       />
-    </div>
+      <div className="container mx-auto flex w-full flex-1 flex-col px-4 py-12">
+        <div className="mb-10 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
+          <div>
+            <h1 className="mb-2 text-4xl font-bold">
+              {t.programs.listing.heading}
+            </h1>
+            <p className="text-fd-muted-foreground max-w-2xl text-lg">
+              {translatedPrograms.length} {t.programs.listing.countSuffix}{" "}
+              {t.programs.listing.description}
+            </p>
+          </div>
+          <div className="shrink-0">
+            <Button
+              size="lg"
+              nativeButton={false}
+              render={
+                <Link href={withLocalePrefix(lang, ROUTES.SUBMIT_PROGRAM)}>
+                  <Plus />
+                  {t.programs.submit.buttonText}
+                </Link>
+              }
+            />
+          </div>
+        </div>
+
+        <ProgramsFilter
+          programs={programsWithPerkTypes}
+          categories={categories}
+          perkTypes={perkTypes}
+          lang={lang}
+          translations={{
+            filters: t.programs.filters,
+            learnMore: t.programs.learnMore,
+            more: t.programs.more,
+          }}
+          categoryLabels={t.common.categories}
+        />
+      </div>
+    </>
   );
 }

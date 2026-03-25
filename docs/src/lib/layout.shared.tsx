@@ -16,6 +16,10 @@ export const baseOptions = (locale: string): BaseLayoutProps => ({
       url: withLocalePrefix(locale, ROUTES.PROGRAMS),
     },
     {
+      text: "Check Eligibility",
+      url: withLocalePrefix(locale, ROUTES.CHECK),
+    },
+    {
       text: "People",
       url: withLocalePrefix(locale, ROUTES.PEOPLE),
     },

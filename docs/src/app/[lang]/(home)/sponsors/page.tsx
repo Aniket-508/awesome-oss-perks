@@ -54,7 +54,10 @@ export default async function SponsorsPage({
         <Card>
           <CardContent>
             <p className="text-fd-muted-foreground text-center">
-              No gold sponsors yet
+              {t.sponsors.tiers.empty.replace(
+                "{tier}",
+                t.sponsors.tiers.gold.name.toLowerCase(),
+              )}
             </p>
           </CardContent>
         </Card>
@@ -70,7 +73,10 @@ export default async function SponsorsPage({
         <Card>
           <CardContent>
             <p className="text-fd-muted-foreground text-center">
-              No silver sponsors yet
+              {t.sponsors.tiers.empty.replace(
+                "{tier}",
+                t.sponsors.tiers.silver.name.toLowerCase(),
+              )}
             </p>
           </CardContent>
         </Card>
@@ -86,7 +92,10 @@ export default async function SponsorsPage({
         <Card>
           <CardContent>
             <p className="text-fd-muted-foreground text-center">
-              No bronze sponsors yet
+              {t.sponsors.tiers.empty.replace(
+                "{tier}",
+                t.sponsors.tiers.bronze.name.toLowerCase(),
+              )}
             </p>
           </CardContent>
         </Card>
