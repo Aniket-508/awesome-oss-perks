@@ -1,6 +1,6 @@
-import { Public_Sans } from "next/font/google";
+export const OG_DIMENSIONS = { height: 630, width: 1200 } as const;
 
-const OG_FONT_FAMILY = "Public Sans";
+export const OG_FONT_FAMILY = "Public Sans";
 
 const fetchGoogleFont = async (weight: number): Promise<ArrayBuffer> => {
   const css = await fetch(
@@ -47,10 +47,3 @@ export const loadOgFonts = async () => {
     },
   ];
 };
-
-export { OG_FONT_FAMILY };
-
-export const publicSans = Public_Sans({
-  subsets: ["latin"],
-  variable: "--font-sans",
-});
