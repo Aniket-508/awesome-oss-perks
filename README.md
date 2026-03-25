@@ -19,6 +19,7 @@ Free tools, services, and credits offered to open-source projects and their main
 - [Infrastructure](#infrastructure)
 - [Monitoring & Observability](#monitoring--observability)
 - [Security](#security)
+- [Support](#support)
 - [Testing](#testing)
 
 ## AI & Machine Learning
@@ -56,7 +57,7 @@ Free tools, services, and credits offered to open-source projects and their main
 - [Atlassian](https://www.atlassian.com/software/views/open-source-license-request) - Free Atlassian Standard cloud products including Rovo, Jira, Confluence, Trello, Bitbucket, and more for qualifying open-source projects.
 - [Cal.com](https://cal.com/help/event-types/sponsor) - Cal.com sponsors open source projects with free access to their scheduling platform. Projects must display a 'Book us with Cal.com' banner in their README and website footer.
 - [Crowdin](https://crowdin.com/page/open-source-project-setup-request) - Free localization platform for open source projects with an OSI-approved license, including translation memory, glossaries, 700+ integrations, and GitHub/GitLab/Bitbucket sync.
-- [cubic](https://cubic.dev) - The leading AI code review platform – used by teams like Resend, n8n, Better Auth, and thousands of other open source teams.
+- [cubic](https://cubic.dev) - The leading AI code review platform – used by teams like Resend, n8n, Better Auth, and thousands of other open source teams.
 - [GitBook](https://docs.gitbook.com/account-management/plans/apply-for-the-non-profit-open-source-plan) - Free Community plan for open source projects with access to all Ultimate features (except SAML SSO), GitHub/GitLab sync, unlimited contributors, and no hosting fees.
 - [GitLab](https://about.gitlab.com/solutions/open-source/) - GitLab provides free Ultimate-tier features and 50,000 compute minutes for qualifying open-source projects through the GitLab for Open Source Program.
 - [JetBrains](https://www.jetbrains.com/community/opensource/) - JetBrains offers free All Products Pack subscriptions for open-source project core teams, covering all JetBrains IDEs for development.
@@ -96,6 +97,10 @@ Free tools, services, and credits offered to open-source projects and their main
 - [Snyk](https://snyk.io/open-source/) - Snyk provides full Enterprise License access with unlimited usage for open-source projects, covering vulnerability scanning, dependency analysis, and security advisories.
 - [SonarSource](https://www.sonarsource.com/open-source-editions/sonarqube-cloud/) - Free static analysis for open-source projects on SonarQube Cloud, with unlimited members, feature branch analysis, and custom quality standards.
 
+## Support
+
+- [Cossistant](https://cossistant.com/open-source-program) - Free Cossistant Pro plan for open source projects, including credits, a dofollow listing, guest blog posts, and integration support.
+
 ## Testing
 
 - [Argos](https://argos-ci.com/docs/open-source) - Free visual regression testing for open source projects. Argos sponsors qualifying OSS projects with full access to their visual testing platform in exchange for a README badge.
@@ -103,7 +108,6 @@ Free tools, services, and credits offered to open-source projects and their main
 - [Chromatic](https://chromatic.com/docs/open-source) - Free visual testing plan for qualifying open source projects, built by the Storybook team. Includes 35,000 Chrome snapshots per month with cross-browser testing across Chrome, Firefox, Safari, and Edge.
 - [Codecov](https://about.codecov.io/for/open-source/) - Free forever code coverage for open source projects with unlimited public repositories, PR comments, status checks, and API access. Trusted by over 60,000 OSS projects.
 - [Coveralls](https://coveralls.io/) - Free forever code coverage tracking for open source projects with support for C/C++, Go, Java, JavaScript, Python, Ruby, PHP, .NET, and more.
-
 ## Contributing
 
 Contributions welcome! Read the [contribution guidelines](CONTRIBUTING.md) first.
