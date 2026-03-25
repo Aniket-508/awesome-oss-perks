@@ -1,10 +1,10 @@
-import type { EligibilityStatus } from "@ossperks/core";
+import type { EligibilityStatus, RepoProvider } from "@ossperks/core";
 import { CircleAlert, CircleCheck, CircleX } from "lucide-react";
 
 export const CHECK_PAGE_CONTAINER =
   "container max-w-4xl flex-1 flex flex-col w-full py-12 px-4 mx-auto";
 
-export const DEFAULT_PROVIDER = "github" as const;
+export const DEFAULT_PROVIDER: RepoProvider = "github";
 
 export const STATUS_CONFIG: Record<
   EligibilityStatus,
@@ -29,4 +29,12 @@ export const STATUS_CONFIG: Record<
     icon: CircleAlert,
     ring: "ring-amber-500/20",
   },
+};
+
+export type StatusLabelKey = "eligible" | "ineligible" | "needsReview";
+
+export const STATUS_LABELS: Record<EligibilityStatus, StatusLabelKey> = {
+  eligible: "eligible",
+  ineligible: "ineligible",
+  "needs-review": "needsReview",
 };

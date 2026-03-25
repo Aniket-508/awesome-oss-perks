@@ -1,5 +1,5 @@
 import { getAllProgramSlugs } from "@ossperks/core";
-import { ArrowRightIcon, ArrowLeftIcon } from "lucide-react";
+import { ArrowRightIcon, ArrowLeftIcon, Search } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -7,9 +7,10 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { LinkText } from "@/components/ui/link-text";
 import { Separator } from "@/components/ui/separator";
 import { ROUTES } from "@/constants/routes";
-import { i18n } from "@/i18n/config";
+import { generateLangParamsWithSlug } from "@/i18n/config";
 import { getT } from "@/i18n/get-t";
 import { withLocalePrefix } from "@/i18n/navigation";
 import { getProgram } from "@/lib/programs";
@@ -54,7 +55,9 @@ export default async function ProgramPage({
             <Badge variant="outline">{program.duration}</Badge>
           )}
         </div>
-        <h1 className="mb-2 text-3xl font-bold">{program.name}</h1>
+        <h1 className="mb-2 text-3xl font-bold">
+          <LinkText href={program.url}>{program.name}</LinkText>
+        </h1>
         <p className="text-fd-muted-foreground text-lg">
           {t.programs.by} {program.provider}
         </p>
@@ -80,9 +83,15 @@ export default async function ProgramPage({
             size="sm"
             nativeButton={false}
             render={
-              <a href={program.url} target="_blank" rel="noopener noreferrer">
-                {t.programs.viewDetails.replace("{provider}", program.provider)}
-              </a>
+              <Link
+                href={withLocalePrefix(
+                  lang,
+                  `${ROUTES.PROGRAMS}/${program.slug}/check`,
+                )}
+              >
+                <Search />
+                {t.programs.sections.checkEligibility}
+              </Link>
             }
           />
         </div>
@@ -177,9 +186,7 @@ export default async function ProgramPage({
 }
 
 export const generateStaticParams = () =>
-  i18n.languages.flatMap((lang) =>
-    getAllProgramSlugs().map((slug) => ({ lang, slug })),
-  );
+  generateLangParamsWithSlug(getAllProgramSlugs);
 
 export const generateMetadata = async ({
   params,

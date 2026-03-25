@@ -2,34 +2,17 @@
 
 import { PROVIDER_HOSTS } from "@ossperks/core";
 import type { RepoProvider } from "@ossperks/core";
-import { ExternalLink, GitFork, Lock, Scale, Star } from "lucide-react";
+import { GitFork, Lock, Scale, Star } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
+import { LinkText } from "@/components/ui/link-text";
 import { Separator } from "@/components/ui/separator";
 import { STATUS_CONFIG } from "@/lib/check";
+import { formatAge } from "@/lib/date";
 import type { CheckTranslations } from "@/locales/en/check";
 import type { TranslatedCheckResponse } from "@/types/check";
 
 import { ResultSection } from "./result-section";
-
-const formatAge = (iso: string, t: CheckTranslations["time"]): string => {
-  const days = Math.floor(
-    (Date.now() - new Date(iso).getTime()) / (1000 * 60 * 60 * 24),
-  );
-  if (days === 0) {
-    return t.today;
-  }
-  if (days === 1) {
-    return t.yesterday;
-  }
-  if (days < 30) {
-    return t.daysAgo.replace("{days}", String(days));
-  }
-  if (days < 365) {
-    return t.monthsAgo.replace("{months}", String(Math.floor(days / 30)));
-  }
-  return t.yearsAgo.replace("{years}", String(Math.floor(days / 365)));
-};
 
 export const CheckResults = ({
   data,
@@ -49,15 +32,11 @@ export const CheckResults = ({
     <>
       <div className="mb-8">
         <h1 className="mb-2 text-3xl font-bold">
-          <a
+          <LinkText
             href={`https://${PROVIDER_HOSTS[repo.provider as RepoProvider]}/${repo.path}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="decoration-fd-primary/40 hover:decoration-fd-primary inline-flex items-center gap-2 underline underline-offset-4"
           >
             {repo.path}
-            <ExternalLink className="size-5 shrink-0 opacity-50" />
-          </a>
+          </LinkText>
         </h1>
         {repo.description && (
           <p className="text-fd-muted-foreground mb-4">{repo.description}</p>

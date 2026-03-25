@@ -11,3 +11,11 @@ export type Locale = (typeof i18n.languages)[number];
 
 export const isLocale = (value: string): value is Locale =>
   i18n.languages.includes(value as Locale);
+
+export const generateLangParams = (): { lang: string }[] =>
+  i18n.languages.map((lang) => ({ lang }));
+
+export const generateLangParamsWithSlug = (
+  getSlugs: () => string[],
+): { lang: string; slug: string }[] =>
+  i18n.languages.flatMap((lang) => getSlugs().map((slug) => ({ lang, slug })));

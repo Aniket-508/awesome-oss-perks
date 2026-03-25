@@ -1,13 +1,15 @@
 import "server-only";
-import type { Program } from "@ossperks/core";
 import {
+  programs as corePrograms,
   programs as allPrograms,
   getProgramBySlug,
   getFeaturedPrograms as getFeaturedProgramsBase,
 } from "@ossperks/core";
+import type { Program } from "@ossperks/core";
 
 import { i18n } from "@/i18n/config";
 import { programsSource } from "@/lib/source";
+import type { ProgramTranslationMap } from "@/types/check";
 
 const parsePerks = (
   section: string,
@@ -111,4 +113,46 @@ export const getFeaturedPrograms = async (lang: string) => {
     getFeaturedProgramsBase().map((p) => translateProgram(p, lang)),
   );
   return results;
+};
+
+const formatProgramTranslation = (
+  program: Program,
+  lang: string,
+  englishProgram?: Program,
+): ProgramTranslationMap[string] => ({
+  eligibility: program.eligibility,
+  hasEligibilityParity:
+    lang === i18n.defaultLanguage ||
+    program.eligibility.length ===
+      (englishProgram?.eligibility.length ?? program.eligibility.length),
+  name: program.name,
+});
+
+export const getProgramTranslations = async (
+  lang: string,
+): Promise<ProgramTranslationMap> => {
+  const translated = await getPrograms(lang);
+  const englishPrograms = new Map(
+    corePrograms.map((program) => [program.slug, program]),
+  );
+  const map: ProgramTranslationMap = {};
+  for (const p of translated) {
+    const en = englishPrograms.get(p.slug);
+    map[p.slug] = formatProgramTranslation(p, lang, en);
+  }
+  return map;
+};
+
+export const getSingleProgramTranslation = async (
+  slug: string,
+  lang: string,
+): Promise<ProgramTranslationMap> => {
+  const program = await getProgram(slug, lang);
+  if (!program) {
+    return {};
+  }
+  const englishProgram = corePrograms.find((p) => p.slug === slug);
+  return {
+    [slug]: formatProgramTranslation(program, lang, englishProgram),
+  };
 };

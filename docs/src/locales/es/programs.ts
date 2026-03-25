@@ -13,6 +13,7 @@ const programs = {
   },
   more: "+{count} más",
   sections: {
+    checkEligibility: "Verificar Elegibilidad",
     eligibility: "Elegibilidad",
     howToApply: "Cómo aplicar",
     perks: "Beneficios",
@@ -20,6 +21,15 @@ const programs = {
     tags: "Etiquetas"
   },
   submit: {
+    backToAll: "Todos los programas",
+    autofill: {
+      button: "Autocompletar",
+      description: "Simplemente ingresa la URL del programa y completaremos automáticamente los detalles por ti.",
+      error: "No se pudieron extraer los detalles de esta URL. Por favor, completa el formulario manualmente.",
+      heading: "Autocompletar con IA",
+      loading: "Autocompletando...",
+      placeholder: "https://..."
+    },
     buttonText: "Enviar un programa",
     description: "¿Tienes un programa para sugerir? Envía sus detalles y lo añadiremos a la lista.",
     form: {
@@ -56,7 +66,14 @@ const programs = {
       tagsNoResults: "No se encontraron etiquetas.",
       tagsPlaceholder: "Buscar o añadir etiquetas...",
       urlLabel: "URL",
-      urlPlaceholder: "https://..."
+      urlPlaceholder: "https://...",
+      contactToggle: "¿Agregar también un contacto del programa?",
+      contactNameLabel: "Nombre del contacto",
+      contactNamePlaceholder: "p. ej., Jane Doe",
+      contactRoleLabel: "Cargo",
+      contactRolePlaceholder: "p. ej., Gerente del Programa OSS",
+      contactUrlLabel: "URL de contacto (opcional)",
+      contactUrlPlaceholder: "https://..."
     },
     heading: "Enviar un programa",
     submitButton: "Enviar PR",
@@ -78,8 +95,7 @@ const programs = {
       perkRequired: "Se requiere al menos un beneficio con título y descripción",
       providerRequired: "El proveedor es obligatorio"
     }
-  },
-  viewDetails: "Ver detalles del programa de {provider}"
+  }
 };
 export default programs;
 export type ProgramsTranslations = typeof programs;

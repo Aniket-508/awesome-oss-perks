@@ -13,6 +13,7 @@ const programs = {
   },
   more: "还有 {count} 个",
   sections: {
+    checkEligibility: "检查资格",
     eligibility: "资格要求",
     howToApply: "如何申请",
     perks: "福利",
@@ -20,6 +21,15 @@ const programs = {
     tags: "标签"
   },
   submit: {
+    backToAll: "所有项目",
+    autofill: {
+      button: "自动填写",
+      description: "只需输入项目 URL，我们将自动为您填写详细信息！",
+      error: "无法从此 URL 提取详细信息。请手动填写表单。",
+      heading: "AI 自动填写",
+      loading: "自动填写中...",
+      placeholder: "https://..."
+    },
     buttonText: "提交项目",
     description: "有想推荐的项目?提交其详细信息,我们将把它添加到列表中。",
     form: {
@@ -56,7 +66,14 @@ const programs = {
       tagsNoResults: "未找到标签。",
       tagsPlaceholder: "搜索或添加标签...",
       urlLabel: "URL",
-      urlPlaceholder: "https://..."
+      urlPlaceholder: "https://...",
+      contactToggle: "同时添加项目联系人?",
+      contactNameLabel: "联系人姓名",
+      contactNamePlaceholder: "例如:张三",
+      contactRoleLabel: "职位",
+      contactRolePlaceholder: "例如:开源项目经理",
+      contactUrlLabel: "联系人URL(可选)",
+      contactUrlPlaceholder: "https://..."
     },
     heading: "提交项目",
     submitButton: "提交 PR",
@@ -78,8 +95,7 @@ const programs = {
       perkRequired: "至少需要一个包含标题和描述的福利",
       providerRequired: "提供方为必填项"
     }
-  },
-  viewDetails: "查看 {provider} 项目详情"
+  }
 };
 export default programs;
 export type ProgramsTranslations = typeof programs;

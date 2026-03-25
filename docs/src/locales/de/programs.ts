@@ -13,6 +13,7 @@ const programs = {
   },
   more: "+{count} weitere",
   sections: {
+    checkEligibility: "Berechtigung prüfen",
     eligibility: "Teilnahmeberechtigung",
     howToApply: "Bewerbungsverfahren",
     perks: "Vorteile",
@@ -20,6 +21,15 @@ const programs = {
     tags: "Tags"
   },
   submit: {
+    backToAll: "Alle Programme",
+    autofill: {
+      button: "Automatisch ausfüllen",
+      description: "Geben Sie einfach die Programm-URL ein, und wir füllen die Details automatisch für Sie aus!",
+      error: "Die Details konnten nicht aus dieser URL extrahiert werden. Bitte füllen Sie das Formular manuell aus.",
+      heading: "Automatisch mit KI ausfüllen",
+      loading: "Wird ausgefüllt...",
+      placeholder: "https://..."
+    },
     buttonText: "Programm einreichen",
     description: "Haben Sie ein Programm vorzuschlagen? Reichen Sie die Details ein und wir fügen es der Liste hinzu.",
     form: {
@@ -56,7 +66,14 @@ const programs = {
       tagsNoResults: "Keine Tags gefunden.",
       tagsPlaceholder: "Tags suchen oder hinzufügen...",
       urlLabel: "URL",
-      urlPlaceholder: "https://..."
+      urlPlaceholder: "https://...",
+      contactToggle: "Auch einen Programmkontakt hinzufügen?",
+      contactNameLabel: "Name des Kontakts",
+      contactNamePlaceholder: "z. B. Max Mustermann",
+      contactRoleLabel: "Rolle",
+      contactRolePlaceholder: "z. B. OSS-Programmmanager",
+      contactUrlLabel: "Kontakt-URL (optional)",
+      contactUrlPlaceholder: "https://..."
     },
     heading: "Programm einreichen",
     submitButton: "PR einreichen",
@@ -78,8 +95,7 @@ const programs = {
       perkRequired: "Mindestens ein Vorteil mit Titel und Beschreibung ist erforderlich",
       providerRequired: "Anbieter ist erforderlich"
     }
-  },
-  viewDetails: "Details zum {provider}-Programm anzeigen"
+  }
 };
 export default programs;
 export type ProgramsTranslations = typeof programs;

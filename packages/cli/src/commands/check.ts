@@ -1,10 +1,14 @@
 import {
-  programs,
   checkAllPrograms,
+  checkEligibility,
+  getProgramBySlug,
   fetchRepoContext,
+  programs,
   PROVIDER_HOSTS,
+  VALID_PROVIDERS,
 } from "@ossperks/core";
 import type {
+  Program,
   ProgramEligibility,
   RepoContext,
   RepoProvider,
@@ -22,10 +26,12 @@ import {
   maxSlugLength,
   success,
 } from "../utils/format.js";
+import { closestSlug } from "../utils/slug.js";
 
 interface CheckOpts {
   repo?: string;
   provider?: string;
+  program?: string;
   json?: boolean;
 }
 
@@ -63,10 +69,6 @@ const printRepoSummary = (ctx: RepoContext): void => {
   }
   success(`${pc.bold(ctx.name)} ${pc.dim("—")} ${parts.join(pc.dim(" · "))}`);
 };
-
-const VALID_PROVIDERS = new Set<RepoProvider>(
-  Object.keys(PROVIDER_HOSTS) as RepoProvider[],
-);
 
 const resolveRef = (opts: CheckOpts): RepoRef | null => {
   if (!opts.repo) {
@@ -160,8 +162,27 @@ export const checkCommand = new Command("check")
     'git provider to use with --repo: "github", "gitlab", "codeberg", or "gitea"',
     "github",
   )
+  .option(
+    "-p, --program <slug>",
+    "check eligibility for a specific program only (e.g. vercel, sentry)",
+  )
   .option("--json", "output results as JSON")
   .action(async (opts: CheckOpts) => {
+    let targetProgram: Program | undefined;
+    if (opts.program === undefined) {
+      targetProgram = undefined;
+    } else {
+      const resolved = getProgramBySlug(opts.program);
+      if (resolved === undefined) {
+        const suggestion = closestSlug(opts.program);
+        const hint =
+          suggestion === null ? "" : ` Did you mean "${suggestion}"?`;
+        displayError(`Unknown program slug "${opts.program}".${hint}`);
+        process.exit(1);
+      }
+      targetProgram = resolved;
+    }
+
     const ref = resolveRef(opts);
 
     if (!ref) {
@@ -196,6 +217,53 @@ export const checkCommand = new Command("check")
         ...new Set([...(ctx.filePaths ?? []), ...localTree.filePaths]),
       ],
     };
+
+    if (targetProgram) {
+      const result = checkEligibility(targetProgram, ctx);
+
+      if (opts.json) {
+        console.log(
+          JSON.stringify(
+            {
+              repo: {
+                dependencies: ctx.dependencies,
+                isFork: ctx.isFork,
+                isPrivate: ctx.isPrivate,
+                license: ctx.license,
+                owner: ctx.owner,
+                path: ctx.path,
+                provider: ctx.provider,
+                repo: ctx.repo,
+                stars: ctx.stars,
+              },
+              results: [
+                {
+                  name: targetProgram.name,
+                  reasons: result.reasons,
+                  slug: targetProgram.slug,
+                  status: result.status,
+                },
+              ],
+            },
+            null,
+            2,
+          ),
+        );
+        return;
+      }
+
+      printRepoSummary(ctx);
+      console.log();
+      header(`Eligibility for ${targetProgram.name}`);
+      console.log();
+      const pad = maxSlugLength([targetProgram]);
+      console.log(eligibilityRow(targetProgram, result, pad));
+      for (const reason of result.reasons.slice(1)) {
+        console.log(`  ${" ".repeat(pad + 6)}${pc.dim(`• ${reason}`)}`);
+      }
+      console.log();
+      return;
+    }
 
     const results = checkAllPrograms(programs, ctx);
 

@@ -13,6 +13,7 @@ const programs = {
   },
   more: "+{count}개 더보기",
   sections: {
+    checkEligibility: "자격 확인",
     eligibility: "자격 요건",
     howToApply: "신청 방법",
     perks: "혜택",
@@ -20,6 +21,15 @@ const programs = {
     tags: "태그"
   },
   submit: {
+    backToAll: "모든 프로그램",
+    autofill: {
+      button: "자동 입력",
+      description: "프로그램 URL을 입력하면 자동으로 세부 정보를 채워드립니다!",
+      error: "이 URL에서 세부 정보를 추출할 수 없습니다. 양식을 수동으로 작성해 주세요.",
+      heading: "AI로 자동 입력",
+      loading: "자동 입력 중...",
+      placeholder: "https://..."
+    },
     buttonText: "프로그램 제출하기",
     description: "제안하고 싶은 프로그램이 있으신가요? 세부 정보를 제출해 주시면 목록에 추가하겠습니다.",
     form: {
@@ -56,7 +66,14 @@ const programs = {
       tagsNoResults: "태그를 찾을 수 없습니다.",
       tagsPlaceholder: "태그 검색 또는 추가...",
       urlLabel: "URL",
-      urlPlaceholder: "https://..."
+      urlPlaceholder: "https://...",
+      contactToggle: "프로그램 담당자도 추가하시겠습니까?",
+      contactNameLabel: "담당자 이름",
+      contactNamePlaceholder: "예: 홍길동",
+      contactRoleLabel: "역할",
+      contactRolePlaceholder: "예: OSS 프로그램 매니저",
+      contactUrlLabel: "담당자 URL (선택사항)",
+      contactUrlPlaceholder: "https://..."
     },
     heading: "프로그램 제출",
     submitButton: "PR 제출",
@@ -78,8 +95,7 @@ const programs = {
       perkRequired: "제목과 설명이 포함된 혜택이 최소 하나 필요합니다",
       providerRequired: "제공업체는 필수입니다"
     }
-  },
-  viewDetails: "{provider} 프로그램 세부정보 보기"
+  }
 };
 export default programs;
 export type ProgramsTranslations = typeof programs;
