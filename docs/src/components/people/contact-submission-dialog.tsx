@@ -30,8 +30,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useSubmission } from "@/hooks/use-submission";
-
-const canSubmitSelector = (s: { canSubmit: boolean }) => s.canSubmit;
+import { canSubmitSelector } from "@/lib/utils";
 
 interface ContactSubmissionTranslations {
   autofill: {
@@ -175,110 +174,114 @@ export const ContactSubmissionDialog = ({
       <DialogTrigger render={trigger} />
       <DialogContent>
         {step === "form" ? (
-          <form
-            id="contact-form"
-            onSubmit={handleFormSubmit}
-            className="contents"
-          >
+          <>
             <DialogHeader>
               <DialogTitle>{t.heading}</DialogTitle>
               <DialogDescription>{t.description}</DialogDescription>
             </DialogHeader>
 
-            <DialogBody>
-              {/* eslint-disable react-perf/jsx-no-new-function-as-prop */}
-              <div className="grid gap-4">
-                <AutofillCard
-                  endpoint="/api/autofill-contact"
-                  translations={t.autofill}
-                  disabled={isSubmitting}
-                  onAutofill={handleAutofillData}
-                />
+            <AutofillCard
+              endpoint="/api/autofill-contact"
+              translations={t.autofill}
+              disabled={isSubmitting}
+              onAutofill={handleAutofillData}
+            />
 
-                <form.Field name="name">
-                  {(nameField) => (
-                    <form.Field name="role">
-                      {(roleField) => (
-                        <form.Field name="url">
-                          {(urlField) => (
-                            <ContactFields
-                              nameField={nameField}
-                              roleField={roleField}
-                              urlField={urlField}
-                              translations={t.form}
-                              disabled={isSubmitting}
-                            />
-                          )}
-                        </form.Field>
-                      )}
-                    </form.Field>
-                  )}
-                </form.Field>
-
-                <form.Field name="programSlug">
-                  {(field) => {
-                    const handleChange = (val: string | number | null) =>
-                      field.handleChange(val as string);
-                    return (
-                      <div className="space-y-2">
-                        <Label>{t.form.programLabel}</Label>
-                        <Select
-                          value={field.state.value}
-                          onValueChange={handleChange}
-                          disabled={isSubmitting}
-                        >
-                          <SelectTrigger className="w-full">
-                            <SelectValue
-                              placeholder={t.form.programPlaceholder}
-                            >
-                              {getProgramBySlug(field.state.value)?.name}
-                            </SelectValue>
-                          </SelectTrigger>
-                          <SelectContent>
-                            {programs.map((p) => (
-                              <SelectItem key={p.slug} value={p.slug}>
-                                {p.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <FieldError errors={field.state.meta.errors} />
-                      </div>
-                    );
-                  }}
-                </form.Field>
-
-                {submissionError && (
-                  <p className="text-destructive text-sm">{submissionError}</p>
-                )}
-              </div>
-              {/* eslint-enable react-perf/jsx-no-new-function-as-prop */}
-            </DialogBody>
-
-            <DialogFooter>
-              <form.Subscribe selector={canSubmitSelector}>
-                {(canSubmit) => (
-                  <Button
-                    type="submit"
-                    disabled={!canSubmit || isSubmitting}
-                    className="w-full"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <Loader2 className="animate-spin" />
-                        {t.submitting}
-                      </>
-                    ) : (
-                      <>
-                        {t.submitButton}
-                        <ArrowRight />
-                      </>
+            <form
+              id="contact-form"
+              onSubmit={handleFormSubmit}
+              className="contents"
+            >
+              <DialogBody className="pt-0">
+                {/* eslint-disable react-perf/jsx-no-new-function-as-prop */}
+                <div className="grid gap-4">
+                  <form.Field name="name">
+                    {(nameField) => (
+                      <form.Field name="role">
+                        {(roleField) => (
+                          <form.Field name="url">
+                            {(urlField) => (
+                              <ContactFields
+                                nameField={nameField}
+                                roleField={roleField}
+                                urlField={urlField}
+                                translations={t.form}
+                                disabled={isSubmitting}
+                              />
+                            )}
+                          </form.Field>
+                        )}
+                      </form.Field>
                     )}
-                  </Button>
-                )}
-              </form.Subscribe>
-            </DialogFooter>
-          </form>
+                  </form.Field>
+
+                  <form.Field name="programSlug">
+                    {(field) => {
+                      const handleChange = (val: string | number | null) =>
+                        field.handleChange(val as string);
+                      return (
+                        <div className="space-y-2">
+                          <Label>{t.form.programLabel}</Label>
+                          <Select
+                            value={field.state.value}
+                            onValueChange={handleChange}
+                            disabled={isSubmitting}
+                          >
+                            <SelectTrigger className="w-full">
+                              <SelectValue
+                                placeholder={t.form.programPlaceholder}
+                              >
+                                {getProgramBySlug(field.state.value)?.name}
+                              </SelectValue>
+                            </SelectTrigger>
+                            <SelectContent>
+                              {programs.map((p) => (
+                                <SelectItem key={p.slug} value={p.slug}>
+                                  {p.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                          <FieldError errors={field.state.meta.errors} />
+                        </div>
+                      );
+                    }}
+                  </form.Field>
+
+                  {submissionError && (
+                    <p className="text-destructive text-sm">
+                      {submissionError}
+                    </p>
+                  )}
+                </div>
+                {/* eslint-enable react-perf/jsx-no-new-function-as-prop */}
+              </DialogBody>
+
+              <DialogFooter>
+                <form.Subscribe selector={canSubmitSelector}>
+                  {(canSubmit) => (
+                    <Button
+                      type="submit"
+                      disabled={!canSubmit || isSubmitting}
+                      className="w-full"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="animate-spin" />
+                          {t.submitting}
+                        </>
+                      ) : (
+                        <>
+                          {t.submitButton}
+                          <ArrowRight />
+                        </>
+                      )}
+                    </Button>
+                  )}
+                </form.Subscribe>
+              </DialogFooter>
+            </form>
+          </>
         ) : (
           <div className="flex flex-col items-center gap-4 text-center">
             <CheckCircle2 className="size-12 text-green-500" />

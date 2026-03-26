@@ -42,8 +42,8 @@ export const useSubmission = (
           prUrl: result.prUrl,
           success: true,
         };
-      } catch (error) {
-        const message = error instanceof Error ? error.message : labels.error;
+      } catch (_error) {
+        const message = _error instanceof Error ? _error.message : labels.error;
         return { error: message, success: false };
       }
     },

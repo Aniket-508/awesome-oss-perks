@@ -43,6 +43,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ROUTES } from "@/constants/routes";
 import { useSubmission } from "@/hooks/use-submission";
 import { withLocalePrefix } from "@/i18n/navigation";
+import { canSubmitSelector } from "@/lib/utils";
 import type { ProgramsTranslations } from "@/locales/en/programs";
 
 const COMMON_TAGS = [
@@ -74,8 +75,6 @@ const COMMON_TAGS = [
   "storage",
   "testing",
 ];
-
-const canSubmitSelector = (s: { canSubmit: boolean }) => s.canSubmit;
 
 interface ProgramSubmitPageClientProps {
   categoryLabels: Record<string, string>;

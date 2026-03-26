@@ -1,13 +1,16 @@
 "use client";
 
+import { useForm } from "@tanstack/react-form";
 import { Loader2, Sparkles } from "lucide-react";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import useSWRMutation from "swr/mutation";
+import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
+import { FieldError } from "@/components/ui/form-field";
 import { Input } from "@/components/ui/input";
 import { postJson } from "@/lib/fetchers";
-import { cn } from "@/lib/utils";
+import { canSubmitSelector, cn } from "@/lib/utils";
 
 interface AutofillCardProps {
   className?: string;
@@ -32,8 +35,12 @@ export const AutofillCard = ({
   onAutofill,
   translations: t,
 }: AutofillCardProps) => {
-  const [url, setUrl] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
+
+  const urlSchema = useMemo(
+    () => z.object({ url: z.string().url(t.error) }),
+    [t.error],
+  );
 
   const { error, isMutating, trigger } = useSWRMutation<
     Record<string, unknown>,
@@ -42,69 +49,89 @@ export const AutofillCard = ({
     string
   >(endpoint, (_key, { arg }) => postJson(_key, { url: arg }, t.error));
 
-  const handleAutofill = useCallback(async () => {
-    if (!url.trim() || disabled) {
-      return;
-    }
-
-    setShowSuccess(false);
-    try {
-      const data = await trigger(url.trim());
-      onAutofill(data, url.trim());
-      setShowSuccess(true);
-    } catch {
-      /* error surfaced via SWR's error state */
-    }
-  }, [url, disabled, trigger, onAutofill]);
-
-  const handleUrlChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setUrl(e.target.value);
+  const form = useForm({
+    defaultValues: { url: "" },
+    onSubmit: async ({ value }) => {
       setShowSuccess(false);
+      try {
+        const data = await trigger(value.url.trim());
+        onAutofill(data, value.url.trim());
+        setShowSuccess(true);
+      } catch {
+        /* error surfaced via SWR's error state */
+      }
     },
-    [],
+    validators: { onSubmit: urlSchema },
+  });
+
+  const handleFormSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      e.stopPropagation();
+      form.handleSubmit();
+    },
+    [form],
   );
 
   const autofillError = error instanceof Error ? error.message : null;
 
   return (
     <div className={cn(className)}>
-      <div className="from-fd-muted/60 to-fd-muted/10 border-fd-border rounded-lg border bg-linear-to-b p-4">
+      <form
+        onSubmit={handleFormSubmit}
+        className="from-fd-muted/60 to-fd-muted/10 border-fd-border rounded-lg border bg-linear-to-b p-4"
+      >
         <div className="mb-3">
           <p className="text-sm font-semibold">{t.heading}</p>
           <p className="text-fd-muted-foreground text-xs">{t.description}</p>
         </div>
+        {/* eslint-disable react-perf/jsx-no-new-function-as-prop */}
         <div className="flex items-start gap-3">
-          <Input
-            type="url"
-            placeholder={t.placeholder}
-            value={url}
-            onChange={handleUrlChange}
-            disabled={isMutating || disabled}
-            className="bg-fd-background flex-1"
-          />
-          <Button
-            type="button"
-            disabled={isMutating || disabled || !url.trim()}
-            onClick={handleAutofill}
-          >
-            {isMutating ? (
-              <>
-                <Loader2 className="animate-spin" />
-                {t.loading}
-              </>
-            ) : (
-              <>
-                <Sparkles className="size-4" />
-                {t.button}
-              </>
+          <form.Field name="url">
+            {(field) => (
+              <div className="flex-1">
+                <Input
+                  type="url"
+                  placeholder={t.placeholder}
+                  value={field.state.value}
+                  onChange={(e) => {
+                    field.handleChange(e.target.value);
+                    setShowSuccess(false);
+                  }}
+                  onBlur={field.handleBlur}
+                  disabled={isMutating || disabled}
+                  className="bg-fd-background"
+                />
+                <FieldError errors={field.state.meta.errors} />
+              </div>
             )}
-          </Button>
+          </form.Field>
+          {/* eslint-enable react-perf/jsx-no-new-function-as-prop */}
+          <form.Subscribe selector={canSubmitSelector}>
+            {(canSubmit) => (
+              <Button
+                type="submit"
+                disabled={isMutating || disabled || !canSubmit}
+              >
+                {isMutating ? (
+                  <>
+                    <Loader2 className="animate-spin" />
+                    {t.loading}
+                  </>
+                ) : (
+                  <>
+                    <Sparkles className="size-4" />
+                    {t.button}
+                  </>
+                )}
+              </Button>
+            )}
+          </form.Subscribe>
         </div>
         {autofillError && (
           <p className="text-destructive mt-2 text-xs">{autofillError}</p>
         )}
-      </div>
+      </form>
       {showSuccess && (
         <p className="animate-slide-down bg-fd-muted/50 overflow-hidden py-2 text-center text-xs text-green-500">
           {t.success} 🥳
