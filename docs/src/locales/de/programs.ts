@@ -29,7 +29,8 @@ const programs = {
       error: "Die Details konnten nicht aus dieser URL extrahiert werden. Bitte füllen Sie das Formular manuell aus.",
       heading: "Automatisch mit KI ausfüllen",
       loading: "Wird ausgefüllt...",
-      placeholder: "https://..."
+      placeholder: "https://...",
+      success: "Wir haben die Details Ihres Projekts erfolgreich abgerufen!"
     },
     buttonText: "Programm einreichen",
     description: "Haben Sie ein Programm vorzuschlagen? Reichen Sie die Details ein und wir fügen es der Liste hinzu.",

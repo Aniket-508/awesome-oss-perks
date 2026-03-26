@@ -29,7 +29,8 @@ const programs = {
       error: "このURLから詳細を抽出できませんでした。フォームを手動で入力してください。",
       heading: "AIで自動入力",
       loading: "自動入力中...",
-      placeholder: "https://..."
+      placeholder: "https://...",
+      success: "プロジェクトの詳細を正常に取得しました！"
     },
     buttonText: "プログラムを提案",
     description: "提案したいプログラムはありますか?詳細を送信していただければ、リストに追加いたします。",

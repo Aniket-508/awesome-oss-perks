@@ -29,7 +29,8 @@ const programs = {
       error: "Impossible d'extraire les détails de cette URL. Veuillez remplir le formulaire manuellement.",
       heading: "Remplissage auto avec l'IA",
       loading: "Remplissage en cours...",
-      placeholder: "https://..."
+      placeholder: "https://...",
+      success: "Nous avons récupéré les détails de votre projet avec succès !"
     },
     buttonText: "Soumettre un programme",
     description: "Vous avez un programme à suggérer ? Soumettez ses détails et nous l'ajouterons à la liste.",

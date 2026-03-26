@@ -29,7 +29,8 @@ const programs = {
       error: "이 URL에서 세부 정보를 추출할 수 없습니다. 양식을 수동으로 작성해 주세요.",
       heading: "AI로 자동 입력",
       loading: "자동 입력 중...",
-      placeholder: "https://..."
+      placeholder: "https://...",
+      success: "프로젝트 세부 정보를 성공적으로 가져왔습니다!"
     },
     buttonText: "프로그램 제출하기",
     description: "제안하고 싶은 프로그램이 있으신가요? 세부 정보를 제출해 주시면 목록에 추가하겠습니다.",

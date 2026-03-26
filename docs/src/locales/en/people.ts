@@ -21,6 +21,7 @@ const people = {
       heading: "Autofill with AI",
       loading: "Autofilling...",
       placeholder: "https://...",
+      success: "We've successfully fetched the contact details!",
     },
     buttonText: "Submit a contact",
     description:

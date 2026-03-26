@@ -16,7 +16,8 @@ const people = {
       error: "No se pudieron extraer los detalles de esta URL. Por favor, completa el formulario manualmente.",
       heading: "Autocompletar con IA",
       loading: "Autocompletando...",
-      placeholder: "https://..."
+      placeholder: "https://...",
+      success: "¡Hemos obtenido los datos del contacto exitosamente!",
     },
     buttonText: "Enviar un contacto",
     description: "¿Conoces a alguien detrás de un programa? Envía sus datos y los añadiremos.",

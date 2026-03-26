@@ -29,7 +29,8 @@ const programs = {
       error: "Não foi possível extrair os detalhes desta URL. Por favor, preencha o formulário manualmente.",
       heading: "Preenchimento automático com IA",
       loading: "Preenchendo...",
-      placeholder: "https://..."
+      placeholder: "https://...",
+      success: "Buscamos os detalhes do seu projeto com sucesso!"
     },
     buttonText: "Enviar um programa",
     description: "Tem um programa para sugerir? Envie os detalhes e nós o adicionaremos à lista.",

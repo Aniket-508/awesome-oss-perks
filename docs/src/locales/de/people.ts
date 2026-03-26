@@ -16,7 +16,8 @@ const people = {
       error: "Die Details konnten nicht aus dieser URL extrahiert werden. Bitte füllen Sie das Formular manuell aus.",
       heading: "Automatisch mit KI ausfüllen",
       loading: "Wird ausgefüllt...",
-      placeholder: "https://..."
+      placeholder: "https://...",
+      success: "Wir haben die Kontaktdaten erfolgreich abgerufen!",
     },
     buttonText: "Kontakt einreichen",
     description: "Kennen Sie jemanden hinter einem Programm? Reichen Sie dessen Details ein und wir fügen sie hinzu.",

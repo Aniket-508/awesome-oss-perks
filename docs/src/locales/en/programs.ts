@@ -33,6 +33,7 @@ const programs = {
       heading: "Autofill with AI",
       loading: "Autofilling...",
       placeholder: "https://...",
+      success: "We've successfully fetched your project details!",
     },
     buttonText: "Submit a program",
     description:

@@ -29,7 +29,8 @@ const programs = {
       error: "无法从此 URL 提取详细信息。请手动填写表单。",
       heading: "AI 自动填写",
       loading: "自动填写中...",
-      placeholder: "https://..."
+      placeholder: "https://...",
+      success: "我们已成功获取您的项目详情！"
     },
     buttonText: "提交项目",
     description: "有想推荐的项目?提交其详细信息,我们将把它添加到列表中。",

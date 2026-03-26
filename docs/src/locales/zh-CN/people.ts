@@ -16,7 +16,8 @@ const people = {
       error: "无法从此 URL 提取详细信息。请手动填写表单。",
       heading: "AI 自动填写",
       loading: "自动填写中...",
-      placeholder: "https://..."
+      placeholder: "https://...",
+      success: "我们已成功获取联系人详情！",
     },
     buttonText: "提交联系人",
     description: "认识某个计划背后的人员?提交他们的详细信息,我们将添加他们。",

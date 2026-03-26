@@ -16,7 +16,8 @@ const people = {
       error: "Impossible d'extraire les détails de cette URL. Veuillez remplir le formulaire manuellement.",
       heading: "Remplissage auto avec l'IA",
       loading: "Remplissage en cours...",
-      placeholder: "https://..."
+      placeholder: "https://...",
+      success: "Nous avons récupéré les coordonnées avec succès !",
     },
     buttonText: "Soumettre un contact",
     description: "Vous connaissez quelqu'un derrière un programme ? Soumettez ses coordonnées et nous les ajouterons.",
