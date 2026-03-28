@@ -13,9 +13,9 @@ ossperks search <query> [options]
 
 ## 인수
 
-| 인수      | 설명                                                                |
-| --------- | ------------------------------------------------------------------- |
-| `<query>` | 검색어(이름, 슬러그, 설명, 제공자, 카테고리, 태그 또는 혜택과 일치) |
+| 인수  | 설명                                                                       |
+| --------- | --------------------------------------------------------------------------------- |
+| `<query>` | 검색어 (이름, ID, 설명, 제공자, 카테고리, 태그 또는 혜택과 일치) |
 
 ## 옵션
 
@@ -47,12 +47,13 @@ ossperks search vercel --json
 "hosting" 검색 결과 — 4개 프로그램
 ────────────────────────────────────────────
 
-  vercel                 Vercel for Open Source
-  netlify                Netlify OSS Plan
-  digitalocean           DigitalOcean Open Source
-  cloudflare             Cloudflare for Open Source
+  ID            NAME                            URL
+  vercel        Vercel for Open Source          https://ossperks.com/programs/vercel
+  netlify       Netlify Open Source Plan        https://ossperks.com/programs/netlify
+  digitalocean  DigitalOcean Open Source        https://ossperks.com/programs/digitalocean
+  cloudflare    Cloudflare for Open Source      https://ossperks.com/programs/cloudflare
 ```
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-결과의 전체 세부 정보를 보려면 <DynamicLink href="/[lang]/cli/show">`ossperks show <slug>`</DynamicLink>를 사용하세요.
+**ID** 열을 <DynamicLink href="/[lang]/cli/show">`ossperks show <id>`</DynamicLink>와 함께 사용하여 각 결과의 전체 세부 정보를 확인하세요.

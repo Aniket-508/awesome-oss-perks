@@ -6,14 +6,16 @@ description: 특정 OSS 혜택 프로그램의 전체 세부 정보를 표시합
 ## 사용법
 
 ```
-ossperks show <slug> [options]
+ossperks show <id> [options]
 ```
+
+**별칭:** `ossperks info`
 
 ## 인수
 
-| 인수     | 설명                                           |
-| -------- | ---------------------------------------------- |
-| `<slug>` | 프로그램 슬러그 (예: `vercel`, `github-pages`) |
+| 인수 | 설명                                   |
+| -------- | --------------------------------------------- |
+| `<id>`   | 프로그램 ID (예: `vercel`, `github-pages`) |
 
 ## 옵션
 
@@ -40,20 +42,20 @@ ossperks show vercel --json
 ```
 ─────────────────────────────────────
   Vercel for Open Source
-  by Vercel  ·  hosting
+  by Vercel  ·  호스팅
 ─────────────────────────────────────
 
 Vercel은 Vercel 플랫폼에서 호스팅되는
-오픈소스 프로젝트에 플랫폼 크레딧 및 추가 서비스를 제공합니다.
+오픈소스 프로젝트에 플랫폼 크레딧과 추가 서비스를 제공합니다.
 
 혜택
-  • $3,600 플랫폼 크레딧 — 12개월에 걸쳐
-    분배되는 $3,600의 Vercel 플랫폼 크레딧.
-  • OSS 스타터 팩 — 타사 서비스의 크레딧.
+  • $3,600 플랫폼 크레딧 — 12개월에 걸쳐 분배되는
+    $3,600 상당의 Vercel 플랫폼 크레딧.
+  • OSS 스타터 팩 — 제3자 서비스의 크레딧.
 
 자격 요건
-  • 적극적으로 개발 및 유지 관리되는 오픈소스 프로젝트여야 합니다.
-  • Vercel에서 호스팅되거나 호스팅할 예정이어야 합니다.
+  • 활발하게 개발 및 유지 관리되는 오픈소스 프로젝트여야 합니다.
+  • Vercel에서 호스팅되거나 호스팅 예정이어야 합니다.
 
 신청 방법
   • 신청 기간에 Vercel OSS 프로그램 페이지를 통해 신청하세요.
@@ -63,4 +65,4 @@ Vercel은 Vercel 플랫폼에서 호스팅되는
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-먼저 <DynamicLink href="/[lang]/cli/list">`ossperks list`</DynamicLink>를 실행하여 슬러그를 찾으세요.
+<DynamicLink href="/[lang]/cli/list">`ossperks list`</DynamicLink> 또는 <DynamicLink href="/[lang]/cli/search">`ossperks search`</DynamicLink>의 **ID** 열에서 프로그램 ID를 찾으세요.

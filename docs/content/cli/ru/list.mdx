@@ -12,11 +12,11 @@ ossperks list [options]
 
 ## Опции
 
-| Флаг                    | Описание                                       |
-| ----------------------- | ---------------------------------------------- |
-| `-c, --category <slug>` | Фильтр по slug категории (например, `hosting`) |
-| `--json`                | Вывод в формате JSON                           |
-| `-h, --help`            | Показать справку                               |
+| Флаг                    | Описание                                 |
+| ----------------------- | ---------------------------------------- |
+| `-c, --category <id>` | Фильтр по идентификатору категории (например, `hosting`) |
+| `--json`                | Вывод в формате JSON                     |
+| `-h, --help`            | Показать справку                         |
 
 ## Примеры
 
@@ -38,12 +38,16 @@ ossperks list --json
 ## Результат
 
 ```
-NAME                          PROVIDER    CATEGORY   PERKS
-Vercel for Open Source        Vercel      hosting    $3,600 credits · OSS Starter Pack
-GitHub Sponsors               GitHub      devtools   Matching fund · Sponsorship
-...
+48 программ
+────────────
+
+  ID                NAME                                          URL
+  1password         1Password for Open Source Projects            https://ossperks.com/programs/1password
+  algolia           Algolia for Open Source                         https://ossperks.com/programs/algolia
+  anthropic-claude  Anthropic Claude for Open Source                https://ossperks.com/programs/anthropic-claude
+  ...
 ```
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-Каждая строка показывает название программы, поставщика, категорию и первые два названия льгот. Используйте <DynamicLink href="/[lang]/cli/show">`ossperks show <slug>`</DynamicLink>, чтобы увидеть полную информацию.
+Колонка **ID** содержит идентификатор, который вы передаёте команде <DynamicLink href="/[lang]/cli/show">`ossperks show <id>`</DynamicLink>. **URL** ссылается на страницу программы на ossperks.com.

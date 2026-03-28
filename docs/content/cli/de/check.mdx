@@ -16,13 +16,13 @@ Führen Sie dies innerhalb eines beliebigen Git-Repositorys aus. Für öffentlic
 
 ## Optionen
 
-| Flag                    | Beschreibung                                                                   |
-| ----------------------- | ------------------------------------------------------------------------------ |
-| `--repo <owner/repo>`   | Repository explizit angeben (z. B. `vercel/next.js`)                           |
+| Flag                    | Beschreibung                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------- |
+| `--repo <owner/repo>`   | Repository explizit angeben (z. B. `vercel/next.js`)                            |
 | `--provider <provider>` | Git-Anbieter: `github`, `gitlab`, `codeberg` oder `gitea` (Standard: `github`) |
-| `-p, --program <slug>`  | Nur gegen ein bestimmtes Programm prüfen (z. B. `--program vercel`)            |
-| `--json`                | Rohes JSON ausgeben                                                            |
-| `-h, --help`            | Hilfe anzeigen                                                                 |
+| `-p, --program <id>`    | Nur gegen ein bestimmtes Programm prüfen (z. B. `--program vercel`)             |
+| `--json`                | Rohes JSON ausgeben                                                             |
+| `-h, --help`            | Hilfe anzeigen                                                                  |
 
 ## Funktionsweise
 
@@ -105,18 +105,18 @@ ossperks check --json
 ```
 ✅ my-project — MIT · 412 Sterne · letzter Push vor 3 Tagen
 
-Zulässigkeit über 48 Programme — 12 zulässig, 8 benötigen Überprüfung, 28 nicht zulässig
+Förderfähigkeit für 48 Programme — 12 förderfähig, 8 benötigen Überprüfung, 28 nicht förderfähig
 
-  ✅  vercel                 Wahrscheinlich zulässig — Open-Source-Projekt
-  ✅  netlify                Wahrscheinlich zulässig — Open-Source-Projekt
-  ⚠️  github-copilot         Überprüfung erforderlich — manuelle Überprüfung nötig
-  ❌  aws-activate           Wahrscheinlich nicht zulässig — erfordert 1000 Sterne
+  ✅  Vercel for Open Source                         Wahrscheinlich förderfähig — Open-Source-Projekt
+  ✅  Netlify Open Source Plan                      Wahrscheinlich förderfähig — Open-Source-Projekt
+  ⚠️  GitHub Copilot Pro for Open Source Maintainers Überprüfung erforderlich — manuelle Prüfung notwendig
+  ❌  DigitalOcean Open Source Credits             Wahrscheinlich nicht förderfähig — nicht genügend GitHub-Sterne
 ```
 
 Status:
 
-- **✅ Wahrscheinlich zulässig** — alle analysierten Zulassungsregeln erfüllt
-- **⚠️ Überprüfung erforderlich** — mindestens eine Regel konnte nicht automatisch ausgewertet werden
-- **❌ Wahrscheinlich nicht zulässig** — eine oder mehrere Regeln sind eindeutig nicht erfüllt
+- **✅ Wahrscheinlich förderfähig** — alle geprüften Förderkriterien erfüllt
+- **⚠️ Überprüfung erforderlich** — mindestens ein Kriterium konnte nicht automatisch geprüft werden
+- **❌ Wahrscheinlich nicht förderfähig** — ein oder mehrere Kriterien eindeutig nicht erfüllt
 
-Überprüfen Sie immer die offizielle Seite des Programms, bevor Sie sich bewerben.
+Bitte immer die offizielle Programmseite prüfen, bevor Sie sich bewerben.

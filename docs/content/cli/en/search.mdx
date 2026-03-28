@@ -15,7 +15,7 @@ ossperks search <query> [options]
 
 | Argument  | Description                                                                       |
 | --------- | --------------------------------------------------------------------------------- |
-| `<query>` | Search term (matches name, slug, description, provider, category, tags, or perks) |
+| `<query>` | Search term (matches name, id, description, provider, category, tags, or perks) |
 
 ## Options
 
@@ -43,12 +43,13 @@ ossperks search vercel --json
 Search results for "hosting" — 4 programs
 ────────────────────────────────────────────
 
-  vercel                 Vercel for Open Source
-  netlify                Netlify OSS Plan
-  digitalocean           DigitalOcean Open Source
-  cloudflare             Cloudflare for Open Source
+  ID            NAME                            URL
+  vercel        Vercel for Open Source          https://ossperks.com/programs/vercel
+  netlify       Netlify Open Source Plan        https://ossperks.com/programs/netlify
+  digitalocean  DigitalOcean Open Source        https://ossperks.com/programs/digitalocean
+  cloudflare    Cloudflare for Open Source      https://ossperks.com/programs/cloudflare
 ```
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-Use <DynamicLink href="/[lang]/cli/show">`ossperks show <slug>`</DynamicLink> to view full details for any result.
+Use the **ID** column with <DynamicLink href="/[lang]/cli/show">`ossperks show <id>`</DynamicLink> to view full details for any result.

@@ -15,7 +15,7 @@ ossperks list [options]
 
 | Flag                    | Description                              |
 | ----------------------- | ---------------------------------------- |
-| `-c, --category <slug>` | Filter by category slug (e.g. `hosting`) |
+| `-c, --category <id>` | Filter by category id (e.g. `hosting`) |
 | `--json`                | Output raw JSON                          |
 | `-h, --help`            | Show help                                |
 
@@ -35,15 +35,16 @@ ossperks list --json
 ## Output
 
 ```
-OSS Perks — 48 programs
-────────────────────────────────
+48 programs
+────────────
 
-  1password              1Password for Open Source Projects
-  algolia                Algolia for Open Source
-  anthropic-claude       Anthropic Claude for Open Source
+  ID                NAME                                          URL
+  1password         1Password for Open Source Projects            https://ossperks.com/programs/1password
+  algolia           Algolia for Open Source                         https://ossperks.com/programs/algolia
+  anthropic-claude  Anthropic Claude for Open Source                https://ossperks.com/programs/anthropic-claude
   ...
 ```
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-Each row shows the program slug and full name. Use <DynamicLink href="/[lang]/cli/show">`ossperks show <slug>`</DynamicLink> to see full details.
+The **ID** column is what you pass to <DynamicLink href="/[lang]/cli/show">`ossperks show <id>`</DynamicLink>. **URL** links to the program page on ossperks.com.

@@ -13,11 +13,11 @@ ossperks list [options]
 
 ## オプション
 
-| フラグ                  | 説明                                       |
-| ----------------------- | ------------------------------------------ |
-| `-c, --category <slug>` | カテゴリスラグでフィルター (例: `hosting`) |
-| `--json`                | 生のJSONを出力                             |
-| `-h, --help`            | ヘルプを表示                               |
+| フラグ                    | 説明                              |
+| ----------------------- | ---------------------------------------- |
+| `-c, --category <id>` | カテゴリIDでフィルタリング (例: `hosting`) |
+| `--json`                | 生のJSONを出力                          |
+| `-h, --help`            | ヘルプを表示                                |
 
 ## 使用例
 
@@ -39,15 +39,16 @@ ossperks list --json
 ## 出力
 
 ```
-OSS Perks — 48プログラム
-────────────────────────────────
+48 programs
+────────────
 
-  1password              1Password for Open Source Projects
-  algolia                Algolia for Open Source
-  anthropic-claude       Anthropic Claude for Open Source
+  ID                NAME                                          URL
+  1password         1Password for Open Source Projects            https://ossperks.com/programs/1password
+  algolia           Algolia for Open Source                         https://ossperks.com/programs/algolia
+  anthropic-claude  Anthropic Claude for Open Source                https://ossperks.com/programs/anthropic-claude
   ...
 ```
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-各行にはプログラムのスラッグと正式名称が表示されます。詳細を確認するには、<DynamicLink href="/[lang]/cli/show">`ossperks show <slug>`</DynamicLink>を使用してください。
+**ID**列は<DynamicLink href="/[lang]/cli/show">`ossperks show <id>`</DynamicLink>に渡す値です。**URL**はossperks.comのプログラムページへのリンクです。

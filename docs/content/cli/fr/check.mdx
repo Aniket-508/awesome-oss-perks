@@ -16,13 +16,13 @@ Exécutez ceci depuis n'importe quel dépôt Git. Aucun argument ni jeton requis
 
 ## Options
 
-| Drapeau                 | Description                                                                     |
-| ----------------------- | ------------------------------------------------------------------------------- |
-| `--repo <owner/repo>`   | Spécifier explicitement un dépôt (ex. `vercel/next.js`)                         |
-| `--provider <provider>` | Fournisseur Git : `github`, `gitlab`, `codeberg` ou `gitea` (défaut : `github`) |
-| `-p, --program <slug>`  | Vérifier uniquement un programme spécifique (ex. `--program vercel`)            |
-| `--json`                | Sortie JSON brute                                                               |
-| `-h, --help`            | Afficher l'aide                                                                 |
+| Drapeau                 | Description                                                                       |
+| ----------------------- | --------------------------------------------------------------------------------- |
+| `--repo <owner/repo>`   | Spécifier explicitement un dépôt (ex. `vercel/next.js`)                          |
+| `--provider <provider>` | Fournisseur Git : `github`, `gitlab`, `codeberg` ou `gitea` (par défaut : `github`) |
+| `-p, --program <id>`    | Vérifier uniquement un programme spécifique (ex. `--program vercel`)             |
+| `--json`                | Afficher le JSON brut                                                             |
+| `-h, --help`            | Afficher l'aide                                                                   |
 
 ## Fonctionnement
 
@@ -103,20 +103,20 @@ ossperks check --json
 ## Résultat
 
 ```
-✅ my-project — MIT · 412 étoiles · dernier push il y a 3 jours
+✅ my-project — MIT · 412 étoiles · dernière mise à jour il y a 3 jours
 
-Éligibilité pour 48 programmes — 12 éligibles, 8 à vérifier, 28 non éligibles
+Éligibilité pour 48 programmes — 12 éligibles, 8 nécessitent un examen, 28 non éligibles
 
-  ✅  vercel                 Probablement éligible — projet open source
-  ✅  netlify                Probablement éligible — projet open source
-  ⚠️  github-copilot         À vérifier — examen manuel requis
-  ❌  aws-activate           Probablement non éligible — nécessite 1000 étoiles
+  ✅  Vercel for Open Source                         Probablement éligible — projet open source
+  ✅  Netlify Open Source Plan                      Probablement éligible — projet open source
+  ⚠️  GitHub Copilot Pro for Open Source Maintainers Nécessite un examen — révision manuelle requise
+  ❌  DigitalOcean Open Source Credits             Probablement non éligible — pas assez d'étoiles GitHub
 ```
 
 Statuts :
 
 - **✅ Probablement éligible** — toutes les règles d'éligibilité analysées correspondent
-- **⚠️ À vérifier** — au moins une règle n'a pas pu être évaluée automatiquement
+- **⚠️ Nécessite un examen** — au moins une règle n'a pas pu être évaluée automatiquement
 - **❌ Probablement non éligible** — une ou plusieurs règles ne correspondent clairement pas
 
 Vérifiez toujours sur la page officielle du programme avant de postuler.

@@ -6,16 +6,16 @@ description: Vollständige Details für ein bestimmtes OSS-Vorteilsprogramm anze
 ## Verwendung
 
 ```
-ossperks show <slug> [options]
+ossperks show <id> [options]
 ```
 
 **Alias:** `ossperks info`
 
 ## Argumente
 
-| Argument | Beschreibung                                       |
-| -------- | -------------------------------------------------- |
-| `<slug>` | Der Programm-Slug (z. B. `vercel`, `github-pages`) |
+| Argument | Beschreibung                                   |
+| -------- | ---------------------------------------------- |
+| `<id>`   | Die Programm-ID (z. B. `vercel`, `github-pages`) |
 
 ## Optionen
 
@@ -42,27 +42,27 @@ ossperks show vercel --json
 ```
 ─────────────────────────────────────
   Vercel for Open Source
-  von Vercel  ·  Hosting
+  by Vercel  ·  hosting
 ─────────────────────────────────────
 
-Vercel stellt Plattform-Guthaben und zusätzliche Dienste für
+Vercel stellt Plattform-Credits und zusätzliche Dienste für
 Open-Source-Projekte bereit, die auf der Vercel-Plattform gehostet werden.
 
 VORTEILE
-  • 3.600 $ Plattform-Guthaben — 3.600 $ an Vercel-Plattform-Guthaben,
+  • 3.600 $ Plattform-Credits — 3.600 $ an Vercel-Plattform-Credits,
     verteilt über 12 Monate.
-  • OSS Starter Pack — Guthaben von Drittanbieter-Diensten.
+  • OSS Starter Pack — Credits von Drittanbieterdiensten.
 
 VORAUSSETZUNGEN
-  • Muss ein Open-Source-Projekt sein, das aktiv entwickelt und gepflegt wird.
-  • Muss auf Vercel gehostet sein (oder zur Nutzung von Vercel vorgesehen sein).
+  • Muss ein aktiv entwickeltes und gepflegtes Open-Source-Projekt sein.
+  • Muss auf Vercel gehostet sein (oder beabsichtigen, dort zu hosten).
 
-WIE BEWERBEN
-  • Bewerben Sie sich über die Vercel OSS-Programmseite, sobald Bewerbungen möglich sind.
+WIE MAN SICH BEWIRBT
+  • Bewerben Sie sich über die Vercel OSS-Programmseite, wenn Bewerbungen geöffnet sind.
 
   → Jetzt bewerben: https://vercel.com/open-source-program
 ```
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-Finden Sie einen Slug, indem Sie zuerst <DynamicLink href="/[lang]/cli/list">`ossperks list`</DynamicLink> ausführen.
+Finden Sie eine Programm-ID in der Spalte **ID** von <DynamicLink href="/[lang]/cli/list">`ossperks list`</DynamicLink> oder <DynamicLink href="/[lang]/cli/search">`ossperks search`</DynamicLink>.

@@ -13,11 +13,11 @@ ossperks list [options]
 
 ## 选项
 
-| 标志                    | 描述                               |
-| ----------------------- | ---------------------------------- |
-| `-c, --category <slug>` | 按类别标识符筛选（例如 `hosting`） |
-| `--json`                | 输出原始 JSON                      |
-| `-h, --help`            | 显示帮助                           |
+| 标志                    | 描述                              |
+| ----------------------- | --------------------------------- |
+| `-c, --category <id>` | 按类别 ID 筛选（例如 `hosting`） |
+| `--json`                | 输出原始 JSON                     |
+| `-h, --help`            | 显示帮助                          |
 
 ## 示例
 
@@ -39,15 +39,16 @@ ossperks list --json
 ## 输出
 
 ```
-OSS Perks — 48 个项目
-────────────────────────────────
+48 个项目
+────────────
 
-  1password              1Password for Open Source Projects
-  algolia                Algolia for Open Source
-  anthropic-claude       Anthropic Claude for Open Source
+  ID                NAME                                          URL
+  1password         1Password for Open Source Projects            https://ossperks.com/programs/1password
+  algolia           Algolia for Open Source                         https://ossperks.com/programs/algolia
+  anthropic-claude  Anthropic Claude for Open Source                https://ossperks.com/programs/anthropic-claude
   ...
 ```
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-每行显示项目标识符和完整名称。使用 <DynamicLink href="/[lang]/cli/show">`ossperks show <slug>`</DynamicLink> 查看完整详情。
+**ID** 列是您传递给 <DynamicLink href="/[lang]/cli/show">`ossperks show <id>`</DynamicLink> 的内容。**URL** 链接到 ossperks.com 上的项目页面。

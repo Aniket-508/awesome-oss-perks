@@ -6,16 +6,16 @@ description: Afficher les détails complets d'un programme de bénéfices OSS sp
 ## Utilisation
 
 ```
-ossperks show <slug> [options]
+ossperks show <id> [options]
 ```
 
 **Alias :** `ossperks info`
 
 ## Arguments
 
-| Argument | Description                                         |
-| -------- | --------------------------------------------------- |
-| `<slug>` | Le slug du programme (ex. `vercel`, `github-pages`) |
+| Argument | Description                                        |
+| -------- | -------------------------------------------------- |
+| `<id>`   | L'identifiant du programme (ex. `vercel`, `github-pages`) |
 
 ## Options
 
@@ -41,16 +41,16 @@ ossperks show vercel --json
 
 ```
 ─────────────────────────────────────
-  Vercel pour l'Open Source
-  par Vercel  ·  hébergement
+  Vercel for Open Source
+  by Vercel  ·  hosting
 ─────────────────────────────────────
 
 Vercel fournit des crédits de plateforme et des services supplémentaires
 pour les projets open source hébergés sur la plateforme Vercel.
 
 AVANTAGES
-  • 3 600 $ de crédits de plateforme — 3 600 $ de crédits pour la plateforme
-    Vercel répartis sur 12 mois.
+  • 3 600 $ de crédits de plateforme — 3 600 $ en crédits de plateforme Vercel
+    répartis sur 12 mois.
   • Pack de démarrage OSS — Crédits de services tiers.
 
 ÉLIGIBILITÉ
@@ -58,11 +58,11 @@ AVANTAGES
   • Doit être hébergé sur (ou destiné à être hébergé sur) Vercel.
 
 COMMENT POSTULER
-  • Postulez via la page du programme OSS de Vercel lorsque les candidatures sont ouvertes.
+  • Postulez via la page du programme Vercel OSS lorsque les candidatures sont ouvertes.
 
   → Postuler maintenant : https://vercel.com/open-source-program
 ```
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-Trouvez un slug en exécutant d'abord <DynamicLink href="/[lang]/cli/list">`ossperks list`</DynamicLink>.
+Trouvez un identifiant de programme dans la colonne **ID** depuis <DynamicLink href="/[lang]/cli/list">`ossperks list`</DynamicLink> ou <DynamicLink href="/[lang]/cli/search">`ossperks search`</DynamicLink>.

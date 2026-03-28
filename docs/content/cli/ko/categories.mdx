@@ -1,6 +1,6 @@
 ---
 title: ossperks categories
-description: 사용 가능한 모든 프로그램 카테고리와 슬러그를 나열합니다.
+description: 사용 가능한 모든 프로그램 카테고리와 해당 ID를 나열합니다.
 ---
 
 ## 사용법
@@ -34,20 +34,17 @@ ossperks categories --json
 ## 출력
 
 ```
-CATEGORY SLUG      LABEL
-hosting            Hosting & Deployment
-devtools           Developer Tools
-security           Security
-monitoring         Monitoring & Observability
-communication      Communication
-ci-cd              CI/CD
-testing            Testing
-ai                 AI & Machine Learning
-analytics          Analytics
-infrastructure     Infrastructure
-credentials        Credentials & Secrets
+13 categories
+─────────────
+
+  ID               NAME                    COUNT
+  hosting          Hosting & Deployment       12
+  devtools         Developer Tools             8
+  ...
 ```
+
+**COUNT** 열은 해당 카테고리에 속한 프로그램의 수입니다 (예시 값).
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-<DynamicLink href="/[lang]/cli/list">`ossperks list --category <slug>`</DynamicLink>와 함께 카테고리 슬러그를 사용하여 프로그램을 필터링하세요.
+카테고리 **id** (첫 번째 열)를 <DynamicLink href="/[lang]/cli/list">`ossperks list --category <id>`</DynamicLink>와 함께 사용하여 프로그램을 필터링하세요.

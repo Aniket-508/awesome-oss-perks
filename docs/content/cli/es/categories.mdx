@@ -1,6 +1,6 @@
 ---
 title: ossperks categories
-description: Lista todas las categorías de programas disponibles y sus slugs.
+description: Lista todas las categorías de programas disponibles y sus ids.
 ---
 
 ## Uso
@@ -34,20 +34,17 @@ ossperks categories --json
 ## Salida
 
 ```
-CATEGORY SLUG      LABEL
-hosting            Hosting & Deployment
-devtools           Developer Tools
-security           Security
-monitoring         Monitoring & Observability
-communication      Communication
-ci-cd              CI/CD
-testing            Testing
-ai                 AI & Machine Learning
-analytics          Analytics
-infrastructure     Infrastructure
-credentials        Credentials & Secrets
+13 categorías
+─────────────
+
+  ID               NOMBRE                  CANTIDAD
+  hosting          Alojamiento e Implementación  12
+  devtools         Herramientas de Desarrollo     8
+  ...
 ```
+
+La columna **CANTIDAD** es el número de programas en esa categoría (valores de ejemplo).
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-Usa los slugs de categoría con <DynamicLink href="/[lang]/cli/list">`ossperks list --category <slug>`</DynamicLink> para filtrar programas.
+Usa el **id** de la categoría (primera columna) con <DynamicLink href="/[lang]/cli/list">`ossperks list --category <id>`</DynamicLink> para filtrar programas.

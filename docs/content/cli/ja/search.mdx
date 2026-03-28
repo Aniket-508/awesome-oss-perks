@@ -11,9 +11,9 @@ ossperks search <query> [options]
 
 ## 引数
 
-| 引数      | 説明                                                 |
-| --------- | ---------------------------------------------------- |
-| `<query>` | 検索キーワード(名前、説明、またはプロバイダーに一致) |
+| 引数  | 説明                                                                       |
+| --------- | --------------------------------------------------------------------------------- |
+| `<query>` | 検索語句（名前、ID、説明、プロバイダー、カテゴリ、タグ、または特典に一致） |
 
 ## オプション
 
@@ -43,15 +43,16 @@ ossperks search vercel --json
 ## 出力結果
 
 ```
-Results for "hosting" (4 programs)
+「hosting」の検索結果 — 4件のプログラム
+────────────────────────────────────────────
 
-NAME                          PROVIDER    CATEGORY
-Vercel for Open Source        Vercel      hosting
-Netlify OSS Plan              Netlify     hosting
-Railway OSS Program           Railway     hosting
-Render Open Source            Render      hosting
+  ID            NAME                            URL
+  vercel        Vercel for Open Source          https://ossperks.com/programs/vercel
+  netlify       Netlify Open Source Plan        https://ossperks.com/programs/netlify
+  digitalocean  DigitalOcean Open Source        https://ossperks.com/programs/digitalocean
+  cloudflare    Cloudflare for Open Source      https://ossperks.com/programs/cloudflare
 ```
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-<DynamicLink href="/[lang]/cli/show">`ossperks show <slug>`</DynamicLink>を使用して、任意の結果の詳細を表示できます。
+<DynamicLink href="/[lang]/cli/show">`ossperks show <id>`</DynamicLink>で**ID**列を使用して、任意の結果の詳細を表示できます。

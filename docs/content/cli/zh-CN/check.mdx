@@ -13,11 +13,13 @@ ossperks check [选项]
 
 ## 选项
 
-| 标志                   | 描述                                      |
-| ---------------------- | ----------------------------------------- |
-| `-p, --program <slug>` | 仅检查特定项目（例如 `--program vercel`） |
-| `--json`               | 输出原始 JSON                             |
-| `-h, --help`           | 显示帮助                                  |
+| 标志                    | 描述                                                                  |
+| ----------------------- | ---------------------------------------------------------------------------- |
+| `--repo <owner/repo>`   | 明确指定仓库（例如 `vercel/next.js`）                      |
+| `--provider <provider>` | Git 提供商：`github`、`gitlab`、`codeberg` 或 `gitea`（默认：`github`） |
+| `-p, --program <id>`    | 仅检查特定项目（例如 `--program vercel`）              |
+| `--json`                | 输出原始 JSON                                                              |
+| `-h, --help`            | 显示帮助                                                                    |
 
 ## 工作原理
 
@@ -115,16 +117,14 @@ ossperks check --json
 ## 输出
 
 ```
+✅ my-project — MIT · 412 stars · 3 天前最后推送
 
-✅ my-project — MIT · 412 stars · last push 3 days ago
+48 个项目的资格审查 — 12 个符合条件，8 个需要审核，28 个不符合条件
 
-Eligibility across 48 programs — 12 eligible, 8 need review, 28 ineligible
-
-✅ vercel Likely eligible — open source project
-✅ netlify Likely eligible — open source project
-⚠️ github-copilot Needs review — manual review required
-❌ aws-activate Likely ineligible — requires 1000 stars
-
+  ✅  Vercel for Open Source                         可能符合条件 — 开源项目
+  ✅  Netlify Open Source Plan                      可能符合条件 — 开源项目
+  ⚠️  GitHub Copilot Pro for Open Source Maintainers 需要审核 — 需要人工审核
+  ❌  DigitalOcean Open Source Credits             可能不符合条件 — GitHub stars 数量不足
 ```
 
 状态说明：
@@ -133,5 +133,4 @@ Eligibility across 48 programs — 12 eligible, 8 need review, 28 ineligible
 - **⚠️ 需要审核** — 至少有一条规则无法自动评估
 - **❌ 可能不符合条件** — 一条或多条规则明显不匹配
 
-在申请前请始终根据项目的官方页面进行验证。
-```
+申请前请务必核对项目的官方页面。

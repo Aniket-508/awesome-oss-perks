@@ -12,9 +12,9 @@ ossperks search <Suchbegriff> [Optionen]
 
 ## Argumente
 
-| Argument        | Beschreibung                                                      |
-| --------------- | ----------------------------------------------------------------- |
-| `<Suchbegriff>` | Suchbegriff (stimmt mit Name, Beschreibung oder Anbieter überein) |
+| Argument  | Beschreibung                                                                       |
+| --------- | ---------------------------------------------------------------------------------- |
+| `<query>` | Suchbegriff (stimmt überein mit Name, ID, Beschreibung, Anbieter, Kategorie, Tags oder Vorteilen) |
 
 ## Optionen
 
@@ -44,15 +44,16 @@ ossperks search vercel --json
 ## Ausgabe
 
 ```
-Ergebnisse für "hosting" (4 Programme)
+Suchergebnisse für "hosting" — 4 Programme
+────────────────────────────────────────────
 
-NAME                          PROVIDER    CATEGORY
-Vercel for Open Source        Vercel      hosting
-Netlify OSS Plan              Netlify     hosting
-Railway OSS Program           Railway     hosting
-Render Open Source            Render      hosting
+  ID            NAME                            URL
+  vercel        Vercel for Open Source          https://ossperks.com/programs/vercel
+  netlify       Netlify Open Source Plan        https://ossperks.com/programs/netlify
+  digitalocean  DigitalOcean Open Source        https://ossperks.com/programs/digitalocean
+  cloudflare    Cloudflare for Open Source      https://ossperks.com/programs/cloudflare
 ```
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-Verwenden Sie <DynamicLink href="/[lang]/cli/show">`ossperks show <slug>`</DynamicLink>, um vollständige Details zu jedem Ergebnis anzuzeigen.
+Verwenden Sie die Spalte **ID** mit <DynamicLink href="/[lang]/cli/show">`ossperks show <id>`</DynamicLink>, um vollständige Details zu einem beliebigen Ergebnis anzuzeigen.

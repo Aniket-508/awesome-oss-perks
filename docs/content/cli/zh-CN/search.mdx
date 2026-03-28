@@ -11,9 +11,9 @@ ossperks search <query> [options]
 
 ## 参数说明
 
-| 参数      | 说明                               |
-| --------- | ---------------------------------- |
-| `<query>` | 搜索词（可匹配名称、描述或提供方） |
+| 参数  | 描述                                                                       |
+| --------- | --------------------------------------------------------------------------------- |
+| `<query>` | 搜索词（匹配名称、ID、描述、提供商、类别、标签或福利） |
 
 ## 选项
 
@@ -43,15 +43,16 @@ ossperks search vercel --json
 ## 输出结果
 
 ```
-Results for "hosting" (4 programs)
+"hosting" 的搜索结果 — 4 个项目
+────────────────────────────────────────────
 
-NAME                          PROVIDER    CATEGORY
-Vercel for Open Source        Vercel      hosting
-Netlify OSS Plan              Netlify     hosting
-Railway OSS Program           Railway     hosting
-Render Open Source            Render      hosting
+  ID            NAME                            URL
+  vercel        Vercel for Open Source          https://ossperks.com/programs/vercel
+  netlify       Netlify Open Source Plan        https://ossperks.com/programs/netlify
+  digitalocean  DigitalOcean Open Source        https://ossperks.com/programs/digitalocean
+  cloudflare    Cloudflare for Open Source      https://ossperks.com/programs/cloudflare
 ```
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-使用 <DynamicLink href="/[lang]/cli/show">`ossperks show <slug>`</DynamicLink> 查看任何结果的完整详情。
+使用 **ID** 列配合 <DynamicLink href="/[lang]/cli/show">`ossperks show <id>`</DynamicLink> 查看任何结果的完整详情。

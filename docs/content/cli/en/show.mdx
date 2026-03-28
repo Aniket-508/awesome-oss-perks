@@ -6,16 +6,16 @@ description: Display full details for a specific OSS perk program.
 ## Usage
 
 ```
-ossperks show <slug> [options]
+ossperks show <id> [options]
 ```
 
 **Alias:** `ossperks info`
 
 ## Arguments
 
-| Argument | Description                                      |
-| -------- | ------------------------------------------------ |
-| `<slug>` | The program slug (e.g. `vercel`, `github-pages`) |
+| Argument | Description                                   |
+| -------- | --------------------------------------------- |
+| `<id>`   | The program id (e.g. `vercel`, `github-pages`) |
 
 ## Options
 
@@ -62,4 +62,4 @@ HOW TO APPLY
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-Find a slug by running <DynamicLink href="/[lang]/cli/list">`ossperks list`</DynamicLink> first.
+Find a program id in the **ID** column from <DynamicLink href="/[lang]/cli/list">`ossperks list`</DynamicLink> or <DynamicLink href="/[lang]/cli/search">`ossperks search`</DynamicLink>.
