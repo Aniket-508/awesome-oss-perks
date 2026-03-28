@@ -1,6 +1,7 @@
 import type { EligibilityReason, EligibilityStatus } from "@ossperks/core";
 
 export enum CheckApiErrorCode {
+  InvalidProgram = "invalid-program",
   InvalidProvider = "invalid-provider",
   MissingParams = "missing-params",
   NotFound = "not-found",

@@ -60,6 +60,7 @@ const fetchCheck = async (url: string): Promise<CheckResponse> => {
 interface UseCheckDataProps {
   owner: string | null;
   path?: string | null;
+  program?: string | null;
   provider: string | null;
   repo: string | null;
   translations: CheckTranslations;
@@ -68,6 +69,7 @@ interface UseCheckDataProps {
 export const useCheckData = ({
   owner,
   path,
+  program,
   provider,
   repo,
   translations,
@@ -76,8 +78,15 @@ export const useCheckData = ({
     if (!provider || !owner || !repo) {
       return null;
     }
-    return `/api/check?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo)}&provider=${encodeURIComponent(provider)}${path ? `&path=${encodeURIComponent(path)}` : ""}`;
-  }, [owner, path, provider, repo]);
+    let url = `/api/check?owner=${encodeURIComponent(owner)}&repo=${encodeURIComponent(repo)}&provider=${encodeURIComponent(provider)}`;
+    if (path) {
+      url += `&path=${encodeURIComponent(path)}`;
+    }
+    if (program) {
+      url += `&program=${encodeURIComponent(program)}`;
+    }
+    return url;
+  }, [owner, path, program, provider, repo]);
 
   const {
     data,

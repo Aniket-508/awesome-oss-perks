@@ -99,6 +99,7 @@ const ProgramCheckInner = ({
   const { data, error, loading } = useCheckData({
     owner,
     path,
+    program: programSlug,
     provider,
     repo,
     translations,
@@ -107,10 +108,7 @@ const ProgramCheckInner = ({
   const heading = translations.checkProgram.replace("{program}", programName);
 
   const translatedResult = useMemo((): TranslatedCheckResult | null => {
-    if (!data) {
-      return null;
-    }
-    const match = data.results.find((r) => r.slug === programSlug);
+    const match = data?.results[0];
     if (!match) {
       return null;
     }
