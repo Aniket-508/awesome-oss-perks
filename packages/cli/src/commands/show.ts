@@ -2,21 +2,21 @@ import { getProgramBySlug } from "@ossperks/core";
 import { Command } from "commander";
 
 import { programDetail, error } from "../utils/format.js";
-import { closestSlug } from "../utils/slug.js";
+import { closestId } from "../utils/id.js";
 import { track } from "../utils/telemetry.js";
 
 export const showCommand = new Command("show")
   .alias("info")
   .description("Show details for a specific OSS perk program")
-  .argument("<slug>", "program slug (e.g. vercel, sentry, github-copilot)")
+  .argument("<id>", "program id (e.g. vercel, sentry, github-copilot)")
   .option("--json", "output as JSON")
-  .action((slug: string, opts: { json?: boolean }) => {
-    const program = getProgramBySlug(slug);
+  .action((id: string, opts: { json?: boolean }) => {
+    const program = getProgramBySlug(id);
 
     if (!program) {
-      const suggestion = closestSlug(slug);
+      const suggestion = closestId(id);
       const hint = suggestion === null ? "" : ` Did you mean "${suggestion}"?`;
-      error(`Unknown program slug "${slug}".${hint}`);
+      error(`Unknown program id "${id}".${hint}`);
       process.exit(1);
     }
 

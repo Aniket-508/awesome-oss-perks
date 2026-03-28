@@ -2,7 +2,13 @@ import { programs } from "@ossperks/core";
 import { Command } from "commander";
 import pc from "picocolors";
 
-import { header, programRow, maxSlugLength } from "../utils/format.js";
+import {
+  header,
+  maxIdLength,
+  maxNameLength,
+  programRow,
+  programTableHeader,
+} from "../utils/format.js";
 import { track } from "../utils/telemetry.js";
 
 export const searchCommand = new Command("search")
@@ -47,9 +53,11 @@ export const searchCommand = new Command("search")
     if (results.length === 0) {
       console.log(`  ${pc.dim("No programs matched your query.")}`);
     } else {
-      const pad = maxSlugLength(results);
+      const padId = maxIdLength(results);
+      const padName = maxNameLength(results);
+      programTableHeader(padId, padName);
       for (const program of results) {
-        console.log(programRow(program, pad));
+        console.log(programRow(program, padId, padName));
       }
     }
     console.log();

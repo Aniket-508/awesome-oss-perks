@@ -23,10 +23,10 @@ import {
   error as displayError,
   header,
   info,
-  maxSlugLength,
+  maxNameLength,
   success,
 } from "../utils/format.js";
-import { closestSlug } from "../utils/slug.js";
+import { closestId } from "../utils/id.js";
 import { track } from "../utils/telemetry.js";
 
 interface CheckOpts {
@@ -101,12 +101,12 @@ const resolveRef = (opts: CheckOpts): RepoRef | null => {
 
 const printEligibilitySection = (
   items: ProgramEligibility[],
-  pad: number,
+  padName: number,
 ): void => {
   for (const { program, result } of items) {
-    console.log(eligibilityRow(program, result, pad));
+    console.log(eligibilityRow(program, result, padName));
     for (const reason of result.reasons.slice(1)) {
-      console.log(`  ${" ".repeat(pad + 6)}${pc.dim(`• ${reason}`)}`);
+      console.log(`  ${" ".repeat(padName + 6)}${pc.dim(`• ${reason}`)}`);
     }
   }
   console.log();
@@ -122,7 +122,7 @@ const printCheckResults = (
   const eligible = results.filter((r) => r.result.status === "eligible");
   const review = results.filter((r) => r.result.status === "needs-review");
   const ineligible = results.filter((r) => r.result.status === "ineligible");
-  const pad = maxSlugLength(programs);
+  const padName = maxNameLength(programs);
 
   header(
     `Eligibility across ${programs.length} programs — ${eligible.length} eligible, ${review.length} need review, ${ineligible.length} ineligible`,
@@ -131,13 +131,13 @@ const printCheckResults = (
 
   if (eligible.length > 0) {
     for (const { program, result } of eligible) {
-      console.log(eligibilityRow(program, result, pad));
+      console.log(eligibilityRow(program, result, padName));
     }
     console.log();
   }
 
-  printEligibilitySection(review, pad);
-  printEligibilitySection(ineligible, pad);
+  printEligibilitySection(review, padName);
+  printEligibilitySection(ineligible, padName);
 
   if (review.length > 0) {
     console.log(
@@ -165,7 +165,7 @@ export const checkCommand = new Command("check")
     "github",
   )
   .option(
-    "-p, --program <slug>",
+    "-p, --program <id>",
     "check eligibility for a specific program only (e.g. vercel, sentry)",
   )
   .option("--json", "output results as JSON")
@@ -176,10 +176,10 @@ export const checkCommand = new Command("check")
     } else {
       const resolved = getProgramBySlug(opts.program);
       if (resolved === undefined) {
-        const suggestion = closestSlug(opts.program);
+        const suggestion = closestId(opts.program);
         const hint =
           suggestion === null ? "" : ` Did you mean "${suggestion}"?`;
-        displayError(`Unknown program slug "${opts.program}".${hint}`);
+        displayError(`Unknown program id "${opts.program}".${hint}`);
         process.exit(1);
       }
       targetProgram = resolved;
@@ -266,10 +266,10 @@ export const checkCommand = new Command("check")
       console.log();
       header(`Eligibility for ${targetProgram.name}`);
       console.log();
-      const pad = maxSlugLength([targetProgram]);
-      console.log(eligibilityRow(targetProgram, result, pad));
+      const padName = maxNameLength([targetProgram]);
+      console.log(eligibilityRow(targetProgram, result, padName));
       for (const reason of result.reasons.slice(1)) {
-        console.log(`  ${" ".repeat(pad + 6)}${pc.dim(`• ${reason}`)}`);
+        console.log(`  ${" ".repeat(padName + 6)}${pc.dim(`• ${reason}`)}`);
       }
       console.log();
       return;

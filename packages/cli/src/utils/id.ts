@@ -1,6 +1,6 @@
 import { programs } from "@ossperks/core";
 
-export const slugScore = (a: string, b: string): number => {
+export const idScore = (a: string, b: string): number => {
   const maxLen = Math.max(a.length, b.length);
   let score = 0;
   for (let i = 0; i < maxLen; i += 1) {
@@ -11,12 +11,12 @@ export const slugScore = (a: string, b: string): number => {
   return score + Math.abs(a.length - b.length);
 };
 
-export const closestSlug = (slug: string): string | null => {
+export const closestId = (id: string): string | null => {
   let best: string | null = null;
   let bestScore = Infinity;
-  const target = slug.toLowerCase();
+  const target = id.toLowerCase();
   for (const p of programs) {
-    const score = slugScore(target, p.slug.toLowerCase());
+    const score = idScore(target, p.slug.toLowerCase());
     if (score < bestScore) {
       bestScore = score;
       best = p.slug;

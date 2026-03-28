@@ -5,14 +5,31 @@ import type {
 } from "@ossperks/core";
 import pc from "picocolors";
 
+export const PROGRAMS_BASE_URL = "https://ossperks.com/programs";
+
+export const programPageUrl = (program: Program): string =>
+  `${PROGRAMS_BASE_URL}/${program.slug}`;
+
 export const header = (text: string): void => {
   console.log();
   console.log(pc.bold(pc.cyan(text)));
   console.log(pc.dim("─".repeat(Math.min(text.length, 60))));
 };
 
-export const programRow = (program: Program, padSlug = 20): string =>
-  `  ${pc.bold(program.slug.padEnd(padSlug))} ${program.name}`;
+export const programTableHeader = (padId: number, padName: number): void => {
+  console.log(
+    `  ${pc.dim("ID".padEnd(padId))}  ${pc.dim("NAME".padEnd(padName))}  ${pc.dim("URL")}`,
+  );
+};
+
+export const programRow = (
+  program: Program,
+  padId: number,
+  padName: number,
+): string => {
+  const url = programPageUrl(program);
+  return `  ${pc.bold(program.slug.padEnd(padId))}  ${program.name.padEnd(padName)}  ${pc.underline(pc.blue(url))}`;
+};
 
 const printProgramMeta = (program: Program): void => {
   console.log(`  ${pc.dim("Provider:")}  ${program.provider}`);
@@ -105,13 +122,13 @@ const getStatusDisplay = (status: EligibilityStatus): [string, string] => {
 export const eligibilityRow = (
   program: Program,
   result: EligibilityResult,
-  padSlug = 20,
+  padName = 20,
 ): string => {
   const [icon, statusText] = getStatusDisplay(result.status);
-  const slug = program.slug.padEnd(padSlug);
+  const name = program.name.padEnd(padName);
   const suffix =
     result.reasons.length > 0 ? pc.dim(` — ${result.reasons[0]}`) : "";
-  return `  ${icon}  ${pc.bold(slug)} ${statusText}${suffix}`;
+  return `  ${icon}  ${pc.bold(name)} ${statusText}${suffix}`;
 };
 
 export const error = (message: string): void => {
@@ -130,5 +147,8 @@ export const info = (message: string): void => {
   console.log(`  ${pc.dim(message)}`);
 };
 
-export const maxSlugLength = (programs: Program[]): number =>
-  Math.max(...programs.map((p) => p.slug.length)) + 2;
+export const maxIdLength = (programList: Program[]): number =>
+  Math.max(...programList.map((p) => p.slug.length)) + 2;
+
+export const maxNameLength = (programList: Program[]): number =>
+  Math.max(...programList.map((p) => p.name.length)) + 2;

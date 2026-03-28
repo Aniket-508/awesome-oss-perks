@@ -7,7 +7,14 @@ import {
 import type { Category } from "@ossperks/core";
 import { Command } from "commander";
 
-import { header, programRow, maxSlugLength, error } from "../utils/format.js";
+import {
+  header,
+  maxIdLength,
+  maxNameLength,
+  programRow,
+  programTableHeader,
+  error,
+} from "../utils/format.js";
 import { track } from "../utils/telemetry.js";
 
 export const listCommand = new Command("list")
@@ -38,15 +45,17 @@ export const listCommand = new Command("list")
 
     const plural = results.length === 1 ? "" : "s";
     const title = opts.category
-      ? `OSS Perks — ${results.length} program${plural} in "${CATEGORY_LABELS[opts.category as Category] ?? opts.category}"`
-      : `OSS Perks — ${results.length} programs`;
+      ? `${results.length} program${plural} in "${CATEGORY_LABELS[opts.category as Category] ?? opts.category}"`
+      : `${results.length} programs`;
 
     header(title);
     console.log();
 
-    const pad = maxSlugLength(results);
+    const padId = maxIdLength(results);
+    const padName = maxNameLength(results);
+    programTableHeader(padId, padName);
     for (const program of results) {
-      console.log(programRow(program, pad));
+      console.log(programRow(program, padId, padName));
     }
     console.log();
   });
