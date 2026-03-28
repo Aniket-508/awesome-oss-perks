@@ -6,9 +6,9 @@ import { setTimeout as delay } from "node:timers/promises";
 
 import { PostHog } from "posthog-node";
 
-// Opt out: DO_NOT_TRACK=1 or OSSPERKS_NO_TELEMETRY=1
+// Opt out: DO_NOT_TRACK=1 or DISABLE_TELEMETRY=1
 
-const POSTHOG_API_KEY = "phc_O4ZIP5TjUMDjagCuh4AC0rEJXrLLQUCtcFhUaa6w03C";
+const POSTHOG_API_KEY = process.env["POSTHOG_API_KEY"] ?? "";
 const POSTHOG_HOST = "https://us.i.posthog.com";
 const CLI_VERSION = process.env["VERSION"] ?? "0.0.0";
 const TELEMETRY_STATE_PATH = join(homedir(), ".ossperks-telemetry.json");
@@ -21,7 +21,7 @@ export type TelemetryProperties = Record<
 
 const isDisabled = (): boolean =>
   Boolean(process.env["DO_NOT_TRACK"]) ||
-  Boolean(process.env["OSSPERKS_NO_TELEMETRY"]);
+  Boolean(process.env["DISABLE_TELEMETRY"]);
 
 const isCI = (): boolean =>
   Boolean(process.env["CI"]) ||
@@ -72,7 +72,7 @@ const getDistinctId = (): string => {
 };
 
 const getClient = (): PostHog | null => {
-  if (isDisabled()) {
+  if (isDisabled() || !POSTHOG_API_KEY) {
     return null;
   }
   if (!client) {

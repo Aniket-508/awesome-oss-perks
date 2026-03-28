@@ -17,6 +17,7 @@ const sharedConfig = {
   },
   dts: true,
   env: {
+    POSTHOG_API_KEY: process.env.POSTHOG_API_KEY ?? "",
     VERSION: process.env.VERSION ?? packageJson.version,
   },
   fixedExtension: false,

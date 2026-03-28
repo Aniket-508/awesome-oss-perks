@@ -44,6 +44,8 @@ jobs:
 
       - name: Build packages
         run: pnpm build
+        env:
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
 
       - name: Create release PR or publish
         uses: changesets/action@v1
