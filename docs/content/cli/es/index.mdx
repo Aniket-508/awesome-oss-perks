@@ -11,12 +11,19 @@ description: Explora programas de beneficios OSS y verifica si tu proyecto
 - **Listar** todos los programas de beneficios OSS en un solo lugar
 - **Buscar** programas por palabra clave, proveedor o categoría
 - **Mostrar** detalles completos de cualquier programa (beneficios, elegibilidad, cómo aplicar)
-- **Verificar** si tu propio repositorio califica para programas — automáticamente, obteniendo datos en vivo desde la API de GitHub o GitLab
+- **Verificar** si tu propio repositorio califica para los programas — automáticamente, obteniendo datos en vivo desde la API de GitHub o GitLab
+- **Abrir** el sitio web de ossperks directamente desde la terminal
 
 ## Instalación
 
 ```npm
 npm install -g ossperks
+```
+
+O ejecutar sin instalar:
+
+```bash
+npx ossperks
 ```
 
 ## Inicio rápido
@@ -39,30 +46,64 @@ ossperks search "hosting"
 # Mostrar un programa específico
 
 ossperks show vercel
+
+# Abrir ossperks.com en tu navegador
+
+ossperks open
 ```
+
+## Alias de comandos
+
+Cada comando tiene alias cortos para mayor comodidad:
+
+| Comando      | Alias       |
+| ------------ | ----------- |
+| `list`       | `ls`        |
+| `show`       | `info`      |
+| `search`     | `find`, `s` |
+| `check`      | `ck`        |
+| `categories` | `cats`      |
 
 ## Cómo funciona la detección de repositorios
 
 `ossperks check` detecta automáticamente tu repositorio sin ninguna solicitud:
 
-1. Lee el campo `repository` de `package.json` en el directorio actual
-2. Recurre a analizar `remote.origin.url` de `.git/config`
-3. Llama a la API pública de GitHub o GitLab para obtener datos en vivo (estrellas, licencia, actividad, etc.)
+1. Lee el campo `repository` del `package.json` en el directorio actual
+2. Recurre a analizar `remote.origin.url` del `.git/config`
+3. Llama a la API pública de GitHub, GitLab, Codeberg o Gitea para obtener datos en vivo (estrellas, licencia, actividad, etc.)
 4. Compara esos datos con las reglas de elegibilidad de cada programa
 
 No se requieren tokens de API para repositorios públicos.
+
+## Telemetría
+
+La CLI recopila estadísticas de uso anónimas (nombre del comando, versión, SO) para ayudar a mejorar la herramienta. Nunca se recopilan nombres de repositorios, nombres de usuario o información personal.
+
+Para excluirte, establece cualquiera de estas variables de entorno:
+
+```bash
+export DO_NOT_TRACK=1
+
+# o
+
+export OSSPERKS_NO_TELEMETRY=1
+```
+
+## Notificaciones de actualización
+
+Cuando hay una versión más reciente disponible en npm, la CLI muestra un aviso de una línea después de la salida del comando. La verificación se almacena en caché localmente durante 1 hora y nunca bloquea la ejecución del comando.
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
 ## Próximos pasos
 
-- <DynamicLink href="/[lang]/cli/list">list</DynamicLink> — explora todos los
+- <DynamicLink href="/[lang]/cli/list">list</DynamicLink> — explorar todos los
   programas
-- <DynamicLink href="/[lang]/cli/show">show</DynamicLink> — visualiza los
-  detalles del programa
-- <DynamicLink href="/[lang]/cli/check">check</DynamicLink> — verifica
+- <DynamicLink href="/[lang]/cli/show">show</DynamicLink> — ver detalles del
+  programa
+- <DynamicLink href="/[lang]/cli/check">check</DynamicLink> — verificar
   automáticamente la elegibilidad de tu repositorio
-- <DynamicLink href="/[lang]/cli/search">search</DynamicLink> — encuentra
-  programas por palabra clave
-- <DynamicLink href="/[lang]/cli/categories">categories</DynamicLink> — lista
-  las categorías disponibles
+- <DynamicLink href="/[lang]/cli/search">search</DynamicLink> — buscar programas
+  por palabra clave
+- <DynamicLink href="/[lang]/cli/categories">categories</DynamicLink> — listar
+  categorías disponibles

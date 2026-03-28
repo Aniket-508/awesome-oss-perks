@@ -1,28 +1,29 @@
 ---
 title: ossperks search
-description: Rechercher des programmes d'avantages OSS par mot-clé dans les
-  noms, descriptions et fournisseurs.
+description: Recherchez des programmes d'avantages OSS par mot-clé parmi les
+  noms, descriptions, fournisseurs, tags et avantages.
 ---
 
 ## Utilisation
 
 ```
-ossperks search <requête> [options]
+ossperks search <query> [options]
 ```
+
+**Alias :** `ossperks find`, `ossperks s`
 
 ## Arguments
 
-| Argument    | Description                                                        |
-| ----------- | ------------------------------------------------------------------ |
-| `<requête>` | Terme de recherche (correspond au nom, description ou fournisseur) |
+| Argument  | Description                                                                                          |
+| --------- | ---------------------------------------------------------------------------------------------------- |
+| `<query>` | Terme de recherche (correspond au nom, slug, description, fournisseur, catégorie, tags ou avantages) |
 
 ## Options
 
-| Drapeau                 | Description                                     |
-| ----------------------- | ----------------------------------------------- |
-| `-c, --category <slug>` | Limiter la recherche à une catégorie spécifique |
-| `--json`                | Afficher le JSON brut                           |
-| `-h, --help`            | Afficher l'aide                                 |
+| Option       | Description       |
+| ------------ | ----------------- |
+| `--json`     | Sortie JSON brute |
+| `-h, --help` | Afficher l'aide   |
 
 ## Exemples
 
@@ -32,9 +33,9 @@ ossperks search <requête> [options]
 
 ossperks search hosting
 
-# Rechercher « credits » dans la catégorie devtools
+# Utilisation de l'alias court
 
-ossperks search credits --category devtools
+ossperks s credits
 
 # Sortie JSON
 
@@ -44,15 +45,15 @@ ossperks search vercel --json
 ## Résultat
 
 ```
-Résultats pour « hosting » (4 programmes)
+Résultats de recherche pour "hosting" — 4 programmes
+────────────────────────────────────────────
 
-NAME                          PROVIDER    CATEGORY
-Vercel for Open Source        Vercel      hosting
-Netlify OSS Plan              Netlify     hosting
-Railway OSS Program           Railway     hosting
-Render Open Source            Render      hosting
+  vercel                 Vercel for Open Source
+  netlify                Netlify OSS Plan
+  digitalocean           DigitalOcean Open Source
+  cloudflare             Cloudflare for Open Source
 ```
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-Utilisez <DynamicLink href="/[lang]/cli/show">`ossperks show <slug>`</DynamicLink> pour afficher tous les détails de n'importe quel résultat.
+Utilisez <DynamicLink href="/[lang]/cli/show">`ossperks show <slug>`</DynamicLink> pour afficher les détails complets de n'importe quel résultat.

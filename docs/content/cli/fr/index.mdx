@@ -10,13 +10,20 @@ description: Parcourez les programmes d'avantages OSS et vérifiez si votre
 
 - **Lister** tous les programmes d'avantages OSS en un seul endroit
 - **Rechercher** des programmes par mot-clé, fournisseur ou catégorie
-- **Afficher** les détails complets de n'importe quel programme (avantages, éligibilité, comment postuler)
-- **Vérifier** si votre propre dépôt remplit les conditions des programmes — automatiquement, en récupérant les données en direct depuis l'API GitHub ou GitLab
+- **Afficher** tous les détails d'un programme (avantages, éligibilité, comment postuler)
+- **Vérifier** si votre propre dépôt est éligible aux programmes — automatiquement, en récupérant les données en direct depuis l'API GitHub ou GitLab
+- **Ouvrir** le site web ossperks directement depuis le terminal
 
 ## Installation
 
 ```npm
 npm install -g ossperks
+```
+
+Ou exécutez sans installer :
+
+```bash
+npx ossperks
 ```
 
 ## Démarrage rapide
@@ -39,27 +46,61 @@ ossperks search "hosting"
 # Afficher un programme spécifique
 
 ossperks show vercel
+
+# Ouvrir ossperks.com dans votre navigateur
+
+ossperks open
 ```
 
-## Comment fonctionne la détection de dépôt
+## Alias de commandes
+
+Chaque commande dispose d'alias courts pour plus de commodité :
+
+| Commande     | Alias       |
+| ------------ | ----------- |
+| `list`       | `ls`        |
+| `show`       | `info`      |
+| `search`     | `find`, `s` |
+| `check`      | `ck`        |
+| `categories` | `cats`      |
+
+## Fonctionnement de la détection de dépôt
 
 `ossperks check` détecte automatiquement votre dépôt sans aucune invite :
 
-1. Lit le champ `repository` du fichier `package.json` dans le répertoire courant
+1. Lit le champ `repository` depuis `package.json` dans le répertoire actuel
 2. Se replie sur l'analyse de `remote.origin.url` depuis `.git/config`
-3. Appelle l'API publique de GitHub ou GitLab pour récupérer les données en direct (étoiles, licence, activité, etc.)
+3. Appelle l'API publique de GitHub, GitLab, Codeberg ou Gitea pour récupérer les données en direct (étoiles, licence, activité, etc.)
 4. Compare ces données aux règles d'éligibilité de chaque programme
 
 Aucun jeton d'API requis pour les dépôts publics.
 
+## Télémétrie
+
+Le CLI collecte des statistiques d'utilisation anonymes (nom de commande, version, système d'exploitation) pour améliorer l'outil. Aucun nom de dépôt, nom d'utilisateur ou information personnelle n'est jamais collecté.
+
+Pour refuser, définissez l'une de ces variables d'environnement :
+
+```bash
+export DO_NOT_TRACK=1
+
+# ou
+
+export OSSPERKS_NO_TELEMETRY=1
+```
+
+## Notifications de mise à jour
+
+Lorsqu'une version plus récente est disponible sur npm, l'interface en ligne de commande affiche un avis d'une ligne après la sortie de la commande. La vérification est mise en cache localement pendant 1 heure et ne bloque jamais l'exécution de la commande.
+
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-## Étapes suivantes
+## Prochaines étapes
 
 - <DynamicLink href="/[lang]/cli/list">list</DynamicLink> — parcourir tous les
   programmes
 - <DynamicLink href="/[lang]/cli/show">show</DynamicLink> — afficher les détails
-  d'un programme
+  du programme
 - <DynamicLink href="/[lang]/cli/check">check</DynamicLink> — vérifier
   automatiquement l'éligibilité de votre dépôt
 - <DynamicLink href="/[lang]/cli/search">search</DynamicLink> — rechercher des

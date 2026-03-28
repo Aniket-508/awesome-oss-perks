@@ -10,19 +10,23 @@ description: Verifica automáticamente si tu repositorio califica para programas
 ossperks check [opciones]
 ```
 
-Ejecuta esto desde dentro de cualquier repositorio Git. No se requieren argumentos ni tokens para repositorios públicos.
+**Alias:** `ossperks ck`
+
+Ejecuta esto desde cualquier repositorio Git. No se requieren argumentos ni tokens para repositorios públicos.
 
 ## Opciones
 
-| Bandera                | Descripción                                                           |
-| ---------------------- | --------------------------------------------------------------------- |
-| `-p, --program <slug>` | Verificar solo contra un programa específico (ej. `--program vercel`) |
-| `--json`               | Mostrar JSON sin formato                                              |
-| `-h, --help`           | Mostrar ayuda                                                         |
+| Bandera                     | Descripción                                                                        |
+| --------------------------- | ---------------------------------------------------------------------------------- |
+| `--repo <propietario/repo>` | Especificar explícitamente un repositorio (ej. `vercel/next.js`)                   |
+| `--provider <proveedor>`    | Proveedor Git: `github`, `gitlab`, `codeberg` o `gitea` (predeterminado: `github`) |
+| `-p, --program <slug>`      | Verificar contra un programa específico solamente (ej. `--program vercel`)         |
+| `--json`                    | Mostrar JSON sin procesar                                                          |
+| `-h, --help`                | Mostrar ayuda                                                                      |
 
 ## Cómo funciona
 
-`ossperks check` se ejecuta de forma completamente automática:
+`ossperks check` se ejecuta completamente de forma automática:
 
 ```
 ossperks check
@@ -34,10 +38,12 @@ Leer package.json (campo repository)
 Leer .git/config (remote.origin.url)
       │
       ▼
-Detectar proveedor (github.com / gitlab.com)
+Detectar proveedor (github.com / gitlab.com / codeberg.org / gitea.com)
       │
-      ├─ GitHub → GET /repos/:owner/:repo
-      └─ GitLab → GET /api/v4/projects/:id
+      ├─ GitHub   → GET /repos/:owner/:repo
+      ├─ GitLab   → GET /api/v4/projects/:id
+      ├─ Codeberg → GET /api/v1/repos/:owner/:repo
+      └─ Gitea    → GET /api/v1/repos/:owner/:repo
       │
       ▼
 RepoContext (estrellas, licencia, antigüedad, actividad...)
@@ -46,17 +52,17 @@ RepoContext (estrellas, licencia, antigüedad, actividad...)
 Cotejar reglas de elegibilidad para cada programa
       │
       ▼
-Imprimir resultados
+Mostrar resultados
 ```
 
 ### Detección de repositorio
 
-La herramienta lee la URL de tu repositorio desde uno de estos dos lugares, en orden:
+Cuando no se especifica `--repo`, la herramienta lee la URL de tu repositorio desde uno de dos lugares, en orden:
 
 1. Campo `repository` en `package.json`
 2. `remote.origin.url` en `.git/config`
 
-Se admiten formatos de URL HTTPS / SSH tanto de GitHub como de GitLab.
+Se admiten formatos de URL HTTPS / SSH de GitHub, GitLab, Codeberg y Gitea.
 
 ### Cotejo de elegibilidad
 
@@ -77,6 +83,14 @@ El cotejo es heurístico — analiza umbrales y palabras clave del texto de la r
 
 ossperks check
 
+# Verificar un repositorio específico sin estar dentro de él
+
+ossperks check --repo vercel/next.js
+
+# Verificar un proyecto de GitLab
+
+ossperks check --repo grupo/proyecto --provider gitlab
+
 # Verificar solo un programa específico
 
 ossperks check --program vercel
@@ -89,20 +103,20 @@ ossperks check --json
 ## Salida
 
 ```
-Checking repo: github.com/acme/my-project
-  Stars: 412  License: MIT  Age: 14 months  Last push: 3 days ago
+✅ mi-proyecto — MIT · 412 estrellas · último push hace 3 días
 
-PROGRAM               ELIGIBLE
-vercel                ✔ likely
-netlify               ✔ likely
-github-sponsors       ? unknown (manual review required)
-aws-activate          ✗ unlikely
+Elegibilidad en 48 programas — 12 elegibles, 8 requieren revisión, 28 no elegibles
+
+  ✅  vercel                 Probablemente elegible — proyecto de código abierto
+  ✅  netlify                Probablemente elegible — proyecto de código abierto
+  ⚠️  github-copilot         Requiere revisión — revisión manual requerida
+  ❌  aws-activate           Probablemente no elegible — requiere 1000 estrellas
 ```
 
 Estados:
 
-- **✔ likely** — todas las reglas de elegibilidad analizadas coincidieron
-- **? unknown** — al menos una regla no pudo ser evaluada automáticamente
-- **✗ unlikely** — una o más reglas claramente no coinciden
+- **✅ Probablemente elegible** — todas las reglas de elegibilidad analizadas coincidieron
+- **⚠️ Requiere revisión** — al menos una regla no pudo ser evaluada automáticamente
+- **❌ Probablemente no elegible** — una o más reglas claramente no coinciden
 
-Siempre verifica en la página oficial del programa antes de aplicar.
+Siempre verifica contra la página oficial del programa antes de aplicar.

@@ -10,6 +10,8 @@ description: Lister tous les programmes d'avantages OSS disponibles, avec
 ossperks list [options]
 ```
 
+**Alias :** `ossperks ls`
+
 ## Options
 
 | Flag                    | Description                                   |
@@ -38,12 +40,15 @@ ossperks list --json
 ## Sortie
 
 ```
-NAME                          PROVIDER    CATEGORY   PERKS
-Vercel for Open Source        Vercel      hosting    $3,600 credits · OSS Starter Pack
-GitHub Sponsors               GitHub      devtools   Matching fund · Sponsorship
-...
+OSS Perks — 48 programmes
+────────────────────────────────
+
+  1password              1Password for Open Source Projects
+  algolia                Algolia for Open Source
+  anthropic-claude       Anthropic Claude for Open Source
+  ...
 ```
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
-Chaque ligne affiche le nom du programme, le fournisseur, la catégorie et les deux premiers titres d'avantages. Utilisez <DynamicLink href="/[lang]/cli/show">`ossperks show <slug>`</DynamicLink> pour voir tous les détails.
+Chaque ligne affiche le slug du programme et son nom complet. Utilisez <DynamicLink href="/[lang]/cli/show">`ossperks show <slug>`</DynamicLink> pour voir tous les détails.

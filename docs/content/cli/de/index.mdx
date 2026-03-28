@@ -6,17 +6,24 @@ description: OSS-Vergünstigungs­programme durchsuchen und prüfen, ob Ihr Proj
 
 ## Überblick
 
-`ossperks` ist ein konfigurations­freies Kommandozeilen-Tool, mit dem Sie:
+`ossperks` ist ein Kommandozeilen-Tool ohne Konfiguration, mit dem Sie:
 
-- Alle OSS-Vergünstigungs­programme an einem Ort **auflisten** können
+- Alle OSS-Vorteilsprogramme an einem Ort **auflisten** können
 - Programme nach Stichwort, Anbieter oder Kategorie **durchsuchen** können
-- Vollständige Details zu jedem Programm **anzeigen** können (Vergünstigungen, Berechtigung, Bewerbungs­verfahren)
-- **Prüfen** können, ob Ihr eigenes Repository für Programme qualifiziert ist – automatisch, indem Live-Daten von der GitHub- oder GitLab-API abgerufen werden
+- Vollständige Details zu jedem Programm **anzeigen** können (Vorteile, Teilnahmebedingungen, Bewerbungsverfahren)
+- **Prüfen** können, ob Ihr eigenes Repository für Programme qualifiziert ist — automatisch, durch Abrufen aktueller Daten von der GitHub- oder GitLab-API
+- Die ossperks-Website direkt vom Terminal aus **öffnen** können
 
 ## Installation
 
 ```npm
 npm install -g ossperks
+```
+
+Oder ohne Installation ausführen:
+
+```bash
+npx ossperks
 ```
 
 ## Schnellstart
@@ -39,18 +46,52 @@ ossperks search "hosting"
 # Spezifisches Programm anzeigen
 
 ossperks show vercel
+
+# Öffnen Sie ossperks.com in Ihrem Browser
+
+ossperks open
 ```
 
-## Funktionsweise der Repository-Erkennung
+## Befehls-Aliase
 
-`ossperks check` erkennt Ihr Repository automatisch ohne jegliche Eingabeaufforderungen:
+Jeder Befehl hat kurze Aliase zur Vereinfachung:
 
-1. Liest das Feld `repository` aus der `package.json` im aktuellen Verzeichnis
-2. Greift ersatzweise auf das Parsen von `remote.origin.url` aus `.git/config` zurück
-3. Ruft die öffentliche API von GitHub oder GitLab auf, um Live-Daten abzurufen (Sterne, Lizenz, Aktivität usw.)
-4. Gleicht diese Daten mit den Teilnahmevoraussetzungen aller Programme ab
+| Befehl       | Alias(e)    |
+| ------------ | ----------- |
+| `list`       | `ls`        |
+| `show`       | `info`      |
+| `search`     | `find`, `s` |
+| `check`      | `ck`        |
+| `categories` | `cats`      |
 
-Für öffentliche Repositories sind keine API-Token erforderlich.
+## Wie die Repository-Erkennung funktioniert
+
+`ossperks check` erkennt Ihr Repository automatisch ohne Rückfragen:
+
+1. Liest das `repository`-Feld aus der `package.json` im aktuellen Verzeichnis
+2. Greift alternativ auf die Analyse von `remote.origin.url` aus `.git/config` zurück
+3. Ruft die öffentliche API von GitHub, GitLab, Codeberg oder Gitea auf, um aktuelle Daten abzurufen (Sterne, Lizenz, Aktivität usw.)
+4. Gleicht diese Daten mit den Teilnahmebedingungen aller Programme ab
+
+Für öffentliche Repositories sind keine API-Tokens erforderlich.
+
+## Telemetrie
+
+Die CLI sammelt anonyme Nutzungsstatistiken (Befehlsname, Version, Betriebssystem), um das Tool zu verbessern. Es werden niemals Repository-Namen, Benutzernamen oder persönliche Informationen erfasst.
+
+Um dies zu deaktivieren, setzen Sie eine der folgenden Umgebungsvariablen:
+
+```bash
+export DO_NOT_TRACK=1
+
+# oder
+
+export OSSPERKS_NO_TELEMETRY=1
+```
+
+## Update-Benachrichtigungen
+
+Wenn eine neuere Version auf npm verfügbar ist, zeigt die CLI nach der Befehlsausgabe einen einzeiligen Hinweis an. Die Überprüfung wird lokal für 1 Stunde zwischengespeichert und blockiert niemals die Befehlsausführung.
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
@@ -60,7 +101,7 @@ import { DynamicLink } from "fumadocs-core/dynamic-link";
   durchsuchen
 - <DynamicLink href="/[lang]/cli/show">show</DynamicLink> — Programmdetails
   anzeigen
-- <DynamicLink href="/[lang]/cli/check">check</DynamicLink> — Berechtigung Ihres
+- <DynamicLink href="/[lang]/cli/check">check</DynamicLink> — Eignung Ihres
   Repositorys automatisch prüfen
 - <DynamicLink href="/[lang]/cli/search">search</DynamicLink> — Programme nach
   Stichwort finden

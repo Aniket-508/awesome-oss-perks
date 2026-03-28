@@ -105,3 +105,33 @@ aws-activate          ✗ 可能不符合
 - **✗ 可能不符合** — 一条或多条规则明显不匹配
 
 在申请之前,请务必根据项目的官方页面进行验证。
+
+# 用于脚本的 JSON 输出
+
+ossperks check --json
+
+```
+
+## 输出
+
+```
+
+✅ my-project — MIT · 412 stars · last push 3 days ago
+
+Eligibility across 48 programs — 12 eligible, 8 need review, 28 ineligible
+
+✅ vercel Likely eligible — open source project
+✅ netlify Likely eligible — open source project
+⚠️ github-copilot Needs review — manual review required
+❌ aws-activate Likely ineligible — requires 1000 stars
+
+```
+
+状态说明：
+
+- **✅ 可能符合条件** — 所有已解析的资格规则均匹配
+- **⚠️ 需要审核** — 至少有一条规则无法自动评估
+- **❌ 可能不符合条件** — 一条或多条规则明显不匹配
+
+在申请前请始终根据项目的官方页面进行验证。
+```

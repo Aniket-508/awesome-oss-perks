@@ -1,6 +1,6 @@
 ---
 title: ossperks search
-description: Search OSS perk programs by keyword across names, descriptions, and providers.
+description: Search OSS perk programs by keyword across names, descriptions, providers, tags, and perks.
 ---
 
 ## Usage
@@ -9,19 +9,20 @@ description: Search OSS perk programs by keyword across names, descriptions, and
 ossperks search <query> [options]
 ```
 
+**Aliases:** `ossperks find`, `ossperks s`
+
 ## Arguments
 
-| Argument  | Description                                          |
-| --------- | ---------------------------------------------------- |
-| `<query>` | Search term (matches name, description, or provider) |
+| Argument  | Description                                                                       |
+| --------- | --------------------------------------------------------------------------------- |
+| `<query>` | Search term (matches name, slug, description, provider, category, tags, or perks) |
 
 ## Options
 
-| Flag                    | Description                         |
-| ----------------------- | ----------------------------------- |
-| `-c, --category <slug>` | Limit search to a specific category |
-| `--json`                | Output raw JSON                     |
-| `-h, --help`            | Show help                           |
+| Flag         | Description     |
+| ------------ | --------------- |
+| `--json`     | Output raw JSON |
+| `-h, --help` | Show help       |
 
 ## Examples
 
@@ -29,8 +30,8 @@ ossperks search <query> [options]
 # Search for "hosting"
 ossperks search hosting
 
-# Search for "credits" in the devtools category
-ossperks search credits --category devtools
+# Using the short alias
+ossperks s credits
 
 # JSON output
 ossperks search vercel --json
@@ -39,13 +40,13 @@ ossperks search vercel --json
 ## Output
 
 ```
-Results for "hosting" (4 programs)
+Search results for "hosting" — 4 programs
+────────────────────────────────────────────
 
-NAME                          PROVIDER    CATEGORY
-Vercel for Open Source        Vercel      hosting
-Netlify OSS Plan              Netlify     hosting
-Railway OSS Program           Railway     hosting
-Render Open Source            Render      hosting
+  vercel                 Vercel for Open Source
+  netlify                Netlify OSS Plan
+  digitalocean           DigitalOcean Open Source
+  cloudflare             Cloudflare for Open Source
 ```
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";

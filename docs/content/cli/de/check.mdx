@@ -7,56 +7,62 @@ description: Prüfen Sie automatisch, ob Ihr Repository für OSS-Vorteilsprogram
 ## Verwendung
 
 ```
-ossperks check [optionen]
+ossperks check [Optionen]
 ```
 
-Führen Sie dies in einem beliebigen Git-Repository aus. Für öffentliche Repositorys sind keine Argumente oder Token erforderlich.
+**Alias:** `ossperks ck`
+
+Führen Sie dies innerhalb eines beliebigen Git-Repositorys aus. Für öffentliche Repos sind keine Argumente oder Tokens erforderlich.
 
 ## Optionen
 
-| Flag                   | Beschreibung                                                        |
-| ---------------------- | ------------------------------------------------------------------- |
-| `-p, --program <slug>` | Nur gegen ein bestimmtes Programm prüfen (z. B. `--program vercel`) |
-| `--json`               | Rohes JSON ausgeben                                                 |
-| `-h, --help`           | Hilfe anzeigen                                                      |
+| Flag                    | Beschreibung                                                                   |
+| ----------------------- | ------------------------------------------------------------------------------ |
+| `--repo <owner/repo>`   | Repository explizit angeben (z. B. `vercel/next.js`)                           |
+| `--provider <provider>` | Git-Anbieter: `github`, `gitlab`, `codeberg` oder `gitea` (Standard: `github`) |
+| `-p, --program <slug>`  | Nur gegen ein bestimmtes Programm prüfen (z. B. `--program vercel`)            |
+| `--json`                | Rohes JSON ausgeben                                                            |
+| `-h, --help`            | Hilfe anzeigen                                                                 |
 
 ## Funktionsweise
 
-`ossperks check` läuft vollständig automatisch:
+`ossperks check` läuft vollautomatisch:
 
 ```
 ossperks check
       │
       ▼
-Lese package.json (repository-Feld)
+package.json lesen (repository-Feld)
       │  ← nicht gefunden?
       ▼
-Lese .git/config (remote.origin.url)
+.git/config lesen (remote.origin.url)
       │
       ▼
-Erkenne Anbieter (github.com / gitlab.com)
+Anbieter erkennen (github.com / gitlab.com / codeberg.org / gitea.com)
       │
-      ├─ GitHub → GET /repos/:owner/:repo
-      └─ GitLab → GET /api/v4/projects/:id
+      ├─ GitHub   → GET /repos/:owner/:repo
+      ├─ GitLab   → GET /api/v4/projects/:id
+      ├─ Codeberg → GET /api/v1/repos/:owner/:repo
+      └─ Gitea    → GET /api/v1/repos/:owner/:repo
       │
       ▼
 RepoContext (Sterne, Lizenz, Alter, Aktivität...)
       │
       ▼
-Gleiche Berechtigungsregeln für jedes Programm ab
+Zulassungsregeln für jedes Programm abgleichen
       │
       ▼
-Gebe Ergebnisse aus
+Ergebnisse ausgeben
 ```
 
 ### Repository-Erkennung
 
-Das Tool liest Ihre Repository-URL aus einer der beiden folgenden Quellen, in dieser Reihenfolge:
+Wenn `--repo` nicht angegeben ist, liest das Tool Ihre Repository-URL von einem der folgenden beiden Orte (in dieser Reihenfolge):
 
 1. `repository`-Feld in `package.json`
 2. `remote.origin.url` in `.git/config`
 
-Sowohl GitHub- als auch GitLab-URL-Formate (HTTPS / SSH) werden unterstützt.
+GitHub-, GitLab-, Codeberg- und Gitea-URL-Formate (HTTPS/SSH) werden unterstützt.
 
 ### Berechtigungsabgleich
 
@@ -77,6 +83,14 @@ Der Abgleich ist heuristisch – er analysiert Schwellenwerte und Schlüsselwör
 
 ossperks check
 
+# Ein bestimmtes Repository prüfen, ohne sich darin zu befinden
+
+ossperks check --repo vercel/next.js
+
+# Ein GitLab-Projekt prüfen
+
+ossperks check --repo group/project --provider gitlab
+
 # Nur ein bestimmtes Programm prüfen
 
 ossperks check --program vercel
@@ -89,20 +103,20 @@ ossperks check --json
 ## Ausgabe
 
 ```
-Prüfe Repository: github.com/acme/my-project
-  Sterne: 412  Lizenz: MIT  Alter: 14 Monate  Letzter Push: vor 3 Tagen
+✅ my-project — MIT · 412 Sterne · letzter Push vor 3 Tagen
 
-PROGRAMM              BERECHTIGT
-vercel                ✔ wahrscheinlich
-netlify               ✔ wahrscheinlich
-github-sponsors       ? unbekannt (manuelle Prüfung erforderlich)
-aws-activate          ✗ unwahrscheinlich
+Zulässigkeit über 48 Programme — 12 zulässig, 8 benötigen Überprüfung, 28 nicht zulässig
+
+  ✅  vercel                 Wahrscheinlich zulässig — Open-Source-Projekt
+  ✅  netlify                Wahrscheinlich zulässig — Open-Source-Projekt
+  ⚠️  github-copilot         Überprüfung erforderlich — manuelle Überprüfung nötig
+  ❌  aws-activate           Wahrscheinlich nicht zulässig — erfordert 1000 Sterne
 ```
 
 Status:
 
-- **✔ wahrscheinlich** — alle analysierten Berechtigungsregeln erfüllt
-- **? unbekannt** — mindestens eine Regel konnte nicht automatisch ausgewertet werden
-- **✗ unwahrscheinlich** — eine oder mehrere Regeln stimmen eindeutig nicht überein
+- **✅ Wahrscheinlich zulässig** — alle analysierten Zulassungsregeln erfüllt
+- **⚠️ Überprüfung erforderlich** — mindestens eine Regel konnte nicht automatisch ausgewertet werden
+- **❌ Wahrscheinlich nicht zulässig** — eine oder mehrere Regeln sind eindeutig nicht erfüllt
 
-Überprüfen Sie stets die offizielle Programmseite, bevor Sie sich bewerben.
+Überprüfen Sie immer die offizielle Seite des Programms, bevor Sie sich bewerben.

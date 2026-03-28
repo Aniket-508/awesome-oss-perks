@@ -9,15 +9,19 @@ description: Automatically check whether your repository qualifies for OSS perk 
 ossperks check [options]
 ```
 
+**Alias:** `ossperks ck`
+
 Run this from inside any Git repository. No arguments or tokens required for public repos.
 
 ## Options
 
-| Flag                   | Description                                                     |
-| ---------------------- | --------------------------------------------------------------- |
-| `-p, --program <slug>` | Check against a specific program only (e.g. `--program vercel`) |
-| `--json`               | Output raw JSON                                                 |
-| `-h, --help`           | Show help                                                       |
+| Flag                    | Description                                                                  |
+| ----------------------- | ---------------------------------------------------------------------------- |
+| `--repo <owner/repo>`   | Explicitly specify a repository (e.g. `vercel/next.js`)                      |
+| `--provider <provider>` | Git provider: `github`, `gitlab`, `codeberg`, or `gitea` (default: `github`) |
+| `-p, --program <slug>`  | Check against a specific program only (e.g. `--program vercel`)              |
+| `--json`                | Output raw JSON                                                              |
+| `-h, --help`            | Show help                                                                    |
 
 ## How it works
 
@@ -33,10 +37,12 @@ Read package.json (repository field)
 Read .git/config (remote.origin.url)
       │
       ▼
-Detect provider (github.com / gitlab.com)
+Detect provider (github.com / gitlab.com / codeberg.org / gitea.com)
       │
-      ├─ GitHub → GET /repos/:owner/:repo
-      └─ GitLab → GET /api/v4/projects/:id
+      ├─ GitHub   → GET /repos/:owner/:repo
+      ├─ GitLab   → GET /api/v4/projects/:id
+      ├─ Codeberg → GET /api/v1/repos/:owner/:repo
+      └─ Gitea    → GET /api/v1/repos/:owner/:repo
       │
       ▼
 RepoContext (stars, license, age, activity...)
@@ -50,12 +56,12 @@ Print results
 
 ### Repository detection
 
-The tool reads your repo URL from one of two places, in order:
+When `--repo` is not specified, the tool reads your repo URL from one of two places, in order:
 
 1. `repository` field in `package.json`
 2. `remote.origin.url` in `.git/config`
 
-Both GitHub and GitLab HTTPS / SSH URL formats are supported.
+GitHub, GitLab, Codeberg, and Gitea HTTPS / SSH URL formats are supported.
 
 ### Eligibility matching
 
@@ -74,6 +80,12 @@ The matching is heuristic — it parses thresholds and keywords from the rule te
 # Check all programs from your current repo
 ossperks check
 
+# Check a specific repo without being inside it
+ossperks check --repo vercel/next.js
+
+# Check a GitLab project
+ossperks check --repo group/project --provider gitlab
+
 # Check a specific program only
 ossperks check --program vercel
 
@@ -84,20 +96,20 @@ ossperks check --json
 ## Output
 
 ```
-Checking repo: github.com/acme/my-project
-  Stars: 412  License: MIT  Age: 14 months  Last push: 3 days ago
+✅ my-project — MIT · 412 stars · last push 3 days ago
 
-PROGRAM               ELIGIBLE
-vercel                ✔ likely
-netlify               ✔ likely
-github-sponsors       ? unknown (manual review required)
-aws-activate          ✗ unlikely
+Eligibility across 48 programs — 12 eligible, 8 need review, 28 ineligible
+
+  ✅  vercel                 Likely eligible — open source project
+  ✅  netlify                Likely eligible — open source project
+  ⚠️  github-copilot         Needs review — manual review required
+  ❌  aws-activate           Likely ineligible — requires 1000 stars
 ```
 
 Statuses:
 
-- **✔ likely** — all parsed eligibility rules matched
-- **? unknown** — at least one rule could not be auto-evaluated
-- **✗ unlikely** — one or more rules clearly do not match
+- **✅ Likely eligible** — all parsed eligibility rules matched
+- **⚠️ Needs review** — at least one rule could not be auto-evaluated
+- **❌ Likely ineligible** — one or more rules clearly do not match
 
 Always verify against the program's official page before applying.

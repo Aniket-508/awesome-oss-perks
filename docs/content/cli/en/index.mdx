@@ -11,11 +11,18 @@ description: Browse OSS perk programs and check if your project qualifies — ri
 - **Search** programs by keyword, provider, or category
 - **Show** full details for any program (perks, eligibility, how to apply)
 - **Check** whether your own repository qualifies for programs — automatically, by fetching live data from the GitHub or GitLab API
+- **Open** the ossperks website directly from the terminal
 
 ## Installation
 
 ```npm
 npm install -g ossperks
+```
+
+Or run without installing:
+
+```bash
+npx ossperks
 ```
 
 ## Quick start
@@ -33,7 +40,22 @@ ossperks search "hosting"
 
 # Show a specific program
 ossperks show vercel
+
+# Open ossperks.com in your browser
+ossperks open
 ```
+
+## Command aliases
+
+Every command has short aliases for convenience:
+
+| Command      | Alias(es)   |
+| ------------ | ----------- |
+| `list`       | `ls`        |
+| `show`       | `info`      |
+| `search`     | `find`, `s` |
+| `check`      | `ck`        |
+| `categories` | `cats`      |
 
 ## How repo detection works
 
@@ -41,10 +63,26 @@ ossperks show vercel
 
 1. Reads the `repository` field from `package.json` in the current directory
 2. Falls back to parsing `remote.origin.url` from `.git/config`
-3. Calls the GitHub or GitLab public API to fetch live data (stars, license, activity, etc.)
+3. Calls the GitHub, GitLab, Codeberg, or Gitea public API to fetch live data (stars, license, activity, etc.)
 4. Matches that data against every program's eligibility rules
 
 No API tokens required for public repositories.
+
+## Telemetry
+
+The CLI collects anonymous usage statistics (command name, version, OS) to help improve the tool. No repository names, user names, or personal information is ever collected.
+
+To opt out, set either of these environment variables:
+
+```bash
+export DO_NOT_TRACK=1
+# or
+export OSSPERKS_NO_TELEMETRY=1
+```
+
+## Update notifications
+
+When a newer version is available on npm, the CLI shows a one-line notice after command output. The check is cached locally for 1 hour and never blocks command execution.
 
 import { DynamicLink } from "fumadocs-core/dynamic-link";
 
