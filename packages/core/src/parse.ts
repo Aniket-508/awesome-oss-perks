@@ -87,16 +87,17 @@ export const parseRepoUrl = (raw: string): RepoRef | null => {
   const host = url.hostname.toLowerCase();
   const segments = getPathSegments(url);
 
-  if (host === "github.com" || host === "www.github.com") {
+  if (host.startsWith("github.com")) {
     return parseGitHub(segments);
   }
-  if (host === "gitlab.com" || host === "www.gitlab.com") {
+  if (host.startsWith("gitlab.com")) {
     return parseGitLab(segments);
   }
 
-  const giteaProvider = HOST_TO_PROVIDER[host];
-  if (giteaProvider) {
-    return parseGitea(segments, giteaProvider);
+  for (const [providerHost, provider] of Object.entries(HOST_TO_PROVIDER)) {
+    if (host.startsWith(providerHost)) {
+      return parseGitea(segments, provider);
+    }
   }
 
   return null;

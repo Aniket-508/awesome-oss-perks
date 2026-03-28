@@ -30,6 +30,17 @@ describe(parseRepoUrl, () => {
     });
   });
 
+  it("parses SSH GitHub URL with host alias (e.g. github.com-personal)", () => {
+    expect(
+      parseRepoUrl("git@github.com-personal:owner/repo.git"),
+    ).toStrictEqual({
+      owner: "owner",
+      path: "owner/repo",
+      provider: "github",
+      repo: "repo",
+    });
+  });
+
   it("parses HTTPS GitLab URL", () => {
     expect(parseRepoUrl("https://gitlab.com/user/project.git")).toStrictEqual({
       owner: "user",
