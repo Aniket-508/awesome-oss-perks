@@ -1,4 +1,4 @@
-import { isNewerVersion } from "../src/utils/branding.js";
+import { isNewerVersion } from "../src/utils/check-updates.js";
 
 describe(isNewerVersion, () => {
   it("returns true for newer stable versions", () => {

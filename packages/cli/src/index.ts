@@ -6,12 +6,9 @@ import { listCommand } from "./commands/list.js";
 import { openCommand } from "./commands/open.js";
 import { searchCommand } from "./commands/search.js";
 import { showCommand } from "./commands/show.js";
-import {
-  checkForUpdates,
-  printBanner,
-  printCta,
-  printUsage,
-} from "./utils/branding.js";
+import { checkForUpdates } from "./utils/check-updates.js";
+import { printBanner, printUsage } from "./utils/intro-banner.js";
+import { printCta } from "./utils/outro-cta.js";
 import { shutdownTelemetry } from "./utils/telemetry.js";
 
 export const name = "ossperks";

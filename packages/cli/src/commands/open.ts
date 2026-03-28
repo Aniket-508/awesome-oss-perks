@@ -1,26 +1,17 @@
-import { execSync } from "node:child_process";
-
 import { Command } from "commander";
 
+import { openUrl } from "../utils/open-url.js";
 import { track } from "../utils/telemetry.js";
 
 const SITE_URL = "https://www.ossperks.com";
 
 export const openCommand = new Command("open")
   .description("Open ossperks.com in your default browser")
-  .action(() => {
+  .action(async () => {
     track("cli:open");
 
     try {
-      let cmd: string;
-      if (process.platform === "win32") {
-        cmd = `start ${SITE_URL}`;
-      } else if (process.platform === "darwin") {
-        cmd = `open ${SITE_URL}`;
-      } else {
-        cmd = `xdg-open ${SITE_URL}`;
-      }
-      execSync(cmd, { stdio: "ignore" });
+      await openUrl(SITE_URL);
     } catch {
       console.log(SITE_URL);
     }

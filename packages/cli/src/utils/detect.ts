@@ -1,7 +1,11 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { aggregateDependencies, parseRepoUrl } from "@ossperks/core";
+import {
+  aggregateDependencies,
+  MAX_PACKAGE_JSON_FILES,
+  parseRepoUrl,
+} from "@ossperks/core";
 import type { RepoRef } from "@ossperks/core";
 
 const extractRepoUrl = (repo: unknown): string | null => {
@@ -65,8 +69,6 @@ const fromGitConfig = (cwd: string): RepoRef | null => {
 
 export const detectRepo = (cwd = process.cwd()): RepoRef | null =>
   fromPackageJson(cwd) ?? fromGitConfig(cwd);
-
-const MAX_PACKAGE_JSON_FILES = 20;
 
 const SKIP_DIRS = new Set([
   "node_modules",

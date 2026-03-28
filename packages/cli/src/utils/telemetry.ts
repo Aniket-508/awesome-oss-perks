@@ -6,8 +6,6 @@ import { setTimeout as delay } from "node:timers/promises";
 
 import { PostHog } from "posthog-node";
 
-// Opt out: DO_NOT_TRACK=1 or DISABLE_TELEMETRY=1
-
 const POSTHOG_API_KEY = process.env["POSTHOG_API_KEY"] ?? "";
 const POSTHOG_HOST = "https://us.i.posthog.com";
 const CLI_VERSION = process.env["VERSION"] ?? "0.0.0";
@@ -117,22 +115,5 @@ export const shutdownTelemetry = async (): Promise<void> => {
     await Promise.race([activeClient.shutdown(), delay(SHUTDOWN_TIMEOUT_MS)]);
   } catch {
     // ignore
-  }
-};
-
-const NPM_REGISTRY_URL = "https://registry.npmjs.org/ossperks/latest";
-
-export const fetchLatestVersion = async (): Promise<string | null> => {
-  try {
-    const res = await fetch(NPM_REGISTRY_URL, {
-      signal: AbortSignal.timeout(3000),
-    });
-    if (!res.ok) {
-      return null;
-    }
-    const data = (await res.json()) as { version?: string };
-    return data.version ?? null;
-  } catch {
-    return null;
   }
 };

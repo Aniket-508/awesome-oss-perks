@@ -46,7 +46,9 @@
     "test": "pnpm build && vitest run"
   },
   "dependencies": {
+    "@clack/prompts": "^1.1.0",
     "commander": "^14.0.3",
+    "execa": "^9.6.1",
     "license-similarity": "^0.2.3",
     "picocolors": "^1.1.1",
     "posthog-node": "^5.28.8"
