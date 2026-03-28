@@ -3,8 +3,11 @@ import { Command } from "commander";
 import pc from "picocolors";
 
 import { header, programRow, maxSlugLength } from "../utils/format.js";
+import { track } from "../utils/telemetry.js";
 
 export const searchCommand = new Command("search")
+  .alias("find")
+  .alias("s")
   .description("Search programs by name, description, tags, or perks")
   .argument("<query>", "search query")
   .option("--json", "output as JSON")
@@ -25,6 +28,11 @@ export const searchCommand = new Command("search")
             k.description.toLowerCase().includes(q),
         ),
     );
+
+    track("cli:search", {
+      queryLength: query.length,
+      resultCount: results.length,
+    });
 
     if (opts.json) {
       console.log(JSON.stringify(results, null, 2));

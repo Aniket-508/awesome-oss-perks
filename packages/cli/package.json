@@ -48,7 +48,8 @@
   "dependencies": {
     "commander": "^14.0.3",
     "license-similarity": "^0.2.3",
-    "picocolors": "^1.1.1"
+    "picocolors": "^1.1.1",
+    "posthog-node": "^5.28.8"
   },
   "devDependencies": {
     "@ossperks/core": "workspace:*",

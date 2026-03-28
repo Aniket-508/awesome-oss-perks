@@ -27,6 +27,7 @@ import {
   success,
 } from "../utils/format.js";
 import { closestSlug } from "../utils/slug.js";
+import { track } from "../utils/telemetry.js";
 
 interface CheckOpts {
   repo?: string;
@@ -150,6 +151,7 @@ const printCheckResults = (
 };
 
 export const checkCommand = new Command("check")
+  .alias("ck")
   .description(
     "Check your project's eligibility for OSS perk programs by fetching live repo data",
   )
@@ -221,6 +223,14 @@ export const checkCommand = new Command("check")
     if (targetProgram) {
       const result = checkEligibility(targetProgram, ctx);
 
+      track("cli:check", {
+        eligible: result.status === "eligible" ? 1 : 0,
+        ineligible: result.status === "ineligible" ? 1 : 0,
+        programFilter: true,
+        provider: ref.provider,
+        review: result.status === "needs-review" ? 1 : 0,
+      });
+
       if (opts.json) {
         console.log(
           JSON.stringify(
@@ -266,6 +276,24 @@ export const checkCommand = new Command("check")
     }
 
     const results = checkAllPrograms(programs, ctx);
+
+    const eligibleCount = results.filter(
+      (r) => r.result.status === "eligible",
+    ).length;
+    const reviewCount = results.filter(
+      (r) => r.result.status === "needs-review",
+    ).length;
+    const ineligibleCount = results.filter(
+      (r) => r.result.status === "ineligible",
+    ).length;
+
+    track("cli:check", {
+      eligible: eligibleCount,
+      ineligible: ineligibleCount,
+      programFilter: false,
+      provider: ref.provider,
+      review: reviewCount,
+    });
 
     if (opts.json) {
       console.log(

@@ -8,8 +8,10 @@ import type { Category } from "@ossperks/core";
 import { Command } from "commander";
 
 import { header, programRow, maxSlugLength, error } from "../utils/format.js";
+import { track } from "../utils/telemetry.js";
 
 export const listCommand = new Command("list")
+  .alias("ls")
   .description("List all OSS perk programs")
   .option("-c, --category <category>", "filter by category")
   .option("--json", "output as JSON")
@@ -26,6 +28,8 @@ export const listCommand = new Command("list")
       }
       results = getProgramsByCategory(opts.category as Category);
     }
+
+    track("cli:list", { categoryFilter: Boolean(opts.category) });
 
     if (opts.json) {
       console.log(JSON.stringify(results, null, 2));

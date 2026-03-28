@@ -3,8 +3,10 @@ import { Command } from "commander";
 
 import { programDetail, error } from "../utils/format.js";
 import { closestSlug } from "../utils/slug.js";
+import { track } from "../utils/telemetry.js";
 
 export const showCommand = new Command("show")
+  .alias("info")
   .description("Show details for a specific OSS perk program")
   .argument("<slug>", "program slug (e.g. vercel, sentry, github-copilot)")
   .option("--json", "output as JSON")
@@ -17,6 +19,8 @@ export const showCommand = new Command("show")
       error(`Unknown program slug "${slug}".${hint}`);
       process.exit(1);
     }
+
+    track("cli:show");
 
     if (opts.json) {
       console.log(JSON.stringify(program, null, 2));

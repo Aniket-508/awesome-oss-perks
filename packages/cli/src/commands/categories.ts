@@ -7,12 +7,16 @@ import { Command } from "commander";
 import pc from "picocolors";
 
 import { header } from "../utils/format.js";
+import { track } from "../utils/telemetry.js";
 
 export const categoriesCommand = new Command("categories")
+  .alias("cats")
   .description("List all available program categories")
   .option("--json", "output as JSON")
   .action((opts: { json?: boolean }) => {
     const categories = getCategories();
+
+    track("cli:categories");
 
     if (opts.json) {
       console.log(
