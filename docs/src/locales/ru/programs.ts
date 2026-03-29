@@ -19,13 +19,32 @@ const programs = {
     empty: "В этой категории пока нет программ."
   },
   sections: {
+    applyShort: "Подать",
+    categoryLabel: "Категория",
     checkEligibility: "Проверка соответствия",
+    checkShort: "Проверить",
+    copyLink: "Копировать ссылку",
+    copyLinkTooltip: "Копировать ссылку на страницу",
     eligibility: "Условия участия",
     howToApply: "Как подать заявку",
+    linkCopied: "Ссылка скопирована!",
+    linkCopiedTooltip: "Ссылка скопирована!",
+    nextProgram: "Следующая программа",
+    nextProgramTooltip: "Следующая программа",
     people: "Контактные лица",
     perks: "Преимущества",
+    previousProgram: "Предыдущая программа",
+    previousProgramTooltip: "Предыдущая программа",
     requirements: "Требования",
-    tags: "Теги"
+    share: "Поделиться",
+    shareOnFacebook: "Поделиться в Facebook",
+    shareOnLinkedIn: "Поделиться в LinkedIn",
+    shareOnReddit: "Поделиться в Reddit",
+    shareOnWhatsApp: "Поделиться в WhatsApp",
+    shareOnX: "Поделиться в X",
+    similarTo: "Похоже на {name}",
+    tags: "Теги",
+    viewAll: "Все программы"
   },
   submit: {
     backToAll: "Все программы",

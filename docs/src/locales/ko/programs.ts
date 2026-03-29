@@ -19,13 +19,32 @@ const programs = {
     empty: "이 카테고리에 아직 프로그램이 없습니다."
   },
   sections: {
+    applyShort: "신청",
+    categoryLabel: "카테고리",
     checkEligibility: "자격 확인",
+    checkShort: "확인",
+    copyLink: "링크 복사",
+    copyLinkTooltip: "페이지 링크 복사",
     eligibility: "자격 요건",
     howToApply: "신청 방법",
+    linkCopied: "링크가 복사되었습니다",
+    linkCopiedTooltip: "링크가 복사되었습니다",
+    nextProgram: "다음 프로그램",
+    nextProgramTooltip: "다음 프로그램",
     people: "관련 인물",
     perks: "혜택",
+    previousProgram: "이전 프로그램",
+    previousProgramTooltip: "이전 프로그램",
     requirements: "요구 사항",
-    tags: "태그"
+    share: "공유",
+    shareOnFacebook: "Facebook에 공유",
+    shareOnLinkedIn: "LinkedIn에 공유",
+    shareOnReddit: "Reddit에 공유",
+    shareOnWhatsApp: "WhatsApp으로 공유",
+    shareOnX: "X에 공유",
+    similarTo: "{name}와(과) 유사",
+    tags: "태그",
+    viewAll: "모든 프로그램 보기"
   },
   submit: {
     backToAll: "모든 프로그램",

@@ -19,13 +19,32 @@ const programs = {
     empty: "该类别下暂时还没有项目。"
   },
   sections: {
+    applyShort: "申请",
+    categoryLabel: "类别",
     checkEligibility: "检查资格",
+    checkShort: "检查",
+    copyLink: "复制链接",
+    copyLinkTooltip: "复制页面链接",
     eligibility: "资格要求",
     howToApply: "如何申请",
+    linkCopied: "链接已复制！",
+    linkCopiedTooltip: "链接已复制！",
+    nextProgram: "下一个项目",
+    nextProgramTooltip: "下一个项目",
     people: "相关人员",
     perks: "福利",
+    previousProgram: "上一个项目",
+    previousProgramTooltip: "上一个项目",
     requirements: "要求",
-    tags: "标签"
+    share: "分享",
+    shareOnFacebook: "分享到 Facebook",
+    shareOnLinkedIn: "分享到 LinkedIn",
+    shareOnReddit: "分享到 Reddit",
+    shareOnWhatsApp: "分享到 WhatsApp",
+    shareOnX: "分享到 X",
+    similarTo: "与 {name} 类似",
+    tags: "标签",
+    viewAll: "查看所有项目"
   },
   submit: {
     backToAll: "所有项目",

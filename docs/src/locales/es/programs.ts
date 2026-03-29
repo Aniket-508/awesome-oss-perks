@@ -19,13 +19,32 @@ const programs = {
     empty: "Aún no hay programas en esta categoría."
   },
   sections: {
+    applyShort: "Aplicar",
+    categoryLabel: "Categoría",
     checkEligibility: "Verificar Elegibilidad",
+    checkShort: "Verificar",
+    copyLink: "Copiar enlace",
+    copyLinkTooltip: "Copiar enlace de la página",
     eligibility: "Elegibilidad",
     howToApply: "Cómo aplicar",
+    linkCopied: "¡Enlace copiado!",
+    linkCopiedTooltip: "¡Enlace copiado!",
+    nextProgram: "Programa siguiente",
+    nextProgramTooltip: "Programa siguiente",
     people: "Personas",
     perks: "Beneficios",
+    previousProgram: "Programa anterior",
+    previousProgramTooltip: "Programa anterior",
     requirements: "Requisitos",
-    tags: "Etiquetas"
+    share: "Compartir",
+    shareOnFacebook: "Compartir en Facebook",
+    shareOnLinkedIn: "Compartir en LinkedIn",
+    shareOnReddit: "Compartir en Reddit",
+    shareOnWhatsApp: "Compartir en WhatsApp",
+    shareOnX: "Compartir en X",
+    similarTo: "Similar a {name}",
+    tags: "Etiquetas",
+    viewAll: "Ver todos los programas"
   },
   submit: {
     backToAll: "Todos los programas",

@@ -19,13 +19,32 @@ const programs = {
     empty: "このカテゴリーにはまだプログラムがありません。"
   },
   sections: {
+    applyShort: "応募",
+    categoryLabel: "カテゴリ",
     checkEligibility: "適格性を確認",
+    checkShort: "確認",
+    copyLink: "リンクをコピー",
+    copyLinkTooltip: "ページのリンクをコピー",
     eligibility: "応募資格",
     howToApply: "応募方法",
+    linkCopied: "リンクをコピーしました",
+    linkCopiedTooltip: "リンクをコピーしました",
+    nextProgram: "次のプログラム",
+    nextProgramTooltip: "次のプログラム",
     people: "関連する人物",
     perks: "特典",
+    previousProgram: "前のプログラム",
+    previousProgramTooltip: "前のプログラム",
     requirements: "要件",
-    tags: "タグ"
+    share: "共有",
+    shareOnFacebook: "Facebookで共有",
+    shareOnLinkedIn: "LinkedInで共有",
+    shareOnReddit: "Redditで共有",
+    shareOnWhatsApp: "WhatsAppで共有",
+    shareOnX: "Xで共有",
+    similarTo: "{name}に似ている",
+    tags: "タグ",
+    viewAll: "すべてのプログラムを見る"
   },
   submit: {
     backToAll: "すべてのプログラム",
