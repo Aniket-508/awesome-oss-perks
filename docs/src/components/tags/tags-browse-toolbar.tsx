@@ -98,10 +98,10 @@ export const TagsBrowseToolbar = ({ labels }: TagsBrowseToolbarProps) => {
   );
 
   const setSort = useCallback(
-    async (value: string) => {
+    async (value: TagsBrowseSort | null) => {
       await setParams({
         page: 1,
-        sort: value as TagsBrowseSort,
+        sort: value,
       });
     },
     [setParams],

@@ -48,8 +48,8 @@ export const ProgramListToolbar = ({ labels }: { labels: ToolbarCopy }) => {
   );
 
   const setSort = useCallback(
-    async (value: string) => {
-      await setParams({ sort: value as ProgramListSort });
+    async (value: ProgramListSort | null) => {
+      await setParams({ sort: value });
     },
     [setParams],
   );

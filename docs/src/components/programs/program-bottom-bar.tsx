@@ -88,12 +88,8 @@ export const ProgramBottomBar = ({
     }
   }, [shareUrl]);
 
-  useHotkey("KeyC", async (e) => {
-    if (
-      e.key !== "c" ||
-      !hotkeyOk(e) ||
-      isEditableTarget(document.activeElement)
-    ) {
+  useHotkey("C", async (e) => {
+    if (!hotkeyOk(e) || isEditableTarget(document.activeElement)) {
       return;
     }
     e.preventDefault();
