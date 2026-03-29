@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRightIcon, Search } from "lucide-react";
+import { ArrowRightIcon, ListTodoIcon } from "lucide-react";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
@@ -98,7 +98,7 @@ export const ProgramStickyHeader = ({
                   href={checkHref}
                   tabIndex={showCompactActions ? undefined : -1}
                 >
-                  <Search />
+                  <ListTodoIcon />
                   {labels.checkShort}
                 </Link>
               }

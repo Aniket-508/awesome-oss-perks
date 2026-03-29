@@ -4,13 +4,14 @@ import {
   getProgramsByCategory,
   programs as allPrograms,
 } from "@ossperks/core";
-import { ArrowRightIcon, Search } from "lucide-react";
+import { ArrowRightIcon, ListTodoIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 import { PersonCard } from "@/components/people/person-card";
 import { ProgramBottomBar } from "@/components/programs/program-bottom-bar";
+import { ProgramCard } from "@/components/programs/program-card";
 import { ProgramStickyHeader } from "@/components/programs/program-sticky-header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -27,8 +28,6 @@ import { encodeTagForPath } from "@/lib/tag-path";
 import { getUnavatarUrl } from "@/lib/unavatar";
 import { BreadcrumbJsonLd, ProgramJsonLd } from "@/seo/json-ld";
 import { createMetadata } from "@/seo/metadata";
-
-const SIMILAR_TAG_PREVIEW = 3;
 
 export default async function ProgramPage({
   params,
@@ -248,7 +247,7 @@ export default async function ProgramPage({
                     nativeButton={false}
                     render={
                       <Link href={checkHref}>
-                        <Search />
+                        <ListTodoIcon />
                         {sec.checkEligibility}
                       </Link>
                     }
@@ -266,76 +265,79 @@ export default async function ProgramPage({
             programUrl={program.url}
           />
 
-          <aside className="lg:sticky lg:top-16 lg:self-start">
-            <div className="bg-fd-muted/20 border-fd-border/60 space-y-6 rounded-xl border p-4">
-              {people.length > 0 ? (
-                <section>
-                  <h2 className="text-fd-muted-foreground mb-3 text-sm font-medium">
-                    {sec.people}
-                  </h2>
-                  <div className="flex flex-col gap-3">
-                    {people.map((person) => {
-                      const personHref = withLocalePrefix(
-                        lang,
-                        `${ROUTES.PEOPLE}/${person.slug}` as `/${string}`,
-                      );
-                      const avatarUrl = person.contact.url
-                        ? getUnavatarUrl(person.contact.url)
-                        : null;
-                      return (
-                        <PersonCard
-                          avatarUrl={avatarUrl}
-                          contact={person.contact}
-                          href={personHref}
-                          key={person.slug}
-                          variant="program"
-                        />
-                      );
-                    })}
-                  </div>
-                </section>
-              ) : null}
-
-              {people.length > 0 ? <Separator /> : null}
-
+          <aside className="space-y-8 lg:sticky lg:top-16 lg:self-start">
+            {people.length > 0 ? (
               <section>
                 <h2 className="text-fd-muted-foreground mb-3 text-sm font-medium">
-                  {sec.categoryLabel}
+                  {sec.contact}
                 </h2>
-                <div className="flex flex-wrap gap-2">
-                  <Link href={categoryHref}>
-                    <Badge variant="default">{categoryLabel}</Badge>
-                  </Link>
-                  {program.duration ? (
-                    <Badge variant="outline">{program.duration}</Badge>
-                  ) : null}
+                <div className="flex flex-col gap-3">
+                  {people.map((person) => {
+                    const personHref = withLocalePrefix(
+                      lang,
+                      `${ROUTES.PEOPLE}/${person.slug}` as `/${string}`,
+                    );
+                    const avatarUrl = person.contact.url
+                      ? getUnavatarUrl(person.contact.url)
+                      : null;
+                    return (
+                      <PersonCard
+                        avatarUrl={avatarUrl}
+                        contact={person.contact}
+                        href={personHref}
+                        key={person.slug}
+                        subtitle={
+                          person.contact.role
+                            ? t.people.roleAt
+                                .replace("{role}", person.contact.role)
+                                .replace("{provider}", program.provider)
+                            : undefined
+                        }
+                      />
+                    );
+                  })}
                 </div>
               </section>
+            ) : null}
 
-              {program.tags && program.tags.length > 0 ? (
-                <>
-                  <Separator />
-                  <section>
-                    <h2 className="text-fd-muted-foreground mb-3 text-sm font-medium">
-                      {sec.tags}
-                    </h2>
-                    <div className="flex flex-wrap gap-2">
-                      {program.tags.map((tag) => (
-                        <Link
-                          href={withLocalePrefix(
-                            lang,
-                            `${ROUTES.TAGS}/${encodeTagForPath(tag)}` as `/${string}`,
-                          )}
-                          key={tag}
-                        >
-                          <Badge variant="secondary">{tag}</Badge>
-                        </Link>
-                      ))}
-                    </div>
-                  </section>
-                </>
-              ) : null}
-            </div>
+            <section>
+              <h2 className="text-fd-muted-foreground mb-3 text-sm font-medium">
+                {sec.categoryLabel}
+              </h2>
+              <Link href={categoryHref}>
+                <Badge variant="default">{categoryLabel}</Badge>
+              </Link>
+            </section>
+
+            {program.duration ? (
+              <section>
+                <h2 className="text-fd-muted-foreground mb-3 text-sm font-medium">
+                  {sec.timeline}
+                </h2>
+                <p className="text-fd-foreground text-sm">{program.duration}</p>
+              </section>
+            ) : null}
+
+            {program.tags && program.tags.length > 0 ? (
+              <section>
+                <h2 className="text-fd-muted-foreground mb-3 text-sm font-medium">
+                  {sec.tags}
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {program.tags.map((tag) => (
+                    <Link
+                      href={withLocalePrefix(
+                        lang,
+                        `${ROUTES.TAGS}/${encodeTagForPath(tag)}` as `/${string}`,
+                      )}
+                      key={tag}
+                    >
+                      <Badge variant="secondary">{tag}</Badge>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            ) : null}
           </aside>
         </div>
 
@@ -360,60 +362,29 @@ export default async function ProgramPage({
                   </Link>
                 }
                 size="sm"
-                variant="outline"
+                variant="ghost"
+                className="text-fd-primary"
               />
             </div>
             <div className="grid gap-4 md:grid-cols-3">
               {similarPrograms.map((p) => {
-                const href = withLocalePrefix(
+                const similarCategoryLabel =
+                  t.common.categories[
+                    p.category as keyof typeof t.common.categories
+                  ] ?? p.category;
+                const programHref = withLocalePrefix(
                   lang,
                   `${ROUTES.PROGRAMS}/${p.slug}` as `/${string}`,
                 );
-                const tags = p.tags ?? [];
-                const visibleTags = tags.slice(0, SIMILAR_TAG_PREVIEW);
-                const moreCount = tags.length - visibleTags.length;
                 return (
-                  <Link
-                    className="bg-fd-background ring-foreground/10 hover:bg-fd-muted/30 block rounded-xl p-4 ring-1 transition-colors"
-                    href={href}
+                  <ProgramCard
+                    categoryLabel={similarCategoryLabel}
                     key={p.slug}
-                  >
-                    <div className="mb-2 flex items-start gap-2">
-                      <h3 className="text-base font-semibold">
-                        <span className="decoration-fd-primary/40 hover:decoration-fd-primary underline underline-offset-2">
-                          {p.name}
-                        </span>
-                      </h3>
-                    </div>
-                    <p className="text-fd-muted-foreground line-clamp-2 text-sm">
-                      {p.description}
-                    </p>
-                    {tags.length > 0 ? (
-                      <div className="mt-3 flex flex-wrap items-center gap-1.5">
-                        {visibleTags.map((tag) => (
-                          <Link
-                            href={withLocalePrefix(
-                              lang,
-                              `${ROUTES.TAGS}/${encodeTagForPath(tag)}` as `/${string}`,
-                            )}
-                            key={tag}
-                          >
-                            <Badge className="font-normal" variant="secondary">
-                              {tag}
-                            </Badge>
-                          </Link>
-                        ))}
-                        {moreCount > 0 ? (
-                          <span className="text-fd-muted-foreground text-xs">
-                            {t.programs.more.replace(
-                              "{count}",
-                              String(moreCount),
-                            )}
-                          </span>
-                        ) : null}
-                      </div>
-                    ) : null}
-                  </Link>
+                    learnMore={t.programs.learnMore}
+                    more={t.programs.more}
+                    program={p}
+                    programHref={programHref}
+                  />
                 );
               })}
             </div>

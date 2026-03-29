@@ -5,7 +5,6 @@ import { ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 const personCardPartVariants = cva("", {
@@ -16,7 +15,6 @@ const personCardPartVariants = cva("", {
       part: "avatar",
       variant: "featured",
     },
-    { class: "size-10", part: "avatar", variant: "program" },
     { class: "text-lg", part: "fallback", variant: "directory" },
     { class: "text-xl", part: "fallback", variant: "featured" },
     {
@@ -26,8 +24,10 @@ const personCardPartVariants = cva("", {
       variant: "directory",
     },
     { class: "font-semibold", part: "name", variant: "featured" },
-    { class: "font-medium", part: "name", variant: "program" },
   ],
+  defaultVariants: {
+    variant: "directory",
+  },
   variants: {
     part: {
       avatar: "",
@@ -37,22 +37,22 @@ const personCardPartVariants = cva("", {
     variant: {
       directory: "",
       featured: "",
-      program: "",
     },
   },
 });
 
-interface PersonCardProps
-  extends
-    React.ComponentProps<typeof Link>,
-    Pick<VariantProps<typeof personCardPartVariants>, "variant"> {
+interface PersonCardProps extends Pick<
+  VariantProps<typeof personCardPartVariants>,
+  "variant"
+> {
+  href: string;
   avatarUrl: string | null;
   contact: Contact;
   subtitle?: string;
 }
 
 export const PersonCard = (props: PersonCardProps) => {
-  const { href, avatarUrl, contact, subtitle, variant, ...rest } = props;
+  const { href, avatarUrl, contact, subtitle, variant } = props;
   const initial = contact.name.charAt(0).toUpperCase();
 
   const avatar = (
@@ -72,31 +72,9 @@ export const PersonCard = (props: PersonCardProps) => {
     </Avatar>
   );
 
-  if (variant === "program") {
-    return (
-      <Link href={href} {...rest}>
-        <Card className="hover:bg-fd-muted/50 transition-colors">
-          <CardContent className="flex items-center gap-4 p-4">
-            {avatar}
-            <div className="min-w-0 flex-1">
-              <p className={personCardPartVariants({ part: "name", variant })}>
-                {contact.name}
-              </p>
-              {contact.role ? (
-                <p className="text-fd-muted-foreground text-sm">
-                  {contact.role}
-                </p>
-              ) : null}
-            </div>
-          </CardContent>
-        </Card>
-      </Link>
-    );
-  }
-
   if (variant === "featured") {
     return (
-      <Link className="group block" href={href} {...rest}>
+      <Link className="group block" href={href}>
         <div className="ring-foreground/10 hover:bg-fd-accent flex flex-col items-center gap-3 rounded-xl p-8 ring-1 transition-colors">
           {avatar}
           <div className="text-center">
@@ -113,7 +91,7 @@ export const PersonCard = (props: PersonCardProps) => {
   }
 
   return (
-    <Link className="group block" href={href} {...rest}>
+    <Link className="group block" href={href}>
       <div className="ring-foreground/10 hover:bg-fd-accent flex items-center gap-4 rounded-xl p-4 ring-1 transition-colors">
         {avatar}
         <div className="min-w-0 flex-1">
