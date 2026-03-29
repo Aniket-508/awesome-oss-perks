@@ -29,48 +29,43 @@ const isCI = (): boolean =>
   Boolean(process.env["TRAVIS"]) ||
   Boolean(process.env["BUILDKITE"]);
 
+let resolvedId: string | null = null;
 let client: PostHog | null = null;
-let distinctId: string | null = null;
+let shutdownCalled = false;
 
-const getDistinctId = (): string => {
-  if (distinctId) {
-    return distinctId;
-  }
-
-  if (isCI()) {
-    distinctId = `ci-${randomUUID()}`;
-    return distinctId;
+const resolveDistinctId = (): string => {
+  if (resolvedId) {
+    return resolvedId;
   }
 
   try {
     const raw = readFileSync(TELEMETRY_STATE_PATH, "utf8");
     const saved = JSON.parse(raw) as { distinctId?: string };
-    const persisted = saved.distinctId;
-    if (persisted) {
-      distinctId = persisted;
-      return persisted;
+    if (saved.distinctId) {
+      resolvedId = saved.distinctId;
+      return resolvedId;
     }
   } catch {
     // ignore
   }
 
-  distinctId = randomUUID();
+  resolvedId = randomUUID();
 
   try {
     writeFileSync(
       TELEMETRY_STATE_PATH,
-      JSON.stringify({ distinctId }, null, 2),
+      JSON.stringify({ distinctId: resolvedId }, null, 2),
       "utf8",
     );
   } catch {
     // ignore
   }
 
-  return distinctId;
+  return resolvedId;
 };
 
 const getClient = (): PostHog | null => {
-  if (isDisabled() || !POSTHOG_API_KEY) {
+  if (shutdownCalled || isDisabled() || !POSTHOG_API_KEY) {
     return null;
   }
   if (!client) {
@@ -92,7 +87,7 @@ export const track = (
     return;
   }
   c.capture({
-    distinctId: getDistinctId(),
+    distinctId: resolveDistinctId(),
     event,
     properties: {
       ci: isCI(),
@@ -105,14 +100,13 @@ export const track = (
 };
 
 export const shutdownTelemetry = async (): Promise<void> => {
-  const activeClient = client;
-  client = null;
-  if (!activeClient) {
+  shutdownCalled = true;
+  if (!client) {
     return;
   }
 
   try {
-    await Promise.race([activeClient.shutdown(), delay(SHUTDOWN_TIMEOUT_MS)]);
+    await Promise.race([client.shutdown(), delay(SHUTDOWN_TIMEOUT_MS)]);
   } catch {
     // ignore
   }
