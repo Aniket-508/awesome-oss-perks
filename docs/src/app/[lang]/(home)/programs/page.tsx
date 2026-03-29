@@ -2,18 +2,24 @@ import {
   getCategories,
   getAllPerkTypes,
   getProgramPerkTypes,
+  getProgramsByCategory,
+  PERK_TYPE_LABELS,
 } from "@ossperks/core";
+import type { Category } from "@ossperks/core";
 import { Plus } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import type { SearchParams } from "nuqs/server";
 
 import { ProgramsFilter } from "@/components/programs/programs-filter";
 import { Button } from "@/components/ui/button";
 import { ROUTES } from "@/constants/routes";
 import { generateLangParams } from "@/i18n/config";
+import { formatProgramsCategoryIntro } from "@/i18n/format-programs-category-intro";
 import { getT } from "@/i18n/get-t";
 import { withLocalePrefix } from "@/i18n/navigation";
 import { getPrograms } from "@/lib/programs";
+import { programsParamsCache } from "@/lib/search-params";
 import { ProgramListJsonLd } from "@/seo/json-ld";
 import { createMetadata } from "@/seo/metadata";
 
@@ -21,13 +27,39 @@ export const generateStaticParams = generateLangParams;
 
 export const generateMetadata = async ({
   params,
+  searchParams,
 }: {
   params: Promise<{ lang: string }>;
+  searchParams: Promise<SearchParams>;
 }): Promise<Metadata> => {
   const { lang } = await params;
+  const { category } = await programsParamsCache.parse(searchParams);
   const t = await getT(lang);
+
+  if (category) {
+    const categoryLabel =
+      t.common.categories[category as keyof typeof t.common.categories] ??
+      category;
+    const programCount = getProgramsByCategory(category as Category).length;
+    return createMetadata({
+      description: formatProgramsCategoryIntro(
+        t.programs.category.intro,
+        programCount,
+        categoryLabel,
+        lang,
+      ),
+      lang,
+      path: "/programs",
+      title: `${categoryLabel} — ${t.programs.listing.heading}`,
+    });
+  }
+
+  const translatedPrograms = await getPrograms(lang);
   return createMetadata({
-    description: t.programs.listing.description,
+    description: t.programs.listing.intro.replace(
+      "{count}",
+      String(translatedPrograms.length),
+    ),
     lang,
     path: "/programs",
     title: t.programs.listing.heading,
@@ -36,10 +68,13 @@ export const generateMetadata = async ({
 
 export default async function ProgramsPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ lang: string }>;
+  searchParams: Promise<SearchParams>;
 }) {
   const { lang } = await params;
+  await programsParamsCache.parse(searchParams);
   const [t, translatedPrograms] = await Promise.all([
     getT(lang),
     getPrograms(lang),
@@ -68,8 +103,10 @@ export default async function ProgramsPage({
               {t.programs.listing.heading}
             </h1>
             <p className="text-fd-muted-foreground max-w-2xl text-lg">
-              {translatedPrograms.length} {t.programs.listing.countSuffix}{" "}
-              {t.programs.listing.description}
+              {t.programs.listing.intro.replace(
+                "{count}",
+                String(translatedPrograms.length),
+              )}
             </p>
           </div>
           <div className="shrink-0">
@@ -97,6 +134,7 @@ export default async function ProgramsPage({
             more: t.programs.more,
           }}
           categoryLabels={t.common.categories}
+          perkTypeLabels={PERK_TYPE_LABELS}
         />
       </div>
     </>

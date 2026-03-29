@@ -1,7 +1,8 @@
 "use client";
 
 import type { Category, PerkType, Program } from "@ossperks/core";
-import { useCallback, useMemo, useState } from "react";
+import { useQueryStates } from "nuqs";
+import { useCallback, useMemo } from "react";
 
 import { ProgramCard } from "@/components/programs/program-card";
 import {
@@ -12,6 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { withLocalePrefix } from "@/i18n/navigation";
+import { programsSearchParams } from "@/lib/search-params";
 
 interface ProgramWithPerkTypes extends Program {
   perkTypes: PerkType[];
@@ -23,11 +25,16 @@ interface ProgramsFilterProps {
   perkTypes: PerkType[];
   lang: string;
   translations: {
-    filters: { allCategories: string; allTypes: string };
+    filters: {
+      allCategories: string;
+      allTypes: string;
+      noMatches: string;
+    };
     learnMore: string;
     more: string;
   };
   categoryLabels: Record<string, string>;
+  perkTypeLabels: Record<string, string>;
 }
 
 const ALL = "__all__";
@@ -39,46 +46,56 @@ export const ProgramsFilter = ({
   lang,
   translations,
   categoryLabels,
+  perkTypeLabels,
 }: ProgramsFilterProps) => {
-  const [selectedCategory, setSelectedCategory] = useState(ALL);
-  const [selectedPerkType, setSelectedPerkType] = useState(ALL);
+  const [{ category, type }, setFilters] = useQueryStates(
+    programsSearchParams,
+    { shallow: false },
+  );
 
   const filtered = useMemo(
     () =>
       programs.filter((p) => {
-        if (selectedCategory !== ALL && p.category !== selectedCategory) {
+        if (category && p.category !== category) {
           return false;
         }
-        if (
-          selectedPerkType !== ALL &&
-          !p.perkTypes.includes(selectedPerkType as PerkType)
-        ) {
+        if (type && !p.perkTypes.includes(type)) {
           return false;
         }
         return true;
       }),
-    [programs, selectedCategory, selectedPerkType],
+    [programs, category, type],
   );
 
   const handleCategoryChange = useCallback(
-    (v: string | number | null) => setSelectedCategory(v as string),
-    [],
+    async (v: string | number | null) => {
+      const value = v as string;
+      await setFilters({
+        category: value === ALL ? null : (value as Category),
+      });
+    },
+    [setFilters],
   );
 
   const handlePerkTypeChange = useCallback(
-    (v: string | number | null) => setSelectedPerkType(v as string),
-    [],
+    async (v: string | number | null) => {
+      const value = v as string;
+      await setFilters({
+        type: value === ALL ? null : (value as PerkType),
+      });
+    },
+    [setFilters],
   );
 
   return (
     <>
       <div className="mb-8 flex flex-wrap gap-3">
-        <Select value={selectedCategory} onValueChange={handleCategoryChange}>
+        <Select value={category ?? ALL} onValueChange={handleCategoryChange}>
           <SelectTrigger>
             <SelectValue>
-              {selectedCategory === ALL
-                ? translations.filters.allCategories
-                : (categoryLabels[selectedCategory] ?? selectedCategory)}
+              {category
+                ? (categoryLabels[category] ?? category)
+                : translations.filters.allCategories}
             </SelectValue>
           </SelectTrigger>
           <SelectContent>
@@ -93,19 +110,19 @@ export const ProgramsFilter = ({
           </SelectContent>
         </Select>
 
-        <Select value={selectedPerkType} onValueChange={handlePerkTypeChange}>
+        <Select value={type ?? ALL} onValueChange={handlePerkTypeChange}>
           <SelectTrigger>
             <SelectValue>
-              {selectedPerkType === ALL
-                ? translations.filters.allTypes
-                : selectedPerkType}
+              {type
+                ? (perkTypeLabels[type] ?? type)
+                : translations.filters.allTypes}
             </SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={ALL}>{translations.filters.allTypes}</SelectItem>
-            {perkTypes.map((type) => (
-              <SelectItem key={type} value={type}>
-                {type}
+            {perkTypes.map((perkType) => (
+              <SelectItem key={perkType} value={perkType}>
+                {perkTypeLabels[perkType] ?? perkType}
               </SelectItem>
             ))}
           </SelectContent>
@@ -136,7 +153,7 @@ export const ProgramsFilter = ({
       {filtered.length === 0 && (
         <div className="bg-fd-muted/30 rounded-lg border border-dashed p-12 text-center">
           <p className="text-fd-muted-foreground">
-            No programs match the selected filters.
+            {translations.filters.noMatches}
           </p>
         </div>
       )}

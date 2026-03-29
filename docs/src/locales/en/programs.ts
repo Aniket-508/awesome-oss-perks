@@ -5,19 +5,26 @@ const programs = {
   filters: {
     allCategories: "All Categories",
     allTypes: "All Types",
+    noMatches: "No programs match the selected filters.",
   },
   learnMore: "learn more",
   listing: {
-    countSuffix: "curated programs for open-source projects.",
-    description:
-      "Free tools, credits, and services available to open-source projects. Browse by category and find programs your project qualifies for.",
     heading: "Programs",
+    intro:
+      "{count} curated programs offering free tools, credits, and services for open-source projects.",
   },
   more: "+{count} more",
+  category: {
+    heading: "{category} Programs",
+    intro:
+      "{count} {programLabel} offering {category} perks for your open source projects.",
+    empty: "No programs in this category yet.",
+  },
   sections: {
     checkEligibility: "Check Eligibility",
     eligibility: "Eligibility",
     howToApply: "How to Apply",
+    people: "People",
     perks: "Perks",
     requirements: "Requirements",
     tags: "Tags",

@@ -4,19 +4,25 @@ const programs = {
   by: "提供元:",
   filters: {
     allCategories: "すべてのカテゴリー",
-    allTypes: "すべてのタイプ"
+    allTypes: "すべてのタイプ",
+    noMatches: "選択した条件に一致するプログラムはありません。"
   },
   learnMore: "詳細を見る",
   listing: {
-    countSuffix: "のオープンソースプロジェクト向け厳選プログラム。",
-    description: "オープンソースプロジェクト向けの無料ツール、クレジット、サービスをご紹介します。カテゴリー別に参照して、あなたのプロジェクトが対象となるプログラムを見つけましょう。",
-    heading: "プログラム一覧"
+    heading: "プログラム一覧",
+    intro: "{count}件の厳選プログラム。オープンソース向けの無料ツール、クレジット、サービスを提供しています。"
   },
   more: "他{count}件",
+  category: {
+    heading: "{category}プログラム",
+    intro: "{category}カテゴリのオープンソースプログラムは{count}件。プロジェクト向けの無料ツール、クレジット、サービスをご利用いただけます。",
+    empty: "このカテゴリーにはまだプログラムがありません。"
+  },
   sections: {
     checkEligibility: "適格性を確認",
     eligibility: "応募資格",
     howToApply: "応募方法",
+    people: "関連する人物",
     perks: "特典",
     requirements: "要件",
     tags: "タグ"

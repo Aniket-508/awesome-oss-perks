@@ -7,6 +7,7 @@ export const ROUTES: Record<string, `/${string}`> = {
   LLMS_FULL: "/llms-full.txt",
   PEOPLE: "/people",
   PROGRAMS: "/programs",
+  PROGRAMS_CATEGORY: "/programs/category",
   SPONSORS: "/sponsors",
   SUBMIT_PROGRAM: "/programs/submit",
 };

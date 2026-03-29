@@ -4,19 +4,25 @@ const programs = {
   by: "par",
   filters: {
     allCategories: "Toutes les catégories",
-    allTypes: "Tous les types"
+    allTypes: "Tous les types",
+    noMatches: "Aucun programme ne correspond aux filtres sélectionnés."
   },
   learnMore: "en savoir plus",
   listing: {
-    countSuffix: "programmes sélectionnés pour les projets open source.",
-    description: "Outils gratuits, crédits et services disponibles pour les projets open source. Parcourez par catégorie et trouvez les programmes auxquels votre projet est éligible.",
-    heading: "Programmes"
+    heading: "Programmes",
+    intro: "{count} programmes sélectionnés proposant des outils gratuits, des crédits et des services pour les projets open source."
   },
   more: "+{count} de plus",
+  category: {
+    heading: "Programmes {category}",
+    intro: "{count} programmes dans la catégorie {category} : outils gratuits, crédits et services pour votre projet.",
+    empty: "Aucun programme dans cette catégorie pour le moment."
+  },
   sections: {
     checkEligibility: "Vérifier l'éligibilité",
     eligibility: "Éligibilité",
     howToApply: "Comment postuler",
+    people: "Personnes",
     perks: "Avantages",
     requirements: "Exigences",
     tags: "Tags"

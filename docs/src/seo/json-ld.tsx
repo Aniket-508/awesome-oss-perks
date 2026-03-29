@@ -210,6 +210,35 @@ const PersonPageJsonLd = ({
   return <JsonLdScript data={jsonLd} />;
 };
 
+const CategoryProgramListJsonLd = ({
+  categoryLabel,
+  lang,
+  pageName,
+  programs,
+}: {
+  categoryLabel: string;
+  lang: string;
+  pageName: string;
+  programs: { name: string; slug: string }[];
+}) => {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    about: {
+      "@type": "Thing",
+      name: categoryLabel,
+    },
+    hasPart: programs.map((program) => ({
+      "@type": "SoftwareApplication",
+      name: program.name,
+      url: `${SITE.URL}${withLocalePrefix(lang, `/programs/${program.slug}`)}`,
+    })),
+    name: pageName,
+    numberOfItems: programs.length,
+  };
+  return <JsonLdScript data={jsonLd} />;
+};
+
 const JsonLdScripts = () => (
   <>
     <WebsiteJsonLd />
@@ -227,5 +256,6 @@ export {
   BreadcrumbJsonLd,
   ProgramJsonLd,
   ProgramListJsonLd,
+  CategoryProgramListJsonLd,
   PersonPageJsonLd,
 };

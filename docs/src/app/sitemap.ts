@@ -1,4 +1,9 @@
-import { getPeople, getPersonSlug, programs } from "@ossperks/core";
+import {
+  getCategories,
+  getPeople,
+  getPersonSlug,
+  programs,
+} from "@ossperks/core";
 import type { MetadataRoute } from "next";
 
 import { ROUTES } from "@/constants/routes";
@@ -85,6 +90,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const slugs of cliSlugs) {
     const path =
       `${ROUTES.CLI}${slugs.length > 0 ? `/${slugs.join("/")}` : ""}` as `/${string}`;
+    entries.push({
+      alternates: buildAlternates(path),
+      changeFrequency: "weekly" as const,
+      lastModified,
+      priority: 0.8,
+      url: `${SITE.URL}${withLocalePrefix(i18n.defaultLanguage, path)}`,
+    });
+  }
+
+  for (const category of getCategories()) {
+    const path = `${ROUTES.PROGRAMS_CATEGORY}/${category}` as `/${string}`;
     entries.push({
       alternates: buildAlternates(path),
       changeFrequency: "weekly" as const,

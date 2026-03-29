@@ -1,6 +1,7 @@
 import "../global.css";
 import { Analytics } from "@vercel/analytics/react";
 import { notFound } from "next/navigation";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import type { ReactNode } from "react";
 
 import { RootProvider } from "@/components/root-provider";
@@ -30,7 +31,9 @@ export default async function Layout({
         <JsonLdScripts />
       </head>
       <body className="flex min-h-screen flex-col">
-        <RootProvider i18n={provider(lang)}>{children}</RootProvider>
+        <NuqsAdapter>
+          <RootProvider i18n={provider(lang)}>{children}</RootProvider>
+        </NuqsAdapter>
         <Analytics />
       </body>
     </html>

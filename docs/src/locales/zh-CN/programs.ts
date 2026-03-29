@@ -4,19 +4,25 @@ const programs = {
   by: "由",
   filters: {
     allCategories: "所有类别",
-    allTypes: "所有类型"
+    allTypes: "所有类型",
+    noMatches: "没有符合所选筛选条件的项目。"
   },
   learnMore: "了解更多",
   listing: {
-    countSuffix: "个精选的开源项目计划。",
-    description: "为开源项目提供的免费工具、额度和服务。按类别浏览,找到您的项目符合条件的项目。",
-    heading: "项目"
+    heading: "项目",
+    intro: "{count} 个精选项目，为开源项目提供免费工具、额度和服务。"
   },
   more: "还有 {count} 个",
+  category: {
+    heading: "{category}项目",
+    intro: "{category} 类别共 {count} 个项目，提供免费工具、额度和服务。",
+    empty: "该类别下暂时还没有项目。"
+  },
   sections: {
     checkEligibility: "检查资格",
     eligibility: "资格要求",
     howToApply: "如何申请",
+    people: "相关人员",
     perks: "福利",
     requirements: "要求",
     tags: "标签"

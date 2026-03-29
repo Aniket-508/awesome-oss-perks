@@ -1,10 +1,18 @@
-import { getProgramBySlug, programs } from "@ossperks/core";
+import {
+  CATEGORY_LABELS,
+  getCategories,
+  getProgramBySlug,
+  getProgramsByCategory,
+  programs,
+} from "@ossperks/core";
+import type { Category } from "@ossperks/core";
 import { notFound } from "next/navigation";
 import { ImageResponse } from "next/og";
 
 import OgImage from "@/components/og/og-image";
 import { SITE } from "@/constants/site";
 import { i18n, isLocale } from "@/i18n/config";
+import { formatProgramsCategoryIntro } from "@/i18n/format-programs-category-intro";
 import { getT } from "@/i18n/get-t";
 import { loadOgFonts } from "@/lib/og";
 import { cliSource, programsSource } from "@/lib/source";
@@ -16,6 +24,7 @@ type OgContext =
   | { type: "about" }
   | { type: "programs" }
   | { type: "program"; slug: string }
+  | { type: "category"; category: string }
   | { type: "submit" }
   | { type: "people" }
   | { type: "sponsors" }
@@ -48,12 +57,18 @@ const resolveContext = (slug: string[] | undefined): OgContext | null => {
   if (slug.length === 2 && slug[0] === "programs") {
     return { slug: slug[1], type: "program" };
   }
+  if (slug.length === 3 && slug[0] === "programs" && slug[1] === "category") {
+    return { category: slug[2], type: "category" };
+  }
   return null;
 };
 
 const getFooterLabel = (context: OgContext): string | undefined => {
   if (context.type === "program") {
     return "Program";
+  }
+  if (context.type === "category") {
+    return "Category";
   }
   if (context.type === "submit") {
     return "Submit";
@@ -82,6 +97,9 @@ const validateOgRequest = (params: {
       notFound();
     }
   }
+  if (context.type === "category" && !(context.category in CATEGORY_LABELS)) {
+    notFound();
+  }
   if (context.type === "cli") {
     const page = cliSource.getPage(context.slugs, lang);
     if (!page) {
@@ -105,7 +123,10 @@ const getOgContent = async (
     }
     case "programs": {
       return {
-        description: t.programs.listing.description,
+        description: t.programs.listing.intro.replace(
+          "{count}",
+          String(programs.length),
+        ),
         title: t.programs.listing.heading,
       };
     }
@@ -118,6 +139,22 @@ const getOgContent = async (
       return {
         description: page?.data.description ?? program.description,
         title: program.name,
+      };
+    }
+    case "category": {
+      const categoryLabel =
+        t.common.categories[
+          context.category as keyof typeof t.common.categories
+        ] ?? context.category;
+      const count = getProgramsByCategory(context.category as Category).length;
+      return {
+        description: formatProgramsCategoryIntro(
+          t.programs.category.intro,
+          count,
+          categoryLabel,
+          lang,
+        ),
+        title: t.programs.category.heading.replace("{category}", categoryLabel),
       };
     }
     case "submit": {
@@ -184,6 +221,9 @@ export const generateStaticParams = () => {
     params.push({ lang, slug: ["sponsors"] });
     for (const program of programs) {
       params.push({ lang, slug: ["programs", program.slug] });
+    }
+    for (const category of getCategories()) {
+      params.push({ lang, slug: ["programs", "category", category] });
     }
   }
   for (const page of cliSource.getPages()) {

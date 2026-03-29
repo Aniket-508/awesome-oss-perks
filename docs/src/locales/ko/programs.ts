@@ -4,19 +4,25 @@ const programs = {
   by: "제공",
   filters: {
     allCategories: "모든 카테고리",
-    allTypes: "모든 유형"
+    allTypes: "모든 유형",
+    noMatches: "선택한 필터와 일치하는 프로그램이 없습니다."
   },
   learnMore: "자세히 알아보기",
   listing: {
-    countSuffix: "개의 오픈소스 프로젝트용 엄선된 프로그램.",
-    description: "오픈소스 프로젝트에 제공되는 무료 도구, 크레딧 및 서비스입니다. 카테고리별로 찾아보고 프로젝트에 적합한 프로그램을 찾아보세요.",
-    heading: "프로그램"
+    heading: "프로그램",
+    intro: "{count}개의 엄선된 프로그램으로 오픈소스 프로젝트를 위한 무료 도구, 크레딧 및 서비스를 제공합니다."
   },
   more: "+{count}개 더보기",
+  category: {
+    heading: "{category} 프로그램",
+    intro: "{category} 카테고리 프로그램 {count}개. 프로젝트를 위한 무료 도구, 크레딧 및 서비스입니다.",
+    empty: "이 카테고리에 아직 프로그램이 없습니다."
+  },
   sections: {
     checkEligibility: "자격 확인",
     eligibility: "자격 요건",
     howToApply: "신청 방법",
+    people: "관련 인물",
     perks: "혜택",
     requirements: "요구 사항",
     tags: "태그"

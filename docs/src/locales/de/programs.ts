@@ -4,19 +4,25 @@ const programs = {
   by: "von",
   filters: {
     allCategories: "Alle Kategorien",
-    allTypes: "Alle Typen"
+    allTypes: "Alle Typen",
+    noMatches: "Keine Programme entsprechen den ausgewählten Filtern."
   },
   learnMore: "mehr erfahren",
   listing: {
-    countSuffix: "kuratierte Programme für Open-Source-Projekte.",
-    description: "Kostenlose Tools, Guthaben und Dienste, die für Open-Source-Projekte verfügbar sind. Durchsuchen Sie nach Kategorie und finden Sie Programme, für die Ihr Projekt qualifiziert ist.",
-    heading: "Programme"
+    heading: "Programme",
+    intro: "{count} kuratierte Programme mit kostenlosen Tools, Guthaben und Diensten für Open-Source-Projekte."
   },
   more: "+{count} weitere",
+  category: {
+    heading: "{category}-Programme",
+    intro: "{count} Programme in der Kategorie {category}: kostenlose Tools, Guthaben und Dienste für Open-Source-Projekte.",
+    empty: "In dieser Kategorie gibt es noch keine Programme."
+  },
   sections: {
     checkEligibility: "Berechtigung prüfen",
     eligibility: "Teilnahmeberechtigung",
     howToApply: "Bewerbungsverfahren",
+    people: "Personen",
     perks: "Vorteile",
     requirements: "Anforderungen",
     tags: "Tags"

@@ -1,9 +1,10 @@
-import { getAllProgramSlugs } from "@ossperks/core";
+import { getAllProgramSlugs, getPeopleByProgramSlug } from "@ossperks/core";
 import { ArrowRightIcon, ArrowLeftIcon, Search } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,6 +16,7 @@ import { getT } from "@/i18n/get-t";
 import { withLocalePrefix } from "@/i18n/navigation";
 import { getProgram } from "@/lib/programs";
 import { getProgramPageImage, programsSource } from "@/lib/source";
+import { getUnavatarUrl } from "@/lib/unavatar";
 import { BreadcrumbJsonLd, ProgramJsonLd } from "@/seo/json-ld";
 import { createMetadata } from "@/seo/metadata";
 
@@ -32,6 +34,12 @@ export default async function ProgramPage({
   const categoryLabel =
     t.common.categories[program.category as keyof typeof t.common.categories] ??
     program.category;
+
+  const people = getPeopleByProgramSlug(slug);
+  const categoryHref = withLocalePrefix(
+    lang,
+    `${ROUTES.PROGRAMS_CATEGORY}/${program.category}` as `/${string}`,
+  );
 
   return (
     <>
@@ -61,7 +69,9 @@ export default async function ProgramPage({
 
         <div className="mb-8">
           <div className="mb-2 flex flex-wrap items-center gap-2">
-            <Badge variant="default">{categoryLabel}</Badge>
+            <Link href={categoryHref}>
+              <Badge variant="default">{categoryLabel}</Badge>
+            </Link>
             {program.duration && (
               <Badge variant="outline">{program.duration}</Badge>
             )}
@@ -179,7 +189,7 @@ export default async function ProgramPage({
         {program.tags && program.tags.length > 0 && (
           <>
             <Separator className="mb-10" />
-            <section>
+            <section className="mb-10">
               <h2 id="tags" className="mb-4 text-xl font-semibold">
                 {t.programs.sections.tags}
               </h2>
@@ -189,6 +199,55 @@ export default async function ProgramPage({
                     {tag}
                   </Badge>
                 ))}
+              </div>
+            </section>
+          </>
+        )}
+
+        {people.length > 0 && (
+          <>
+            <Separator className="mb-10" />
+            <section>
+              <h2 id="people" className="mb-4 text-xl font-semibold">
+                {t.programs.sections.people}
+              </h2>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {people.map((person) => {
+                  const personHref = withLocalePrefix(
+                    lang,
+                    `${ROUTES.PEOPLE}/${person.slug}` as `/${string}`,
+                  );
+                  const avatarUrl = person.contact.url
+                    ? getUnavatarUrl(person.contact.url)
+                    : null;
+                  return (
+                    <Link key={person.slug} href={personHref}>
+                      <Card className="hover:bg-fd-muted/50 transition-colors">
+                        <CardContent className="flex items-center gap-4 p-4">
+                          <Avatar className="size-10">
+                            {avatarUrl && (
+                              <AvatarImage
+                                src={avatarUrl}
+                                alt={person.contact.name}
+                              />
+                            )}
+                            <AvatarFallback>
+                              {person.contact.name.charAt(0).toUpperCase()}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="min-w-0 flex-1">
+                            <p className="font-medium">{person.contact.name}</p>
+                            {person.contact.role && (
+                              <p className="text-fd-muted-foreground text-sm">
+                                {person.contact.role}
+                              </p>
+                            )}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  );
+                })}
               </div>
             </section>
           </>
