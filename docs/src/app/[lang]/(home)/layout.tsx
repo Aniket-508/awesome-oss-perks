@@ -18,7 +18,7 @@ export default async function Layout({
   const popularCategories = getFooterPopularCategories(lang, t);
 
   return (
-    <HomeLayout {...baseOptions(lang)}>
+    <HomeLayout className="[--fd-layout-width:var(--max-width-layout)]" {...baseOptions(lang)}>
       {children}
       <Footer
         lang={lang}

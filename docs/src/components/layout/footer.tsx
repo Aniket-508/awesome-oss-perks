@@ -83,7 +83,7 @@ export const Footer = ({
 
   return (
     <footer className="border-fd-border bg-fd-background mt-auto border-t">
-      <div className="mx-auto w-full max-w-(--fd-layout-width) px-4 py-14">
+      <div className="view-container w-full px-4 py-14">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-16 md:gap-6">
           <div className="col-span-full md:col-span-6">
             <Link

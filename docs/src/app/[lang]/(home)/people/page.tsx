@@ -62,7 +62,7 @@ export default async function PeoplePage({
           people={peopleForJsonLd}
         />
       ) : null}
-      <div className="container mx-auto flex w-full flex-1 flex-col px-4 py-12">
+      <div className="view-container flex w-full flex-1 flex-col px-4 py-12">
         <PageBreadcrumb
           homeHref={withLocalePrefix(lang, ROUTES.HOME)}
           homeLabel={t.common.breadcrumbHome}

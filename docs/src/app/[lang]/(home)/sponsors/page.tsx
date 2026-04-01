@@ -34,7 +34,7 @@ export default async function SponsorsPage({
   const t = await getT(lang);
 
   return (
-    <div className="container mx-auto flex w-full flex-1 flex-col px-4 py-12">
+    <div className="view-container flex w-full flex-1 flex-col px-4 py-12">
       <div className="mb-10">
         <h1 className="mb-4 text-4xl font-bold">{t.sponsors.heading}</h1>
         <p className="text-fd-muted-foreground text-lg leading-relaxed">
