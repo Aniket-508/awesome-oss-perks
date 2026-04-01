@@ -21,12 +21,6 @@ const footerLinkClass =
 const columnHeadingClass =
   "text-fd-foreground mb-4 text-sm font-semibold tracking-tight";
 
-const popularCategoryTileClass =
-  "group/tile text-fd-muted-foreground hover:[&[href]]:text-fd-foreground -m-0.5 -my-2 flex min-w-0 items-center justify-between gap-2 p-0.5 py-2";
-
-const popularCategoryHrClass =
-  "border-fd-border group-hover/tile:border-fd-primary min-w-2 flex-1 border-0 border-t border-dotted";
-
 const iconLinkClass =
   "text-fd-muted-foreground hover:text-fd-foreground inline-flex size-9 items-center justify-center rounded-md transition-colors";
 
@@ -87,13 +81,13 @@ export const Footer = ({
         <div className="grid grid-cols-2 gap-8 md:grid-cols-16 md:gap-6">
           <div className="col-span-full md:col-span-6">
             <Link
-              className="text-fd-foreground inline-flex items-center gap-2.5 font-semibold tracking-tight"
+              className="text-fd-foreground mb-4 inline-flex items-center gap-2.5 font-semibold tracking-tight"
               href={homeHref}
             >
               <LogoMark aria-hidden className="h-6 shrink-0" />
               <span className="text-base">{SITE.NAME}</span>
             </Link>
-            <div className="mt-5 flex flex-wrap items-center gap-1">
+            <div className="flex flex-wrap items-center gap-1">
               <Link
                 aria-label={translation.rssFeed}
                 className={iconLinkClass}
@@ -131,7 +125,7 @@ export const Footer = ({
 
           <div className="md:col-span-3">
             <h3 className={columnHeadingClass}>{translation.browse}</h3>
-            <ul className="space-y-0.5">
+            <ul>
               {browseLinks.map(({ href, label }) => (
                 <li key={href}>
                   <Link className={footerLinkClass} href={href}>
@@ -144,7 +138,7 @@ export const Footer = ({
 
           <div className="md:col-span-3">
             <h3 className={columnHeadingClass}>{translation.quickLinks}</h3>
-            <ul className="space-y-0.5">
+            <ul>
               {quickLinks.map(({ href, label, external }) => (
                 <li key={href}>
                   {external ? (
@@ -168,7 +162,7 @@ export const Footer = ({
 
           <div className="md:col-span-3">
             <h3 className={columnHeadingClass}>{translation.otherProducts}</h3>
-            <ul className="space-y-0.5">
+            <ul>
               {otherProducts.map(({ href, label }) => (
                 <li key={href}>
                   <a
@@ -243,15 +237,15 @@ export const Footer = ({
             <h3 className={columnHeadingClass}>
               {translation.popularCategories}
             </h3>
-            <div className="mt-6 grid grid-cols-1 gap-x-10 gap-y-0 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-x-10 sm:grid-cols-2 lg:grid-cols-4">
               {popularCategories.map((item) => (
                 <Link
-                  className={popularCategoryTileClass}
+                  className="group/tile text-fd-muted-foreground hover:[[href]]:text-fd-foreground flex min-w-0 items-center justify-between gap-2"
                   href={item.href}
                   key={item.href}
                 >
-                  <span className="truncate">{item.label}</span>
-                  <hr className={popularCategoryHrClass} />
+                  <span className="truncate text-sm">{item.label}</span>
+                  <hr className="border-fd-border group-hover/tile:border-fd-primary min-w-2 flex-1 border-0 border-t" />
                   <span className="text-fd-muted-foreground shrink-0 text-xs tabular-nums max-sm:hidden">
                     {item.count}
                   </span>
