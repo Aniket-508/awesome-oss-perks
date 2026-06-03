@@ -10,6 +10,7 @@ import { createRelativeLink } from "fumadocs-ui/mdx";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+import { Adventory } from "@/components/adventory";
 import { getMDXComponents } from "@/components/mdx";
 import { LINK } from "@/constants/links";
 import { ROUTES } from "@/constants/routes";
@@ -30,7 +31,13 @@ export default async function Page({
   const MdxContent = page.data.body;
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
+    <DocsPage
+      toc={page.data.toc}
+      full={page.data.full}
+      tableOfContent={{
+        footer: <Adventory type="card" className="mt-4" />,
+      }}
+    >
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription className="mb-0">
         {page.data.description}
