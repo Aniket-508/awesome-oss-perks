@@ -200,7 +200,7 @@ export const ProgramBottomBar = ({
   });
 
   return (
-    <TooltipProvider delay={200}>
+    <TooltipProvider>
       <div
         className={cn(
           "bg-fd-background/95 supports-backdrop-filter:bg-fd-background/80 border-fd-border sticky bottom-0 z-20 -mx-1 border-t px-1 py-3 backdrop-blur-md",
