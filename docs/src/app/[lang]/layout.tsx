@@ -4,11 +4,11 @@ import { notFound } from "next/navigation";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import type { ReactNode } from "react";
 
-import { HotkeysProvider } from "@/components/providers/hotkeys-provider";
-import { RootProvider } from "@/components/providers/root-provider";
 import { generateLangParams, isLocale } from "@/i18n/config";
 import { provider } from "@/i18n/ui";
 import { publicSans } from "@/lib/fonts";
+import { HotkeysProvider } from "@/providers/hotkeys-provider";
+import { RootProvider } from "@/providers/root-provider";
 import { JsonLdScripts } from "@/seo/json-ld";
 import { baseMetadata } from "@/seo/metadata";
 
