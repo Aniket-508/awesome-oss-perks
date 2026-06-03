@@ -1,0 +1,23 @@
+{
+  "slug": "pullfrog-for-oss",
+  "name": "Pullfrog for OSS",
+  "provider": "Pullfrog",
+  "url": "https://pullfrog.com/for-oss",
+  "category": "ai",
+  "contact": {
+    "name": "Colin McDonnell",
+    "url": "https://x.com/colinhacks"
+  },
+  "description": "Pullfrog aims to cover model costs for impactful open source projects by providing unlimited Kimi K2.6 usage.",
+  "perks": [
+    {
+      "title": "Free Model Usage",
+      "description": "Unlimited Kimi K2.6 usage."
+    }
+  ],
+  "eligibility": ["Maintain a GitHub repository with over 1,000 stars."],
+  "applicationProcess": [
+    "Apply via the provided link if your GitHub repository has over 1,000 stars."
+  ],
+  "tags": ["ai", "code-review", "developer-tools", "ci-cd"]
+}
