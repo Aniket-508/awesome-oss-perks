@@ -1,0 +1,54 @@
+{
+  "slug": "tembo-open-source-program",
+  "name": "Tembo Open Source Program",
+  "provider": "Tembo",
+  "url": "https://www.tembo.io/oss",
+  "category": "ai",
+  "contact": {
+    "name": "Benjamin Akar",
+    "role": "CPO & Co-founder",
+    "url": "https://x.com/benjaminakar"
+  },
+  "description": "Tembo offers free access to its platform for open-source projects with OSI-approved licenses.",
+  "perks": [
+    {
+      "title": "Full Feature Access",
+      "description": "Full access to all Tembo features including AI agents, automations, and integrations"
+    },
+    {
+      "title": "Unlimited Contributors",
+      "description": "Unlimited contributors at no additional cost"
+    },
+    {
+      "title": "Priority Support",
+      "description": "Priority support from our team"
+    },
+    {
+      "title": "Free for Open Source",
+      "description": "No strings attached - keep using Tembo for free as long as your project remains open source"
+    },
+    {
+      "title": "GitHub Integration",
+      "description": "Seamless GitHub integration with your repositories and workflows"
+    }
+  ],
+  "eligibility": [
+    "Project must be publicly available on GitHub or GitLab",
+    "Licensed under MIT, Apache 2.0, or similar OSI-approved license",
+    "Must be non-commercial (no revenue-generating projects)",
+    "Applicant must be an owner or maintainer of the repository",
+    "Project should have active development and community engagement"
+  ],
+  "applicationProcess": [
+    "Apply through the Tembo OSS Program application page.",
+    "Tembo reviews the application for eligibility."
+  ],
+  "tags": [
+    "ai",
+    "open-source",
+    "cloud",
+    "automation",
+    "code-quality",
+    "infrastructure"
+  ]
+}

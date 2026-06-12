@@ -32,6 +32,7 @@ Free tools, services, and credits offered to open-source projects and their main
 - [OpenAI](https://openai.com/form/codex-open-source-fund/) - A $1 million grant initiative providing one-time API credit grants of up to $25,000 for open source projects integrating Codex CLI or OpenAI models — separate from the Codex for Open Source subscription benefit.
 - [Pullfrog](https://pullfrog.com/for-oss) - Pullfrog aims to cover model costs for impactful open source projects by providing unlimited Kimi K2.6 usage.
 - [Sourcery](https://sourcery.ai/pricing) - Free AI-powered code reviews for open source projects on public repositories, with full Pro-tier functionality including IDE integration and security scans.
+- [Tembo](https://www.tembo.io/oss) - Tembo offers free access to its platform for open-source projects with OSI-approved licenses.
 
 ## Analytics
 
