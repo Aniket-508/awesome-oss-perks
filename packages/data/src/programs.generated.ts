@@ -29,6 +29,7 @@ import greptile from "./programs/greptile.json" with { type: "json" };
 import jetbrains from "./programs/jetbrains.json" with { type: "json" };
 import microsoftFossFund from "./programs/microsoft-foss-fund.json" with { type: "json" };
 import mintlify from "./programs/mintlify.json" with { type: "json" };
+import neonOpenSourceProgram from "./programs/neon-open-source-program.json" with { type: "json" };
 import neon from "./programs/neon.json" with { type: "json" };
 import netlify from "./programs/netlify.json" with { type: "json" };
 import openaiCodexFund from "./programs/openai-codex-fund.json" with { type: "json" };
@@ -83,6 +84,7 @@ export const rawPrograms = [
   jetbrains,
   microsoftFossFund,
   mintlify,
+  neonOpenSourceProgram,
   neon,
   netlify,
   openaiCodexFund,
