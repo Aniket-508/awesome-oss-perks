@@ -1,0 +1,38 @@
+{
+  "slug": "neon-open-source-program",
+  "name": "Neon Open Source Program",
+  "provider": "Neon",
+  "url": "https://neon.com/programs/open-source",
+  "category": "devtools",
+  "contact": {
+    "name": "Anthony Giuliano",
+    "role": "Staff Developer Advocate",
+    "url": "https://x.com/ant_giuliano"
+  },
+  "description": "Neon provides credits, cash, and visibility to open source projects that help developers build on Neon, with a focus on projects that use Postgres.",
+  "perks": [
+    {
+      "title": "Platform Credits",
+      "description": "Eligible open-source software receives up to $5,000 in platform credits yearly."
+    },
+    {
+      "title": "Cash Referral Program",
+      "description": "Receive $20 via GitHub Sponsorships for every developer who discovers Neon through your work and becomes a customer."
+    },
+    {
+      "title": "Marketing Support",
+      "description": "Promotional support to expand your project's visibility to Neon's 1M+ developer community through blog posts, social media, case studies, and co-marketing initiatives."
+    }
+  ],
+  "eligibility": [
+    "Your work must be open source and publicly available under a recognized open-source license.",
+    "Developers should be able to self-host the software.",
+    "Open-source software that uses Postgres is an ideal fit.",
+    "Provide documentation, CLI tools, and code examples that teach users how to build with your software and Neon."
+  ],
+  "applicationProcess": [
+    "Get in touch via the contact form.",
+    "Wait for a response, typically within 1-3 business days."
+  ],
+  "tags": ["open-source", "developer-tools", "credits", "postgres"]
+}
