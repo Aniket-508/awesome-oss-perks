@@ -64,7 +64,6 @@ Free tools, services, and credits offered to open-source projects and their main
 - [GitLab](https://about.gitlab.com/solutions/open-source/) - GitLab provides free Ultimate-tier features and 50,000 compute minutes for qualifying open-source projects through the GitLab for Open Source Program.
 - [JetBrains](https://www.jetbrains.com/community/opensource/) - JetBrains offers free All Products Pack subscriptions for open-source project core teams, covering all JetBrains IDEs for development.
 - [Mintlify](https://www.mintlify.com/oss-program) - Non-commercial open source projects get Mintlify's Pro plan for free (normally $300/month), including custom domains, advanced analytics, API playground, AI chat, and version control.
-- [Neon](https://neon.com/programs/open-source) - Neon provides credits, cash, and visibility to open source projects that help developers build on Neon, with a focus on projects that use Postgres.
 - [Sanity](https://www.sanity.io/docs/open-source-plan) - Sanity offers its Growth plan for free to non-monetized open source projects, including 3 datasets, 25 users, SAML SSO, and no credit card required as long as you stay within quotas.
 - [Stainless](https://stainless.com/pricing) - Free Starter plan (normally $79/mo per generator) for qualifying non-commercial open-source projects, including SDK, documentation site, and MCP server generation from OpenAPI specs.
 
