@@ -1,7 +1,6 @@
 import { HomeLayout } from "fumadocs-ui/layouts/home";
 import type { ReactNode } from "react";
 
-import { Adventory } from "@/components/adventory";
 import { Footer } from "@/components/layout/footer";
 import { baseOptions } from "@/components/layout/layout.shared";
 import { getT } from "@/i18n/get-t";
@@ -23,10 +22,6 @@ export default async function Layout({
       className="[--fd-layout-width:var(--max-width-layout)]"
       {...baseOptions(lang)}
     >
-      <Adventory
-        type="banner"
-        className="mx-auto max-w-(--fd-layout-width) px-4 pt-2.5"
-      />
       {children}
       <Footer
         lang={lang}
