@@ -40,6 +40,7 @@ import sanity from "./programs/sanity.json" with { type: "json" };
 import semaphore from "./programs/semaphore.json" with { type: "json" };
 import sentry from "./programs/sentry.json" with { type: "json" };
 import signpath from "./programs/signpath.json" with { type: "json" };
+import sleekAnalyticsOssProgram from "./programs/sleek-analytics-oss-program.json" with { type: "json" };
 import snyk from "./programs/snyk.json" with { type: "json" };
 import socketForOpenSource from "./programs/socket-for-open-source.json" with { type: "json" };
 import sonarcloud from "./programs/sonarcloud.json" with { type: "json" };
@@ -94,6 +95,7 @@ export const rawPrograms = [
   semaphore,
   sentry,
   signpath,
+  sleekAnalyticsOssProgram,
   snyk,
   socketForOpenSource,
   sonarcloud,
