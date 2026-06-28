@@ -38,6 +38,7 @@ Free tools, services, and credits offered to open-source projects and their main
 
 - [OpenPanel](https://openpanel.dev/open-source) - OpenPanel offers free analytics for open-source projects with up to 2.5 million events per month, full feature access, and unlimited team members.
 - [PostHog](https://posthog.com/startups) - Free credits for small open-source projects covering product analytics, session replay, feature flags, error tracking, and more.
+- [Sleek Anlytics](https://getsleek.io/oss) - 1 year of Pro plan
 
 ## CI/CD
 

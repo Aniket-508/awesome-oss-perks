@@ -1,0 +1,22 @@
+{
+  "slug": "sleek-analytics-oss-program",
+  "name": "Sleek Analytics OSS Program",
+  "provider": "Sleek Anlytics",
+  "url": "https://getsleek.io/oss",
+  "category": "analytics",
+  "contact": {
+    "name": "Abbas",
+    "role": "Founder",
+    "url": "https://getsleek.io/oss"
+  },
+  "description": "1 year of Pro plan",
+  "perks": [
+    {
+      "title": "Pro plan",
+      "description": "12 months free"
+    }
+  ],
+  "eligibility": ["Open-Source Projects"],
+  "applicationProcess": ["Apply through website"],
+  "tags": ["analytics", "tracking", "observability"]
+}
