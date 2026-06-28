@@ -6,7 +6,8 @@
   "category": "analytics",
   "contact": {
     "name": "Abbas",
-    "url": "https://getsleek.io/contact"
+    "role": "Founder",
+    "url": "https://getsleek.io/oss"
   },
   "description": "1 year of Pro plan",
   "perks": [
@@ -16,6 +17,6 @@
     }
   ],
   "eligibility": ["Open-Source Projects"],
-  "applicationProcess": ["Apple through website"],
-  "tags": ["analytic"]
+  "applicationProcess": ["Apply through website"],
+  "tags": ["analytics", "tracking", "observability"]
 }
