@@ -50,6 +50,7 @@ import temboOpenSourceProgram from "./programs/tembo-open-source-program.json" w
 import unstatusOssProgram from "./programs/unstatus-oss-program.json" with { type: "json" };
 import upstash from "./programs/upstash.json" with { type: "json" };
 import vercel from "./programs/vercel.json" with { type: "json" };
+import webclawOssProgram from "./programs/webclaw-oss-program.json" with { type: "json" };
 import zulip from "./programs/zulip.json" with { type: "json" };
 
 export const rawPrograms = [
@@ -105,5 +106,6 @@ export const rawPrograms = [
   unstatusOssProgram,
   upstash,
   vercel,
+  webclawOssProgram,
   zulip,
 ];
