@@ -67,6 +67,7 @@ Free tools, services, and credits offered to open-source projects and their main
 - [Mintlify](https://www.mintlify.com/oss-program) - Non-commercial open source projects get Mintlify's Pro plan for free (normally $300/month), including custom domains, advanced analytics, API playground, AI chat, and version control.
 - [Sanity](https://www.sanity.io/docs/open-source-plan) - Sanity offers its Growth plan for free to non-monetized open source projects, including 3 datasets, 25 users, SAML SSO, and no credit card required as long as you stay within quotas.
 - [Stainless](https://stainless.com/pricing) - Free Starter plan (normally $79/mo per generator) for qualifying non-commercial open-source projects, including SDK, documentation site, and MCP server generation from OpenAPI specs.
+- [Webclaw](https://webclaw.io/oss) - webclaw for OSS gives open-source builders 100,000 free web-scraping credits a month, a feature on webclaw.io, and a direct line to the team. You ship the tool. Your users find webclaw.
 
 ## Funding
 
