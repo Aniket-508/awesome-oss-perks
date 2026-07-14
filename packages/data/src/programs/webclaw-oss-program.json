@@ -1,0 +1,38 @@
+{
+  "slug": "webclaw-oss-program",
+  "name": "Webclaw OSS Program",
+  "provider": "Webclaw",
+  "url": "https://webclaw.io/oss",
+  "category": "devtools",
+  "contact": {
+    "name": "Valerio Massimiani",
+    "url": "https://0xmassi.dev/"
+  },
+  "description": "webclaw for OSS gives open-source builders 100,000 free web-scraping credits a month, a feature on webclaw.io, and a direct line to the team. You ship the tool. Your users find webclaw.",
+  "perks": [
+    {
+      "title": "100,000 credits / month",
+      "description": "The same monthly credits as the Growth plan, free, while your project stays active. Scrape, crawl, search, and extract without watching a meter."
+    },
+    {
+      "title": "We feature your project",
+      "description": "Your logo and repo link on webclaw.io and on our social channels, in front of developers looking for exactly what you built."
+    },
+    {
+      "title": "Priority support",
+      "description": "A direct line to the team on Discord. Bugs and feature requests from OSS builders jump the queue."
+    },
+    {
+      "title": "It renews",
+      "description": "The grant renews each month while your project stays active and the integration stays documented. No re-application.\n\n"
+    }
+  ],
+  "eligibility": [
+    "Public and open source\nA public repository under an OSI-approved license. Any language, any framework.",
+    "A real webclaw integration\nYour tool calls webclaw as part of what it does: a loader, an MCP server, a template, an action, a CLI.",
+    "Actively maintained\nRecent commits, a real README, someone home. We fund living projects.",
+    "Built for other people to use\nThe strongest fit puts webclaw in front of your own users: something people install, clone, or run."
+  ],
+  "applicationProcess": ["Apply here: https://webclaw.io/oss#apply"],
+  "tags": ["ai", "developer-tools", "webscraping"]
+}
