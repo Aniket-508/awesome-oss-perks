@@ -108,18 +108,70 @@ ossperks categories
 ossperks categories --json
 ```
 
+### `telemetry`
+
+Show or change anonymous usage data collection.
+
+```sh
+ossperks telemetry          # same as `status`
+ossperks telemetry status
+ossperks telemetry disable
+ossperks telemetry enable
+```
+
 ## Environment Variables
 
-Set these to avoid API rate limits when checking repos:
+Tokens avoid API rate limits when checking repos; the last two disable telemetry.
 
-| Variable       | Description                  |
-| -------------- | ---------------------------- |
-| `GITHUB_TOKEN` | GitHub personal access token |
-| `GITLAB_TOKEN` | GitLab personal access token |
+| Variable           | Description                                       |
+| ------------------ | ------------------------------------------------- |
+| `GITHUB_TOKEN`     | GitHub personal access token                      |
+| `GITLAB_TOKEN`     | GitLab personal access token                      |
+| `DO_NOT_TRACK`     | Set to any value to disable telemetry             |
+| `DISABLE_TELEMETRY`| Set to any value to disable telemetry             |
 
 ```sh
 GITHUB_TOKEN=ghp_... ossperks check --repo your-org/your-repo
 ```
+
+## Telemetry
+
+The CLI collects anonymous usage data to understand which commands are used and
+on which platforms. It is **on by default**, and a notice is printed the first
+time an event is sent.
+
+**What is collected**
+
+| Field                                | Example              |
+| ------------------------------------ | -------------------- |
+| Command name                         | `cli:check`          |
+| CLI version                          | `0.4.0`              |
+| Operating system, architecture       | `linux`, `arm64`     |
+| Node version                         | `v22.20.0`           |
+| Whether the run is in CI             | `true`               |
+| Anonymous id: `sha256(host:user)[:16]` | `9f1c2ab4d0e3f871` |
+
+Errors also send the command name, error message, and stack trace so crashes can
+be fixed.
+
+**What is never collected:** repository names or URLs, file paths, tokens, the
+contents of your project, your hostname or username in plain text, or your IP
+beyond what PostHog records for any HTTPS request.
+
+Data is sent to [PostHog](https://posthog.com) (`https://us.i.posthog.com`).
+Delivery failures are silently dropped — telemetry never writes errors to your
+terminal and never blocks a command.
+
+**How to opt out** (any one of these):
+
+```sh
+ossperks telemetry disable   # persisted to ~/.ossperks/telemetry.json
+export DO_NOT_TRACK=1        # per-shell, also respected by other tools
+export DISABLE_TELEMETRY=1   # per-shell
+```
+
+Re-enable with `ossperks telemetry enable`. Check the current state with
+`ossperks telemetry status`.
 
 ## Development
 

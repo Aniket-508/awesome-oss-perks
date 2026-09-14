@@ -118,6 +118,22 @@ Free tools, services, and credits offered to open-source projects and their main
 
 Contributions welcome! Read the [contribution guidelines](CONTRIBUTING.md) first.
 
+## CLI Telemetry
+
+The [`ossperks` CLI](https://www.npmjs.com/package/ossperks) collects anonymous
+usage data (command name, CLI version, OS, architecture, Node version, and
+whether the run is in CI) to help prioritise work. Repository names, file paths
+and tokens are never sent.
+
+Opt out at any time:
+
+```sh
+ossperks telemetry disable   # or: export DO_NOT_TRACK=1
+```
+
+Full details, including the exact payload and how to re-enable, are in the
+[CLI README](packages/cli/README.md#telemetry).
+
 ## License
 
 [![CC0](https://mirrors.creativecommons.org/presskit/buttons/88x31/svg/cc-zero.svg)](https://creativecommons.org/publicdomain/zero/1.0)

@@ -97,7 +97,7 @@ describe("telemetry", () => {
       expect.objectContaining({ recursive: true }),
     );
     expect(writeFileSyncMock).toHaveBeenCalledWith(
-      "/home/test/telemetry.json",
+      "/home/test/.ossperks/telemetry.json",
       JSON.stringify({ enabled: true, notified: true }, null, 2),
     );
     expect(captureMock).toHaveBeenCalledWith(
@@ -142,7 +142,7 @@ describe("telemetry", () => {
       expect.objectContaining({ recursive: true }),
     );
     expect(writeFileSyncMock).toHaveBeenCalledWith(
-      "/home/test/telemetry.json",
+      "/home/test/.ossperks/telemetry.json",
       JSON.stringify({ enabled: true, notified: true }, null, 2),
     );
     expect(captureMock).toHaveBeenCalledWith(
@@ -173,5 +173,93 @@ describe("telemetry", () => {
 
     expect(postHogConstructorMock).toHaveBeenCalledTimes(2);
     expect(captureMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("reports status from config and environment", async () => {
+    readFileSyncMock.mockReturnValue(
+      JSON.stringify({ enabled: true, notified: true }),
+    );
+
+    const { getStatus } = await importTelemetry();
+    expect(getStatus()).toBe("on");
+
+    process.env["DO_NOT_TRACK"] = "1";
+    expect(getStatus()).toBe("disabled-by-env");
+  });
+
+  it("stops sending events once telemetry is disabled", async () => {
+    readFileSyncMock.mockReturnValue(
+      JSON.stringify({ enabled: false, notified: true }),
+    );
+
+    const { capture } = await importTelemetry();
+
+    capture("cli:list");
+
+    expect(postHogConstructorMock).not.toHaveBeenCalled();
+    expect(captureMock).not.toHaveBeenCalled();
+  });
+
+  it("persists the opt-out to the config file", async () => {
+    readFileSyncMock.mockReturnValue(
+      JSON.stringify({ enabled: true, notified: true }),
+    );
+
+    const { setEnabled } = await importTelemetry();
+
+    setEnabled(false);
+
+    expect(writeFileSyncMock).toHaveBeenCalledWith(
+      "/home/test/.ossperks/telemetry.json",
+      JSON.stringify({ enabled: false, notified: true }, null, 2),
+    );
+  });
+
+  it("reads an opt-out left behind in the legacy home-directory config", async () => {
+    readFileSyncMock.mockImplementation((path: string) => {
+      if (path === "/home/test/telemetry.json") {
+        return JSON.stringify({ enabled: false, notified: true });
+      }
+      throw new Error("ENOENT");
+    });
+
+    const { getStatus } = await importTelemetry();
+
+    expect(getStatus()).toBe("disabled-by-config");
+  });
+
+  it("swallows unreachable-endpoint failures instead of printing them", async () => {
+    readFileSyncMock.mockReturnValue(
+      JSON.stringify({ enabled: true, notified: true }),
+    );
+    const fetchMock = vi
+      .spyOn(globalThis, "fetch")
+      .mockRejectedValue(new Error("ETIMEDOUT"));
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {
+      // silence
+    });
+
+    const { capture } = await importTelemetry();
+    capture("cli:check");
+
+    const options = postHogConstructorMock.mock.calls[0]?.[1] as {
+      fetch: (
+        url: string,
+        init: { headers: Record<string, string> },
+      ) => Promise<{
+        status: number;
+        text: () => Promise<string>;
+      }>;
+    };
+    const response = await options.fetch("https://us.i.posthog.com/batch", {
+      headers: {},
+    });
+
+    expect(response.status).toBe(200);
+    await expect(response.text()).resolves.toBe("{}");
+    expect(errorSpy).not.toHaveBeenCalled();
+
+    fetchMock.mockRestore();
+    errorSpy.mockRestore();
   });
 });

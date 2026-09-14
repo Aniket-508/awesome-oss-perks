@@ -1,0 +1,67 @@
+---
+title: ossperks telemetry
+description: Inspecta y modifica la recopilación anónima de datos de uso de la CLI.
+---
+
+## Uso
+
+```
+ossperks telemetry [status|enable|disable]
+```
+
+Ejecutar `ossperks telemetry` sin subcomando muestra el estado actual.
+
+## Subcomandos
+
+| Subcomando | Descripción                                             |
+| ---------- | ------------------------------------------------------- |
+| `status`   | Muestra si la telemetría está habilitada, y desde dónde |
+| `enable`   | Activa la telemetría                                    |
+| `disable`  | Desactiva la telemetría                                 |
+
+## Qué se recopila
+
+La telemetría está **activada por defecto**. Se muestra un aviso la primera vez que se envía un evento.
+
+| Campo                                | Ejemplo            |
+| ------------------------------------ | ------------------ |
+| Nombre del comando                   | `cli:check`        |
+| Versión de la CLI                    | `0.4.0`            |
+| Sistema operativo, arquitectura      | `linux`, `arm64`   |
+| Versión de Node                      | `v22.20.0`         |
+| Si la ejecución ocurre en CI         | `true`             |
+| Id anónimo: `sha256(host:user)[:16]` | `9f1c2ab4d0e3f871` |
+
+Los comandos fallidos envían además el nombre del comando, el mensaje de error y la traza de la pila.
+
+**Nunca se recopila:** nombres o URLs de repositorios, rutas de archivos, tokens, contenidos del proyecto, ni tu nombre de host y de usuario en texto plano.
+
+Los eventos se envían a [PostHog](https://posthog.com) en `https://us.i.posthog.com`. Los fallos de envío se descartan en silencio: la telemetría nunca escribe errores en tu terminal ni retrasa un comando.
+
+## Cómo desactivarla
+
+Basta con cualquiera de estas opciones:
+
+```bash
+# Persisted to ~/.ossperks/telemetry.json
+ossperks telemetry disable
+
+# Per-shell, also honoured by other developer tools
+export DO_NOT_TRACK=1
+export DISABLE_TELEMETRY=1
+```
+
+Las variables de entorno tienen prioridad sobre el archivo de configuración, por lo que una shell con `DO_NOT_TRACK=1` sigue excluida incluso después de ejecutar `ossperks telemetry enable`.
+
+## Salida
+
+```
+Telemetry
+─────────
+
+  Status  disabled
+  Config  /home/you/.ossperks/telemetry.json
+
+  Anonymous usage data: command name, CLI version, OS, arch, Node version,
+  and whether the run is in CI. No repo names, paths, or tokens are sent.
+```

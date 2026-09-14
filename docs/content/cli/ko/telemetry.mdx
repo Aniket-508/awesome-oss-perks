@@ -1,0 +1,67 @@
+---
+title: ossperks telemetry
+description: CLI의 익명 사용 데이터 수집을 확인하고 변경합니다.
+---
+
+## 사용법
+
+```
+ossperks telemetry [status|enable|disable]
+```
+
+하위 명령 없이 `ossperks telemetry`를 실행하면 현재 상태가 출력됩니다.
+
+## 하위 명령
+
+| 하위 명령 | 설명                                    |
+| --------- | --------------------------------------- |
+| `status`  | 텔레메트리 활성화 여부와 그 출처를 표시 |
+| `enable`  | 텔레메트리 켜기                         |
+| `disable` | 텔레메트리 끄기                         |
+
+## 수집되는 항목
+
+텔레메트리는 **기본적으로 켜져 있습니다**. 이벤트가 처음 전송될 때 안내 문구가 출력됩니다.
+
+| 필드                              | 예시               |
+| --------------------------------- | ------------------ |
+| 명령 이름                         | `cli:check`        |
+| CLI 버전                          | `0.4.0`            |
+| 운영체제, 아키텍처                | `linux`, `arm64`   |
+| Node 버전                         | `v22.20.0`         |
+| CI 환경에서 실행되었는지 여부     | `true`             |
+| 익명 ID: `sha256(host:user)[:16]` | `9f1c2ab4d0e3f871` |
+
+실패한 명령의 경우 명령 이름, 오류 메시지, 스택 트레이스가 추가로 전송됩니다.
+
+**절대 수집하지 않는 항목:** 저장소 이름이나 URL, 파일 경로, 토큰, 프로젝트 내용, 또는 평문 형태의 호스트 이름과 사용자 이름.
+
+이벤트는 `https://us.i.posthog.com`의 [PostHog](https://posthog.com)로 전송됩니다. 전송 실패는 조용히 폐기됩니다 — 텔레메트리는 터미널에 오류를 출력하지 않으며 명령을 지연시키지도 않습니다.
+
+## 수집 거부(Opt-out)
+
+다음 중 하나만 해도 충분합니다:
+
+```bash
+# Persisted to ~/.ossperks/telemetry.json
+ossperks telemetry disable
+
+# Per-shell, also honoured by other developer tools
+export DO_NOT_TRACK=1
+export DISABLE_TELEMETRY=1
+```
+
+환경 변수가 설정 파일보다 우선하므로, `DO_NOT_TRACK=1`이 설정된 셸에서는 `ossperks telemetry enable`을 실행해도 수집 거부 상태가 유지됩니다.
+
+## 출력
+
+```
+Telemetry
+─────────
+
+  Status  disabled
+  Config  /home/you/.ossperks/telemetry.json
+
+  Anonymous usage data: command name, CLI version, OS, arch, Node version,
+  and whether the run is in CI. No repo names, paths, or tokens are sent.
+```

@@ -10,8 +10,11 @@ const POSTHOG_API_KEY = process.env["POSTHOG_API_KEY"] ?? "";
 const POSTHOG_HOST = "https://us.i.posthog.com";
 const CLI_VERSION = process.env["VERSION"] ?? "0.0.0";
 const CONFIG_DIR = join(homedir(), ".ossperks");
-const TELEMETRY_FILE = join(homedir(), "telemetry.json");
+const TELEMETRY_FILE = join(CONFIG_DIR, "telemetry.json");
+/** Pre-0.3.4 builds wrote the config straight into the home directory. */
+const LEGACY_TELEMETRY_FILE = join(homedir(), "telemetry.json");
 const SHUTDOWN_TIMEOUT_MS = 300;
+const REQUEST_TIMEOUT_MS = 2000;
 
 export type TelemetryProperties = Record<
   string,
@@ -43,18 +46,34 @@ interface TelemetryConfig {
   notified: boolean;
 }
 
-const readConfig = (): TelemetryConfig => {
+const DEFAULT_CONFIG: TelemetryConfig = { enabled: true, notified: false };
+
+const readConfigFile = (path: string): TelemetryConfig | null => {
   try {
-    const raw = readFileSync(TELEMETRY_FILE, "utf8");
-    return JSON.parse(raw) as TelemetryConfig;
+    const parsed = JSON.parse(readFileSync(path, "utf8")) as
+      | Partial<TelemetryConfig>
+      | undefined;
+    if (typeof parsed?.enabled !== "boolean") {
+      return null;
+    }
+    return { enabled: parsed.enabled, notified: parsed.notified === true };
   } catch {
-    return { enabled: true, notified: false };
+    return null;
   }
 };
 
+const readConfig = (): TelemetryConfig =>
+  readConfigFile(TELEMETRY_FILE) ??
+  readConfigFile(LEGACY_TELEMETRY_FILE) ??
+  DEFAULT_CONFIG;
+
 const writeConfig = (config: TelemetryConfig): void => {
-  mkdirSync(CONFIG_DIR, { recursive: true });
-  writeFileSync(TELEMETRY_FILE, JSON.stringify(config, null, 2));
+  try {
+    mkdirSync(CONFIG_DIR, { recursive: true });
+    writeFileSync(TELEMETRY_FILE, JSON.stringify(config, null, 2));
+  } catch {
+    // A read-only or unwritable home directory must not break the command.
+  }
 };
 
 const showFirstRunNotice = (): void => {
@@ -65,7 +84,7 @@ const showFirstRunNotice = (): void => {
 
   console.log(
     "\n  OSS Perks collects anonymous usage data to improve the CLI." +
-      "\n  Run `ossperks telemetry disable` to opt out.\n",
+      "\n  Run `ossperks telemetry disable` or set DO_NOT_TRACK=1 to opt out.\n",
   );
 
   writeConfig({ ...config, notified: true });
@@ -77,20 +96,52 @@ const getContext = (): Record<string, string> => ({
   os: process.platform,
 });
 
-const isEnabled = (): boolean => {
+export type TelemetryStatus = "disabled-by-config" | "disabled-by-env" | "on";
+
+export const getStatus = (): TelemetryStatus => {
   if (isDisabledByEnv()) {
-    return false;
+    return "disabled-by-env";
   }
-  return readConfig().enabled;
+  return readConfig().enabled ? "on" : "disabled-by-config";
+};
+
+/**
+ * PostHog reports transport failures by writing the error and its stack
+ * straight to stderr (`logFlushError` in `@posthog/core`) and exposes no hook
+ * to silence it. Telemetry must never add noise to a user's terminal, so an
+ * unreachable endpoint is absorbed here and reported upstream as an empty
+ * success — the event is simply dropped.
+ */
+const silentFetch = async (
+  url: string,
+  options: { headers: Record<string, string>; signal?: AbortSignal } & Record<
+    string,
+    unknown
+  >,
+) => {
+  const timeout = AbortSignal.timeout(REQUEST_TIMEOUT_MS);
+  const signal = options.signal
+    ? AbortSignal.any([options.signal, timeout])
+    : timeout;
+
+  try {
+    return await fetch(url, { ...options, signal } as RequestInit);
+  } catch {
+    return new Response("{}", {
+      headers: { "content-type": "application/json" },
+      status: 200,
+    });
+  }
 };
 
 const getClient = (): PostHog | null => {
-  if (!isEnabled() || !POSTHOG_API_KEY) {
+  if (getStatus() !== "on" || !POSTHOG_API_KEY) {
     return null;
   }
 
   if (!client) {
     client = new PostHog(POSTHOG_API_KEY, {
+      fetch: silentFetch,
       flushAt: 1,
       flushInterval: 0,
       host: POSTHOG_HOST,
@@ -153,3 +204,5 @@ export const setEnabled = (enabled: boolean): void => {
   const config = readConfig();
   writeConfig({ ...config, enabled, notified: true });
 };
+
+export const getConfigPath = (): string => TELEMETRY_FILE;

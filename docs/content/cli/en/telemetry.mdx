@@ -1,0 +1,67 @@
+---
+title: ossperks telemetry
+description: Inspect and change the CLI's anonymous usage data collection.
+---
+
+## Usage
+
+```
+ossperks telemetry [status|enable|disable]
+```
+
+Running `ossperks telemetry` with no subcommand prints the current status.
+
+## Subcommands
+
+| Subcommand | Description                                       |
+| ---------- | ------------------------------------------------- |
+| `status`   | Show whether telemetry is enabled, and from where |
+| `enable`   | Turn telemetry on                                 |
+| `disable`  | Turn telemetry off                                |
+
+## What is collected
+
+Telemetry is **on by default**. A notice is printed the first time an event is sent.
+
+| Field                                  | Example            |
+| -------------------------------------- | ------------------ |
+| Command name                           | `cli:check`        |
+| CLI version                            | `0.4.0`            |
+| Operating system, architecture         | `linux`, `arm64`   |
+| Node version                           | `v22.20.0`         |
+| Whether the run is in CI               | `true`             |
+| Anonymous id: `sha256(host:user)[:16]` | `9f1c2ab4d0e3f871` |
+
+Failed commands additionally send the command name, error message, and stack trace.
+
+**Never collected:** repository names or URLs, file paths, tokens, project contents, or your hostname and username in plain text.
+
+Events go to [PostHog](https://posthog.com) at `https://us.i.posthog.com`. Delivery failures are dropped silently — telemetry never writes errors to your terminal and never delays a command.
+
+## Opting out
+
+Any one of these is enough:
+
+```bash
+# Persisted to ~/.ossperks/telemetry.json
+ossperks telemetry disable
+
+# Per-shell, also honoured by other developer tools
+export DO_NOT_TRACK=1
+export DISABLE_TELEMETRY=1
+```
+
+Environment variables win over the config file, so a shell with `DO_NOT_TRACK=1` stays opted out even after `ossperks telemetry enable`.
+
+## Output
+
+```
+Telemetry
+─────────
+
+  Status  disabled
+  Config  /home/you/.ossperks/telemetry.json
+
+  Anonymous usage data: command name, CLI version, OS, arch, Node version,
+  and whether the run is in CI. No repo names, paths, or tokens are sent.
+```
