@@ -21,6 +21,7 @@ const footer = {
   rssFeed: "Flux RSS",
   sponsor: "Sponsor",
   submit: "Soumettre",
+  stacks: "Stacks",
   tags: "Tags",
   translationsBy: "Traductions par",
   twitter: "X (Twitter)"

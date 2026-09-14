@@ -21,7 +21,8 @@
         "src/locales/[locale]/home.ts",
         "src/locales/[locale]/people.ts",
         "src/locales/[locale]/programs.ts",
-        "src/locales/[locale]/sponsors.ts"
+        "src/locales/[locale]/sponsors.ts",
+        "src/locales/[locale]/stacks.ts"
       ]
     }
   }

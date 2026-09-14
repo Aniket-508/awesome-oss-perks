@@ -21,6 +21,7 @@ const footer = {
   rssFeed: "Feed RSS",
   sponsor: "Patrocinar",
   submit: "Enviar",
+  stacks: "Stacks",
   tags: "Tags",
   translationsBy: "Traduções por",
   twitter: "X (Twitter)"

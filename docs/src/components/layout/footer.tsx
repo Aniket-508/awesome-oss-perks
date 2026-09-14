@@ -37,6 +37,7 @@ export const Footer = ({
     { href: p(ROUTES.PROGRAMS), label: translation.programs },
     { href: p(ROUTES.CATEGORIES), label: translation.categories },
     { href: p(ROUTES.PEOPLE), label: translation.people },
+    { href: p(ROUTES.STACKS), label: translation.stacks },
     { href: p(ROUTES.TAGS), label: translation.tags },
     { href: p(ROUTES.CLI), label: translation.cli },
   ] as const;

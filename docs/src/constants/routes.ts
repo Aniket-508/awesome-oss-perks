@@ -10,6 +10,7 @@ export const ROUTES: Record<string, `/${string}`> = {
   PROGRAMS: "/programs",
   RSS: "/rss.xml",
   SPONSORS: "/sponsors",
+  STACKS: "/stacks",
   SUBMIT_PROGRAM: "/programs/submit",
   TAGS: "/tags",
 };

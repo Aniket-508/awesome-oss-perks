@@ -21,6 +21,7 @@ const footer = {
   rssFeed: "RSS 피드",
   sponsor: "후원",
   submit: "제출",
+  stacks: "스택",
   tags: "태그",
   translationsBy: "번역",
   twitter: "X (Twitter)"

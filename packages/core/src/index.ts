@@ -20,7 +20,20 @@ export {
   perkTypeEnum,
   programs,
   programSchema,
+  getStackBySlug,
+  getStackPerkCount,
+  getStackPrograms,
+  getStackSlugs,
+  getStacksByProgram,
+  STACK_ROLES,
+  STACKS,
   formatSlug,
+} from "@ossperks/data";
+export type {
+  Stack,
+  StackEntry,
+  StackProgram,
+  StackRole,
 } from "@ossperks/data";
 export type { Category, Contact, PerkType, Program } from "@ossperks/data";
 export type {
