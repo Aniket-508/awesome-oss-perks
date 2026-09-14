@@ -1,0 +1,67 @@
+---
+title: ossperks telemetry
+description: CLI の匿名利用データ収集の状態を確認し、変更します。
+---
+
+## 使い方
+
+```
+ossperks telemetry [status|enable|disable]
+```
+
+サブコマンドなしで `ossperks telemetry` を実行すると、現在の状態が表示されます。
+
+## サブコマンド
+
+| サブコマンド | 説明                                                   |
+| ------------ | ------------------------------------------------------ |
+| `status`     | テレメトリが有効かどうか、およびその設定元を表示します |
+| `enable`     | テレメトリを有効にします                               |
+| `disable`    | テレメトリを無効にします                               |
+
+## 収集される内容
+
+テレメトリは**デフォルトで有効**です。最初にイベントが送信される際に通知が表示されます。
+
+| フィールド                               | 例                 |
+| ---------------------------------------- | ------------------ |
+| コマンド名                               | `cli:check`        |
+| CLI のバージョン                         | `0.4.0`            |
+| オペレーティングシステム、アーキテクチャ | `linux`, `arm64`   |
+| Node のバージョン                        | `v22.20.0`         |
+| 実行環境が CI かどうか                   | `true`             |
+| 匿名 ID: `sha256(host:user)[:16]`        | `9f1c2ab4d0e3f871` |
+
+失敗したコマンドについては、追加でコマンド名、エラーメッセージ、スタックトレースが送信されます。
+
+**収集されないもの:** リポジトリ名や URL、ファイルパス、トークン、プロジェクトの内容、ホスト名やユーザー名の平文。
+
+イベントは `https://us.i.posthog.com` の [PostHog](https://posthog.com) に送信されます。送信に失敗した場合は静かに破棄されます — テレメトリがターミナルにエラーを出力することはなく、コマンドを遅延させることもありません。
+
+## オプトアウト
+
+以下のいずれか 1 つで十分です:
+
+```bash
+# Persisted to ~/.ossperks/telemetry.json
+ossperks telemetry disable
+
+# Per-shell, also honoured by other developer tools
+export DO_NOT_TRACK=1
+export DISABLE_TELEMETRY=1
+```
+
+環境変数は設定ファイルより優先されるため、`DO_NOT_TRACK=1` が設定されたシェルでは `ossperks telemetry enable` を実行してもオプトアウトのままになります。
+
+## 出力
+
+```
+Telemetry
+─────────
+
+  Status  disabled
+  Config  /home/you/.ossperks/telemetry.json
+
+  Anonymous usage data: command name, CLI version, OS, arch, Node version,
+  and whether the run is in CI. No repo names, paths, or tokens are sent.
+```

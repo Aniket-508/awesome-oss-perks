@@ -1,0 +1,67 @@
+---
+title: ossperks telemetry
+description: 查看并更改 CLI 的匿名使用数据收集设置。
+---
+
+## 用法
+
+```
+ossperks telemetry [status|enable|disable]
+```
+
+不带子命令运行 `ossperks telemetry` 会打印当前状态。
+
+## 子命令
+
+| 子命令    | 说明                                 |
+| --------- | ------------------------------------ |
+| `status`  | 显示遥测是否启用，以及该设置来自何处 |
+| `enable`  | 开启遥测                             |
+| `disable` | 关闭遥测                             |
+
+## 收集的内容
+
+遥测**默认开启**。首次发送事件时会打印一条提示。
+
+| 字段                              | 示例               |
+| --------------------------------- | ------------------ |
+| 命令名称                          | `cli:check`        |
+| CLI 版本                          | `0.4.0`            |
+| 操作系统、架构                    | `linux`, `arm64`   |
+| Node 版本                         | `v22.20.0`         |
+| 运行是否处于 CI 环境              | `true`             |
+| 匿名 id：`sha256(host:user)[:16]` | `9f1c2ab4d0e3f871` |
+
+失败的命令还会额外发送命令名称、错误消息和堆栈跟踪。
+
+**从不收集：** 仓库名称或 URL、文件路径、令牌、项目内容，以及明文形式的主机名和用户名。
+
+事件会发送到 `https://us.i.posthog.com` 上的 [PostHog](https://posthog.com)。发送失败会被静默丢弃——遥测绝不会向你的终端写入错误，也绝不会延迟命令执行。
+
+## 选择退出
+
+以下任意一种方式即可：
+
+```bash
+# Persisted to ~/.ossperks/telemetry.json
+ossperks telemetry disable
+
+# Per-shell, also honoured by other developer tools
+export DO_NOT_TRACK=1
+export DISABLE_TELEMETRY=1
+```
+
+环境变量优先于配置文件，因此设置了 `DO_NOT_TRACK=1` 的 shell 即使执行 `ossperks telemetry enable` 后仍保持退出状态。
+
+## 输出
+
+```
+Telemetry
+─────────
+
+  Status  disabled
+  Config  /home/you/.ossperks/telemetry.json
+
+  Anonymous usage data: command name, CLI version, OS, arch, Node version,
+  and whether the run is in CI. No repo names, paths, or tokens are sent.
+```

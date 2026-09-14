@@ -57,6 +57,7 @@ export const printUsage = (): void => {
   console.log(row("ossperks search [query]      ", "Search programs"));
   console.log(row("ossperks categories          ", "List categories"));
   console.log(row("ossperks open                ", "Open ossperks.com"));
+  console.log(row("ossperks telemetry           ", "Usage data settings"));
   console.log();
   console.log(
     `  ${ansi.bannerMuted}Run ${ansi.bannerAccent}ossperks --help${ansi.bannerMuted} for full options.${ansi.reset}`,

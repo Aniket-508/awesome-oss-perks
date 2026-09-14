@@ -6,6 +6,7 @@ import { listCommand } from "./commands/list.js";
 import { openCommand } from "./commands/open.js";
 import { searchCommand } from "./commands/search.js";
 import { showCommand } from "./commands/show.js";
+import { telemetryCommand } from "./commands/telemetry.js";
 import { checkForUpdates } from "./utils/check-updates.js";
 import { printBanner, printUsage } from "./utils/intro-banner.js";
 import { printCta } from "./utils/outro-cta.js";
@@ -15,7 +16,8 @@ const program = new Command()
   .name("ossperks")
   .description(
     "Browse OSS perk programs and check if your project qualifies.\n" +
-      "Anonymous usage stats are collected. Set DO_NOT_TRACK=1 to opt out.",
+      "Anonymous usage stats are collected. Run `ossperks telemetry disable`\n" +
+      "or set DO_NOT_TRACK=1 to opt out.",
   )
   .version(process.env["VERSION"] ?? "0.0.0")
   .action(() => {
@@ -32,6 +34,7 @@ program.addCommand(checkCommand);
 program.addCommand(searchCommand);
 program.addCommand(categoriesCommand);
 program.addCommand(openCommand);
+program.addCommand(telemetryCommand);
 
 program.hook("postAction", (_hookedCommand, actionCommand) => {
   if (!process.stdout.isTTY) {
