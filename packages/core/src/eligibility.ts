@@ -26,10 +26,13 @@ const PERMISSIVE_IDS = new Set(
     "0BSD",
     "BlueOak-1.0.0",
     "UPL-1.0",
+    "Unlicense",
+    "PostgreSQL",
+    "NCSA",
   ].map((id) => id.toLowerCase()),
 );
 
-const isOsiApproved = (spdx: string | null): boolean => {
+export const isOsiApproved = (spdx: string | null): boolean => {
   if (!spdx) {
     return false;
   }
@@ -39,7 +42,7 @@ const isOsiApproved = (spdx: string | null): boolean => {
   return entry?.osiApproved === true;
 };
 
-const isPermissive = (spdx: string | null): boolean => {
+export const isPermissive = (spdx: string | null): boolean => {
   if (!spdx) {
     return false;
   }
@@ -103,6 +106,55 @@ const extractAgeDays = (text: string): number | null => {
   return null;
 };
 
+const PERMISSIVE_LICENSE_KEYWORDS: string[][] = [["permissive", "license"]];
+
+const OSI_LICENSE_KEYWORDS: string[][] = [
+  ["open", "source", "license"],
+  ["oss", "license"],
+  ["recognized", "license"],
+  ["approved", "license", "open", "source"],
+  ["osi", "approved"],
+  ["osi", "definition"],
+  ["osi", "license"],
+];
+
+const OPEN_SOURCE_PROJECT_KEYWORDS: string[][] = [
+  ["open", "source", "project"],
+  ["open", "source", "must"],
+  ["must", "be", "open", "source"],
+  ["definition", "open", "source"],
+  ["fully", "open", "source"],
+  ["foss"],
+  ["open", "source", "repositor"],
+  ["oss", "project"],
+];
+
+/**
+ * Strongest license constraint a program states in its eligibility rules:
+ * `"permissive"` (MIT/Apache-class only), `"osi"` (any OSI-approved license),
+ * or `null` when the program never mentions one.
+ */
+export const getLicenseRequirement = (
+  program: Program,
+): "osi" | "permissive" | null => {
+  let requirement: "osi" | null = null;
+
+  for (const rule of program.eligibility) {
+    const normalized = normalizeRule(rule);
+    if (matchesAny(normalized, PERMISSIVE_LICENSE_KEYWORDS)) {
+      return "permissive";
+    }
+    if (
+      matchesAny(normalized, OSI_LICENSE_KEYWORDS) ||
+      matchesAny(normalized, OPEN_SOURCE_PROJECT_KEYWORDS)
+    ) {
+      requirement = "osi";
+    }
+  }
+
+  return requirement;
+};
+
 const INTENTS: RuleIntent[] = [
   {
     check: (_, ctx) => {
@@ -118,7 +170,7 @@ const INTENTS: RuleIntent[] = [
             verdict: "fail",
           };
     },
-    keywordSets: [["permissive", "license"]],
+    keywordSets: PERMISSIVE_LICENSE_KEYWORDS,
   },
 
   {
@@ -135,15 +187,7 @@ const INTENTS: RuleIntent[] = [
             verdict: "fail",
           };
     },
-    keywordSets: [
-      ["open", "source", "license"],
-      ["oss", "license"],
-      ["recognized", "license"],
-      ["approved", "license", "open", "source"],
-      ["osi", "approved"],
-      ["osi", "definition"],
-      ["osi", "license"],
-    ],
+    keywordSets: OSI_LICENSE_KEYWORDS,
   },
 
   {
@@ -160,16 +204,7 @@ const INTENTS: RuleIntent[] = [
             verdict: "fail",
           };
     },
-    keywordSets: [
-      ["open", "source", "project"],
-      ["open", "source", "must"],
-      ["must", "be", "open", "source"],
-      ["definition", "open", "source"],
-      ["fully", "open", "source"],
-      ["foss"],
-      ["open", "source", "repositor"],
-      ["oss", "project"],
-    ],
+    keywordSets: OPEN_SOURCE_PROJECT_KEYWORDS,
   },
 
   {
