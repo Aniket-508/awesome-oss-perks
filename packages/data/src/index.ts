@@ -34,4 +34,14 @@ export {
   programSchema,
 } from "./schema";
 export type { Category, Contact, Perk, PerkType, Program } from "./schema";
+export {
+  getStackBySlug,
+  getStackPerkCount,
+  getStackPrograms,
+  getStackSlugs,
+  getStacksByProgram,
+  STACK_ROLES,
+  STACKS,
+} from "./stacks";
+export type { Stack, StackEntry, StackProgram, StackRole } from "./stacks";
 export { formatSlug } from "./slug";

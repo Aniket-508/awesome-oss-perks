@@ -21,6 +21,7 @@ const footer = {
   rssFeed: "RSS 订阅",
   sponsor: "赞助",
   submit: "提交",
+  stacks: "技术栈",
   tags: "标签",
   translationsBy: "翻译由",
   twitter: "X（Twitter）"
