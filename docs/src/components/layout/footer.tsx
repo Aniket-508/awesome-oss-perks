@@ -38,6 +38,7 @@ export const Footer = ({
     { href: p(ROUTES.CATEGORIES), label: translation.categories },
     { href: p(ROUTES.PEOPLE), label: translation.people },
     { href: p(ROUTES.TAGS), label: translation.tags },
+    { href: p(ROUTES.LICENSES), label: translation.licenses },
     { href: p(ROUTES.CLI), label: translation.cli },
   ] as const;
 

@@ -35,7 +35,26 @@ export {
   checkEligibilityDetailed,
   checkAllPrograms,
   checkAllProgramsDetailed,
+  getLicenseRequirement,
+  isOsiApproved,
+  isPermissive,
 } from "./eligibility";
+export {
+  getLicenseAliasSlugs,
+  getLicenseFamilyBreakdown,
+  getLicenseFamilyByLicenseSlug,
+  getLicenseFamilyBySlug,
+  getLicenseFamilyCounts,
+  getLicenseFamilySlugs,
+  LICENSE_FAMILIES,
+  toLicenseSlug,
+} from "./licenses";
+export type {
+  LicenseFamily,
+  LicenseFamilyBreakdown,
+  LicenseFamilyCount,
+  LicenseFamilyInfo,
+} from "./licenses";
 export {
   calculateTimeUnits,
   englishFormatter,

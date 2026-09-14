@@ -11,6 +11,8 @@ import footerEn from "@/locales/en/footer";
 import type { FooterTranslations } from "@/locales/en/footer";
 import homeEn from "@/locales/en/home";
 import type { HomeTranslations } from "@/locales/en/home";
+import licensesEn from "@/locales/en/licenses";
+import type { LicensesTranslations } from "@/locales/en/licenses";
 import peopleEn from "@/locales/en/people";
 import type { PeopleTranslations } from "@/locales/en/people";
 import programsEn from "@/locales/en/programs";
@@ -27,6 +29,7 @@ export interface Translations {
   common: CommonTranslations;
   footer: FooterTranslations;
   home: HomeTranslations;
+  licenses: LicensesTranslations;
   people: PeopleTranslations;
   programs: ProgramsTranslations;
   sponsors: SponsorsTranslations;
@@ -41,6 +44,7 @@ const loaders = {
     common: () => import("@/locales/de/common"),
     footer: () => import("@/locales/de/footer"),
     home: () => import("@/locales/de/home"),
+    licenses: () => import("@/locales/de/licenses"),
     people: () => import("@/locales/de/people"),
     programs: () => import("@/locales/de/programs"),
     sponsors: () => import("@/locales/de/sponsors"),
@@ -53,6 +57,7 @@ const loaders = {
     common: () => import("@/locales/en/common"),
     footer: () => import("@/locales/en/footer"),
     home: () => import("@/locales/en/home"),
+    licenses: () => import("@/locales/en/licenses"),
     people: () => import("@/locales/en/people"),
     programs: () => import("@/locales/en/programs"),
     sponsors: () => import("@/locales/en/sponsors"),
@@ -65,6 +70,7 @@ const loaders = {
     common: () => import("@/locales/es/common"),
     footer: () => import("@/locales/es/footer"),
     home: () => import("@/locales/es/home"),
+    licenses: () => import("@/locales/es/licenses"),
     people: () => import("@/locales/es/people"),
     programs: () => import("@/locales/es/programs"),
     sponsors: () => import("@/locales/es/sponsors"),
@@ -77,6 +83,7 @@ const loaders = {
     common: () => import("@/locales/fr/common"),
     footer: () => import("@/locales/fr/footer"),
     home: () => import("@/locales/fr/home"),
+    licenses: () => import("@/locales/fr/licenses"),
     people: () => import("@/locales/fr/people"),
     programs: () => import("@/locales/fr/programs"),
     sponsors: () => import("@/locales/fr/sponsors"),
@@ -89,6 +96,7 @@ const loaders = {
     common: () => import("@/locales/ja/common"),
     footer: () => import("@/locales/ja/footer"),
     home: () => import("@/locales/ja/home"),
+    licenses: () => import("@/locales/ja/licenses"),
     people: () => import("@/locales/ja/people"),
     programs: () => import("@/locales/ja/programs"),
     sponsors: () => import("@/locales/ja/sponsors"),
@@ -101,6 +109,7 @@ const loaders = {
     common: () => import("@/locales/ko/common"),
     footer: () => import("@/locales/ko/footer"),
     home: () => import("@/locales/ko/home"),
+    licenses: () => import("@/locales/ko/licenses"),
     people: () => import("@/locales/ko/people"),
     programs: () => import("@/locales/ko/programs"),
     sponsors: () => import("@/locales/ko/sponsors"),
@@ -113,6 +122,7 @@ const loaders = {
     common: () => import("@/locales/pt-BR/common"),
     footer: () => import("@/locales/pt-BR/footer"),
     home: () => import("@/locales/pt-BR/home"),
+    licenses: () => import("@/locales/pt-BR/licenses"),
     people: () => import("@/locales/pt-BR/people"),
     programs: () => import("@/locales/pt-BR/programs"),
     sponsors: () => import("@/locales/pt-BR/sponsors"),
@@ -125,6 +135,7 @@ const loaders = {
     common: () => import("@/locales/ru/common"),
     footer: () => import("@/locales/ru/footer"),
     home: () => import("@/locales/ru/home"),
+    licenses: () => import("@/locales/ru/licenses"),
     people: () => import("@/locales/ru/people"),
     programs: () => import("@/locales/ru/programs"),
     sponsors: () => import("@/locales/ru/sponsors"),
@@ -137,6 +148,7 @@ const loaders = {
     common: () => import("@/locales/zh-CN/common"),
     footer: () => import("@/locales/zh-CN/footer"),
     home: () => import("@/locales/zh-CN/home"),
+    licenses: () => import("@/locales/zh-CN/licenses"),
     people: () => import("@/locales/zh-CN/people"),
     programs: () => import("@/locales/zh-CN/programs"),
     sponsors: () => import("@/locales/zh-CN/sponsors"),
@@ -156,6 +168,7 @@ export const getT = async (locale: string): Promise<Translations> => {
     common,
     footer,
     home,
+    licenses,
     people,
     programs,
     sponsors,
@@ -186,6 +199,10 @@ export const getT = async (locale: string): Promise<Translations> => {
       .then((m) => m.default as HomeTranslations)
       .catch(() => homeEn),
     localeLoaders
+      .licenses()
+      .then((m) => m.default as LicensesTranslations)
+      .catch(() => licensesEn),
+    localeLoaders
       .people()
       .then((m) => m.default as PeopleTranslations)
       .catch(() => peopleEn),
@@ -210,6 +227,7 @@ export const getT = async (locale: string): Promise<Translations> => {
     common,
     footer,
     home,
+    licenses,
     people,
     programs,
     sponsors,

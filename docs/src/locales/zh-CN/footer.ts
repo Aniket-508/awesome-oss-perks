@@ -8,6 +8,7 @@ const footer = {
   cli: "CLI",
   github: "GitHub",
   hostedOn: "托管于",
+  licenses: "许可证",
   llms: "LLMs",
   madeBy: "作者",
   otherProducts: "其他产品：",
