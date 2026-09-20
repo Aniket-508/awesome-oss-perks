@@ -1,8 +1,14 @@
-import { RssIcon } from "lucide-react";
+import { ChevronDownIcon, RssIcon } from "lucide-react";
 import Link from "next/link";
 
 import { GitHubIcon, LlmsIcon, XIcon } from "@/components/icons";
 import { LogoMark } from "@/components/logo";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { LINK } from "@/constants/links";
 import { ROUTES } from "@/constants/routes";
 import { SITE } from "@/constants/site";
@@ -66,16 +72,67 @@ export const Footer = ({
 
   const otherProducts = [
     {
-      href: LINK.TERMCN,
-      label: translation.productTermcn,
+      href: LINK.HEROICONS_ANIMATED,
+      label: translation.productHeroiconsAnimated,
     },
     {
       href: LINK.VERCEL_DOCTOR,
       label: translation.productVercelDoctor,
     },
     {
-      href: LINK.HEROICONS_ANIMATED,
-      label: translation.productHeroiconsAnimated,
+      href: LINK.FOLLOWERS_VIDEO,
+      label: translation.productFollowersVideo,
+    },
+    {
+      href: LINK.SHADCN_LABS,
+      label: translation.productShadcnLabs,
+    },
+  ] as const;
+
+  const moreProducts = [
+    {
+      href: LINK.STARTERCN,
+      label: translation.productStartercn,
+    },
+    {
+      href: LINK.TERMCN,
+      label: translation.productTermcn,
+    },
+    {
+      href: LINK.FRAMECN,
+      label: translation.productFramecn,
+    },
+    {
+      href: LINK.OGIMAGECN,
+      label: translation.productOgimagecn,
+    },
+    {
+      href: LINK.AGENTCN,
+      label: translation.productAgentcn,
+    },
+    {
+      href: LINK.SHADCN_CSSINJS,
+      label: translation.productShadcnCssinjs,
+    },
+    {
+      href: LINK.MCPCN,
+      label: translation.productMcpcn,
+    },
+    {
+      href: LINK.EMAILCN,
+      label: translation.productEmailcn,
+    },
+    {
+      href: LINK.PDFCN,
+      label: translation.productPdfcn,
+    },
+    {
+      href: LINK.EDITORCN,
+      label: translation.productEditorcn,
+    },
+    {
+      href: LINK.SHADERCN,
+      label: translation.productShadercn,
     },
   ] as const;
 
@@ -207,6 +264,38 @@ export const Footer = ({
                   </a>
                 </li>
               ))}
+              <li>
+                <DropdownMenu>
+                  <DropdownMenuTrigger
+                    render={
+                      <button
+                        className={`${footerLinkClass} inline-flex cursor-pointer items-center gap-1`}
+                        type="button"
+                      >
+                        <span>{translation.andMore}</span>
+                        <ChevronDownIcon className="size-3.5" />
+                      </button>
+                    }
+                  />
+                  <DropdownMenuContent align="start" sideOffset={8}>
+                    {moreProducts.map(({ href, label }) => (
+                      <DropdownMenuItem
+                        key={href}
+                        nativeButton={false}
+                        render={
+                          <a
+                            href={href}
+                            rel="noopener noreferrer"
+                            target="_blank"
+                          >
+                            {label}
+                          </a>
+                        }
+                      />
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </li>
             </ul>
           </div>
         </div>
