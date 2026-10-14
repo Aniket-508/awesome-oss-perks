@@ -1,0 +1,40 @@
+{
+  "slug": "uiverify",
+  "name": "UI Verify for Open Source",
+  "provider": "UI Verify",
+  "url": "https://uiverify.ai/docs/free-for-open-source",
+  "applicationUrl": "https://uiverify.ai/pricing",
+  "category": "testing",
+  "description": "Free visual regression testing for open source projects, built for coding agents. Includes 50,000 snapshots per month, self-serve at sign-up with no approval and no credit card.",
+  "perks": [
+    {
+      "title": "Free Visual Testing",
+      "description": "50,000 snapshots per month at no cost for open source projects, 5 times the standard free tier."
+    },
+    {
+      "title": "Reuses Existing Tests",
+      "description": "Works with existing Storybook stories, Playwright tests, or Vitest browser-mode tests, with GitHub pull request checks and comments."
+    },
+    {
+      "title": "Agent Workflow",
+      "description": "A CLI and a remote MCP server let coding agents such as Claude Code, Cursor, and Codex check what a change did to the UI while they work. An AI judge labels each visual change as intended, a regression, or flake."
+    }
+  ],
+  "eligibility": [
+    "The project must be open source with a public repository.",
+    "The open source tier is self-declared, with no verification step."
+  ],
+  "applicationProcess": [
+    "Click Get started on the open source callout on the UI Verify pricing page or in the open source docs.",
+    "Sign up; the open source tier is applied to your first workspace automatically."
+  ],
+  "tags": [
+    "visual-testing",
+    "regression-testing",
+    "screenshots",
+    "testing",
+    "storybook",
+    "playwright",
+    "mcp"
+  ]
+}
