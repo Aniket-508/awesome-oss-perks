@@ -283,6 +283,61 @@ const CategoriesIndexItemListJsonLd = ({
   return <JsonLdScript data={jsonLd} />;
 };
 
+const StacksIndexItemListJsonLd = ({
+  lang,
+  listName,
+  stacks,
+}: {
+  lang: string;
+  listName: string;
+  stacks: { label: string; slug: string }[];
+}) => {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: stacks.map((row, index) => ({
+      "@type": "ListItem",
+      name: row.label,
+      position: index + 1,
+      url: absoluteUrl(withLocalePrefix(lang, `/stacks/${row.slug}`)),
+    })),
+    name: listName,
+    numberOfItems: stacks.length,
+  };
+  return <JsonLdScript data={jsonLd} />;
+};
+
+const StackItemListJsonLd = ({
+  description,
+  lang,
+  listName,
+  programs,
+}: {
+  description: string;
+  lang: string;
+  listName: string;
+  programs: { name: string; slug: string }[];
+}) => {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    description,
+    itemListElement: programs.map((program, index) => ({
+      "@type": "ListItem",
+      item: {
+        "@type": "SoftwareApplication",
+        name: program.name,
+        url: absoluteUrl(withLocalePrefix(lang, `/programs/${program.slug}`)),
+      },
+      position: index + 1,
+    })),
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    name: listName,
+    numberOfItems: programs.length,
+  };
+  return <JsonLdScript data={jsonLd} />;
+};
+
 const TagsIndexItemListJsonLd = ({
   lang,
   listName,
@@ -353,6 +408,8 @@ export {
   CategoryProgramListJsonLd,
   CategoriesIndexItemListJsonLd,
   TagsIndexItemListJsonLd,
+  StacksIndexItemListJsonLd,
+  StackItemListJsonLd,
   PeopleIndexItemListJsonLd,
   PersonPageJsonLd,
 };

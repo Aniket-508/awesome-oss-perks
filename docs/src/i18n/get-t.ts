@@ -17,6 +17,8 @@ import programsEn from "@/locales/en/programs";
 import type { ProgramsTranslations } from "@/locales/en/programs";
 import sponsorsEn from "@/locales/en/sponsors";
 import type { SponsorsTranslations } from "@/locales/en/sponsors";
+import stacksEn from "@/locales/en/stacks";
+import type { StacksTranslations } from "@/locales/en/stacks";
 import tagsEn from "@/locales/en/tags";
 import type { TagsTranslations } from "@/locales/en/tags";
 
@@ -30,6 +32,7 @@ export interface Translations {
   people: PeopleTranslations;
   programs: ProgramsTranslations;
   sponsors: SponsorsTranslations;
+  stacks: StacksTranslations;
   tags: TagsTranslations;
 }
 
@@ -44,6 +47,7 @@ const loaders = {
     people: () => import("@/locales/de/people"),
     programs: () => import("@/locales/de/programs"),
     sponsors: () => import("@/locales/de/sponsors"),
+    stacks: () => import("@/locales/de/stacks"),
     tags: () => import("@/locales/de/tags"),
   },
   en: {
@@ -56,6 +60,7 @@ const loaders = {
     people: () => import("@/locales/en/people"),
     programs: () => import("@/locales/en/programs"),
     sponsors: () => import("@/locales/en/sponsors"),
+    stacks: () => import("@/locales/en/stacks"),
     tags: () => import("@/locales/en/tags"),
   },
   es: {
@@ -68,6 +73,7 @@ const loaders = {
     people: () => import("@/locales/es/people"),
     programs: () => import("@/locales/es/programs"),
     sponsors: () => import("@/locales/es/sponsors"),
+    stacks: () => import("@/locales/es/stacks"),
     tags: () => import("@/locales/es/tags"),
   },
   fr: {
@@ -80,6 +86,7 @@ const loaders = {
     people: () => import("@/locales/fr/people"),
     programs: () => import("@/locales/fr/programs"),
     sponsors: () => import("@/locales/fr/sponsors"),
+    stacks: () => import("@/locales/fr/stacks"),
     tags: () => import("@/locales/fr/tags"),
   },
   ja: {
@@ -92,6 +99,7 @@ const loaders = {
     people: () => import("@/locales/ja/people"),
     programs: () => import("@/locales/ja/programs"),
     sponsors: () => import("@/locales/ja/sponsors"),
+    stacks: () => import("@/locales/ja/stacks"),
     tags: () => import("@/locales/ja/tags"),
   },
   ko: {
@@ -104,6 +112,7 @@ const loaders = {
     people: () => import("@/locales/ko/people"),
     programs: () => import("@/locales/ko/programs"),
     sponsors: () => import("@/locales/ko/sponsors"),
+    stacks: () => import("@/locales/ko/stacks"),
     tags: () => import("@/locales/ko/tags"),
   },
   "pt-BR": {
@@ -116,6 +125,7 @@ const loaders = {
     people: () => import("@/locales/pt-BR/people"),
     programs: () => import("@/locales/pt-BR/programs"),
     sponsors: () => import("@/locales/pt-BR/sponsors"),
+    stacks: () => import("@/locales/pt-BR/stacks"),
     tags: () => import("@/locales/pt-BR/tags"),
   },
   ru: {
@@ -128,6 +138,7 @@ const loaders = {
     people: () => import("@/locales/ru/people"),
     programs: () => import("@/locales/ru/programs"),
     sponsors: () => import("@/locales/ru/sponsors"),
+    stacks: () => import("@/locales/ru/stacks"),
     tags: () => import("@/locales/ru/tags"),
   },
   "zh-CN": {
@@ -140,6 +151,7 @@ const loaders = {
     people: () => import("@/locales/zh-CN/people"),
     programs: () => import("@/locales/zh-CN/programs"),
     sponsors: () => import("@/locales/zh-CN/sponsors"),
+    stacks: () => import("@/locales/zh-CN/stacks"),
     tags: () => import("@/locales/zh-CN/tags"),
   },
 };
@@ -159,6 +171,7 @@ export const getT = async (locale: string): Promise<Translations> => {
     people,
     programs,
     sponsors,
+    stacks,
     tags,
   ] = await Promise.all([
     localeLoaders
@@ -198,6 +211,10 @@ export const getT = async (locale: string): Promise<Translations> => {
       .then((m) => m.default as SponsorsTranslations)
       .catch(() => sponsorsEn),
     localeLoaders
+      .stacks()
+      .then((m) => m.default as StacksTranslations)
+      .catch(() => stacksEn),
+    localeLoaders
       .tags()
       .then((m) => m.default as TagsTranslations)
       .catch(() => tagsEn),
@@ -213,6 +230,7 @@ export const getT = async (locale: string): Promise<Translations> => {
     people,
     programs,
     sponsors,
+    stacks,
     tags,
   };
 };

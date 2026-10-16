@@ -2,6 +2,7 @@ import {
   getCategories,
   getPeople,
   getPersonSlug,
+  getStackSlugs,
   getTagsWithProgramCounts,
   programs,
 } from "@ossperks/core";
@@ -27,6 +28,7 @@ const STATIC_PATHS: {
   { changeFrequency: "weekly", path: ROUTES.PROGRAMS, priority: 0.9 },
   { changeFrequency: "weekly", path: ROUTES.CATEGORIES, priority: 0.85 },
   { changeFrequency: "weekly", path: ROUTES.TAGS, priority: 0.85 },
+  { changeFrequency: "monthly", path: ROUTES.STACKS, priority: 0.8 },
   { changeFrequency: "monthly", path: ROUTES.SUBMIT_PROGRAM, priority: 0.6 },
   { changeFrequency: "weekly", path: ROUTES.PEOPLE, priority: 0.7 },
   { changeFrequency: "monthly", path: ROUTES.SPONSORS, priority: 0.5 },
@@ -119,6 +121,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entries.push({
       alternates: buildAlternates(path),
       changeFrequency: "weekly" as const,
+      lastModified,
+      priority: 0.75,
+      url: absoluteUrl(withLocalePrefix(i18n.defaultLanguage, path)),
+    });
+  }
+
+  for (const slug of getStackSlugs()) {
+    const path = `${ROUTES.STACKS}/${slug}` as `/${string}`;
+    entries.push({
+      alternates: buildAlternates(path),
+      changeFrequency: "monthly" as const,
       lastModified,
       priority: 0.75,
       url: absoluteUrl(withLocalePrefix(i18n.defaultLanguage, path)),

@@ -34,6 +34,7 @@ const footer = {
   rssFeed: "RSS feed",
   sponsor: "Sponsor",
   submit: "Submit",
+  stacks: "Stacks",
   tags: "Tags",
   translationsBy: "Translations by",
   twitter: "X (Twitter)",

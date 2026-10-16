@@ -1,6 +1,7 @@
 import {
   getAllProgramSlugs,
   getPeopleByProgramSlug,
+  getStacksByProgram,
   programs as allPrograms,
 } from "@ossperks/core";
 import type { Metadata } from "next";
@@ -47,6 +48,7 @@ export default async function ProgramPage({
     program.category;
 
   const people = getPeopleByProgramSlug(programSlug);
+  const programStacks = getStacksByProgram(program.slug);
   const categoryHref = withLocalePrefix(
     lang,
     `${ROUTES.CATEGORIES}/${program.category}` as `/${string}`,
@@ -303,6 +305,34 @@ export default async function ProgramPage({
                       transitionTypes={["nav-back"]}
                     >
                       <Badge variant="secondary">{tag}</Badge>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            ) : null}
+
+            {programStacks.length > 0 ? (
+              <section>
+                <h2 className="text-fd-muted-foreground mb-3 text-sm font-medium">
+                  {t.stacks.listing.heading}
+                </h2>
+                <div className="flex flex-wrap gap-2">
+                  {programStacks.map((stack) => (
+                    <Link
+                      href={withLocalePrefix(
+                        lang,
+                        `${ROUTES.STACKS}/${stack.slug}` as `/${string}`,
+                      )}
+                      key={stack.slug}
+                      transitionTypes={["nav-forward"]}
+                    >
+                      <Badge variant="secondary">
+                        {
+                          t.stacks.items[
+                            stack.slug as keyof typeof t.stacks.items
+                          ].shortName
+                        }
+                      </Badge>
                     </Link>
                   ))}
                 </div>
