@@ -4,6 +4,7 @@ export const ROUTES: Record<string, `/${string}`> = {
   CHECK: "/check",
   CLI: "/cli",
   HOME: "/",
+  LICENSES: "/licenses",
   LLMS: "/llms.txt",
   LLMS_FULL: "/llms-full.txt",
   PEOPLE: "/people",

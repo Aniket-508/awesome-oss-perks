@@ -283,6 +283,30 @@ const CategoriesIndexItemListJsonLd = ({
   return <JsonLdScript data={jsonLd} />;
 };
 
+const LicensesIndexItemListJsonLd = ({
+  lang,
+  listName,
+  licenses,
+}: {
+  lang: string;
+  listName: string;
+  licenses: { label: string; slug: string }[];
+}) => {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: licenses.map((row, index) => ({
+      "@type": "ListItem",
+      name: row.label,
+      position: index + 1,
+      url: absoluteUrl(withLocalePrefix(lang, `/licenses/${row.slug}`)),
+    })),
+    name: listName,
+    numberOfItems: licenses.length,
+  };
+  return <JsonLdScript data={jsonLd} />;
+};
+
 const TagsIndexItemListJsonLd = ({
   lang,
   listName,
@@ -353,6 +377,7 @@ export {
   CategoryProgramListJsonLd,
   CategoriesIndexItemListJsonLd,
   TagsIndexItemListJsonLd,
+  LicensesIndexItemListJsonLd,
   PeopleIndexItemListJsonLd,
   PersonPageJsonLd,
 };
