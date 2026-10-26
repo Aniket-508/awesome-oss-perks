@@ -1,0 +1,36 @@
+{
+  "slug": "uptimerobot",
+  "name": "UptimeRobot Sponsored Monitoring",
+  "provider": "UptimeRobot",
+  "url": "https://uptimerobot.com/sponsorship/",
+  "applicationUrl": "https://info450823.typeform.com/to/EaQ00sTN",
+  "category": "monitoring",
+  "description": "UptimeRobot sponsors a paid Solo or Team plan for non-profit organizations and the open source projects they run, covering uptime monitoring, status pages and alerting.",
+  "perks": [
+    {
+      "title": "Sponsored paid plan",
+      "description": "A Solo or Team plan with all paid features, free for one year."
+    },
+    {
+      "title": "1-minute checks",
+      "description": "Website, keyword, ping, port, cron job and API monitoring at 1-minute intervals."
+    },
+    {
+      "title": "Status pages",
+      "description": "Public status pages to share uptime and incident updates with your users."
+    },
+    {
+      "title": "Chat support",
+      "description": "Help from the UptimeRobot team with setup and troubleshooting."
+    }
+  ],
+  "eligibility": [
+    "Non-profit organizations and charities, and the open source projects they run.",
+    "Applications are reviewed individually."
+  ],
+  "applicationProcess": [
+    "Apply through the form on the UptimeRobot sponsorship page with details about your organization and project."
+  ],
+  "duration": "1 year, renewable by reapplying",
+  "tags": ["monitoring", "uptime", "status-page", "alerting"]
+}
